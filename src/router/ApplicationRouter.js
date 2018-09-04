@@ -34,7 +34,7 @@ const styles = theme => ({
         position: 'relative',
         display: 'flex',
         width: '100%',
-        height: '100vh'
+        minHeight : '100vh'
     },
     appBar: {
         position: 'absolute',
@@ -275,7 +275,7 @@ class ApplicationRouter extends Component{
                                 <Typography variant="title" color="inherit" noWrap>
                                     SKHU Mentoring
                                 </Typography>
-                                {!principal && (
+                                {principal && (
                                     <div>
                                         <IconButton
                                             aria-owns={accountOpen ? 'menu-appbar' : null}
