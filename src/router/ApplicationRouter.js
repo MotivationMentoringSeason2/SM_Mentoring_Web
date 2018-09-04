@@ -125,6 +125,14 @@ class ApplicationRouter extends Component{
         this.setState({ anchor : null });
     };
 
+    componentWillMount = () => {
+        this.props.fetchPrincipalFromServer();
+    }
+
+    componentWillUnmount = () => {
+        this.props.resetFetchPrincipalFromServer();
+    }
+
     render(){
         const { classes } = this.props;
         const { open } = this.state;
@@ -204,7 +212,7 @@ class ApplicationRouter extends Component{
                         : ''
                 }
                 {
-                    (principal !== null && principal.studentStatus === 'MENTI' && principal.studentType === 'CHAIRMAN_MENTI') ?
+                    (principal !== null && ( principal.studentStatus === 'MENTI' || principal.studentType === 'CHAIRMAN_MENTI' )) ?
                         <div>
                             <List>{mentiItems}</List>
                             <Divider />
@@ -212,7 +220,7 @@ class ApplicationRouter extends Component{
                         : ''
                 }
                 {
-                    (principal !== null && principal.studentStatus === 'MENTO' && principal.studentType === 'CHAIRMAN_MENTO') ?
+                    (principal !== null && ( principal.studentStatus === 'MENTO' || principal.studentType === 'CHAIRMAN_MENTO' )) ?
                         <div>
                             <List>{mentoItems}</List>
                             <Divider />
@@ -305,6 +313,9 @@ class ApplicationRouter extends Component{
                                             </Link>
                                             <Link to="/account/profile/edit" style={{ textDecoration: 'none' }}>
                                                 <MenuItem onClick={this.handleClose}>프로필 설정</MenuItem>
+                                            </Link>
+                                            <Link to="/account/logout" style={{ textDecoration: 'none' }}>
+                                                <MenuItem onClick={this.handleClose}>로그아웃</MenuItem>
                                             </Link>
                                         </Menu>
                                     </div>
