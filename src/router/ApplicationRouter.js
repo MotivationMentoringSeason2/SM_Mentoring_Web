@@ -22,6 +22,7 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import {FooterContext} from "../component/footer_component";
 import {adminItems, introDefaultItems, introAdminItems, noticeItems, applicationItems, guestItems, mentiItems, mentoItems} from "../component/left_menu/MenuData";
 import {GuestRouter, UserRouter, MentiRouter, MentoRouter, AdminRouter} from ".";
+import {MenuProfileContainer} from "../container";
 
 const drawerWidth = 240;
 
@@ -125,6 +126,14 @@ class ApplicationRouter extends Component{
         this.setState({ anchor : null });
     };
 
+    componentWillMount = () => {
+        this.props.fetchPrincipalFromServer();
+    }
+
+    componentWillUnmount = () => {
+        this.props.resetFetchPrincipalFromServer();
+    }
+
     render(){
         const { classes } = this.props;
         const { open } = this.state;
@@ -182,6 +191,9 @@ class ApplicationRouter extends Component{
                     </IconButton>
                 </div>
                 <Divider />
+                {
+                    (principal !== null) ? <MenuProfileContainer /> : ''
+                }
                 <List>{noticeItems}</List>
                 <Divider />
                 {
@@ -204,7 +216,7 @@ class ApplicationRouter extends Component{
                         : ''
                 }
                 {
-                    (principal !== null && principal.studentStatus === 'MENTI' && principal.studentType === 'CHAIRMAN_MENTI') ?
+                    (principal !== null && ( principal.studentStatus === 'MENTI' || principal.studentType === 'CHAIRMAN_MENTI' )) ?
                         <div>
                             <List>{mentiItems}</List>
                             <Divider />
@@ -212,7 +224,7 @@ class ApplicationRouter extends Component{
                         : ''
                 }
                 {
-                    (principal !== null && principal.studentStatus === 'MENTO' && principal.studentType === 'CHAIRMAN_MENTO') ?
+                    (principal !== null && ( principal.studentStatus === 'MENTO' || principal.studentType === 'CHAIRMAN_MENTO' )) ?
                         <div>
                             <List>{mentoItems}</List>
                             <Divider />

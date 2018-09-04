@@ -173,7 +173,7 @@ export const mentiItems = (
             </ListItemIcon>
             <ListItemText primary="멘티 메뉴" />
         </ListItem>
-        <Link to="/menti/class_confirm" style={{ textDecoration: 'none' }}>
+        <Link to="/menti/class/confirm" style={{ textDecoration: 'none' }}>
             <ListItem button>
                 <ListItemIcon>
                     <ArrowForwardIcon />
@@ -181,7 +181,7 @@ export const mentiItems = (
                 <ListItemText primary="수업 내역 확인" />
             </ListItem>
         </Link>
-        <Link to="/menti/team_memo" style={{ textDecoration: 'none' }}>
+        <Link to="/menti/sticky_memo" style={{ textDecoration: 'none' }}>
             <ListItem button>
                 <ListItemIcon>
                     <ArrowForwardIcon />
@@ -208,6 +208,14 @@ export const mentoItems = (
             </ListItemIcon>
             <ListItemText primary="멘토 메뉴" />
         </ListItem>
+        <Link to="/mento/class/edit" style={{ textDecoration: 'none' }}>
+            <ListItem button>
+                <ListItemIcon>
+                    <ArrowForwardIcon />
+                </ListItemIcon>
+                <ListItemText primary="수업 일정 관리" />
+            </ListItem>
+        </Link>
         <Link to="/mento/report/edit" style={{ textDecoration: 'none' }}>
             <ListItem button>
                 <ListItemIcon>
@@ -224,7 +232,7 @@ export const mentoItems = (
                 <ListItemText primary="보고서 결과" />
             </ListItem>
         </Link>
-        <Link to="/mento/team_memo" style={{ textDecoration: 'none' }}>
+        <Link to="/mento/sticky_memo" style={{ textDecoration: 'none' }}>
             <ListItem button>
                 <ListItemIcon>
                     <ArrowForwardIcon />
