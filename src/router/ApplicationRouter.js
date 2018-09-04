@@ -19,6 +19,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import CloseIcon from '@material-ui/icons/Close';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
+import {FooterContext} from "../component/footer_component";
 import {adminItems, introDefaultItems, introAdminItems, noticeItems, applicationItems, guestItems, mentiItems, mentoItems} from "../component/left_menu/MenuData";
 import {GuestRouter, UserRouter, MentiRouter, MentoRouter, AdminRouter} from ".";
 
@@ -34,7 +35,7 @@ const styles = theme => ({
         position: 'relative',
         display: 'flex',
         width: '100%',
-        height: '100vh'
+        minHeight : '100vh'
     },
     appBar: {
         position: 'absolute',
@@ -76,7 +77,6 @@ const styles = theme => ({
     },
     content: {
         flexGrow: 1,
-        backgroundColor: theme.palette.background.default,
         padding: theme.spacing.unit * 3,
         transition: theme.transitions.create('margin', {
             easing: theme.transitions.easing.sharp,
@@ -132,12 +132,7 @@ class ApplicationRouter extends Component{
         const accountOpen = Boolean(anchor);
 
         let router;
-        const { principal, error } = this.props.accessAccount;
-
-        if(error !== null){
-            alert(error);
-            window.location.href = "/";
-        }
+        const { principal } = this.props.accessAccount;
 
         if(principal === null){
             router = <GuestRouter />;
@@ -233,7 +228,7 @@ class ApplicationRouter extends Component{
                         : ''
                 }
                 {
-                    (principal !== null && (principal.type === 'PROFESSOR' || principal.type === 'EMPLOYEE' || principal.type === 'CHAIRMAN_MENTO' || principal.type === 'CHAIRMAN_MENTI' || principal.type === 'CHAIRMAN_NORMAL')) ?
+                    (principal !== null && (principal.type === 'PROFESSOR' || principal.type === 'EMPLOYEE' || principal.studentStatus === 'CHAIRMAN_MENTO' || principal.studentStatus === 'CHAIRMAN_MENTI' || principal.studentStatus === 'CHAIRMAN_NORMAL')) ?
                         <div>
                             <List>{adminItems}</List>
                             <Divider />
@@ -275,7 +270,7 @@ class ApplicationRouter extends Component{
                                 <Typography variant="title" color="inherit" noWrap>
                                     SKHU Mentoring
                                 </Typography>
-                                {!principal && (
+                                {principal && (
                                     <div>
                                         <IconButton
                                             aria-owns={accountOpen ? 'menu-appbar' : null}
@@ -327,6 +322,8 @@ class ApplicationRouter extends Component{
 
                             </div>
                             { router }
+                            <hr/>
+                            <FooterContext />
                         </main>
                     </div>
                 </div>
