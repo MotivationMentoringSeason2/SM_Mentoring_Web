@@ -19,6 +19,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import CloseIcon from '@material-ui/icons/Close';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
+import {FooterContext} from "../component/footer_component";
 import {adminItems, introDefaultItems, introAdminItems, noticeItems, applicationItems, guestItems, mentiItems, mentoItems} from "../component/left_menu/MenuData";
 import {GuestRouter, UserRouter, MentiRouter, MentoRouter, AdminRouter} from ".";
 
@@ -76,7 +77,6 @@ const styles = theme => ({
     },
     content: {
         flexGrow: 1,
-        backgroundColor: theme.palette.background.default,
         padding: theme.spacing.unit * 3,
         transition: theme.transitions.create('margin', {
             easing: theme.transitions.easing.sharp,
@@ -322,6 +322,8 @@ class ApplicationRouter extends Component{
 
                             </div>
                             { router }
+                            <hr/>
+                            <FooterContext />
                         </main>
                     </div>
                 </div>

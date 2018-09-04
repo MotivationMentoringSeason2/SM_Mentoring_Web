@@ -6,12 +6,13 @@ import { withStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 import KeyIcon from '@material-ui/icons/VpnKey';
 import LockIcon from '@material-ui/icons/Lock';
 import ReportProblemIcon from '@material-ui/icons/ReportProblem';
-import {renderTextField} from "../form_render";
 
+import {renderTextField} from "../form_render";
 import { guestLoginProcess, guestLoginSuccess, guestLoginFailure } from "../../action/action_account";
 
 function validate(values){
@@ -36,9 +37,6 @@ const validateAndAccountLogin = (values, dispatch) => {
         }
         localStorage.setItem('jwtToken', response.payload.data);
         dispatch(guestLoginSuccess(response.payload.data));
-    }).catch((reason) => {
-        console.log(reason.message);
-        console.log(reason);
     })
 }
 
@@ -66,6 +64,9 @@ class LoginForm extends Component{
         const { handleSubmit, classes } = this.props;
         const { loading, error } = this.props.accessAccount;
         let loginResult = null;
+        if(loading){
+            loginResult = <LinearProgress color="secondary" />
+        }
         if(error){
             loginResult =
                 <div className="w3-panel w3-pale-red w3-round-large">
@@ -94,7 +95,6 @@ class LoginForm extends Component{
                             <KeyIcon className={classes.leftIcon} /> 로그인
                         </Button>
                     </div>
-                    <hr/>
                     {
                         error !== null ? loginResult : ''
                     }
