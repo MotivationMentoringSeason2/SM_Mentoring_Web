@@ -9,6 +9,8 @@ export const USER_FETCH_PRINCIPAL_SUCCESS = 'USER_FETCH_PRINCIPAL_SUCCESS';
 export const USER_FETCH_PRINCIPAL_FAILURE = 'USER_FETCH_PRINCIPAL_FAILURE';
 export const RESET_USER_FETCH_PRINCIPAL = 'RESET_USER_FETCH_PRINCIPAL';
 
+export const USER_LOGOUT_PROCESS = 'USER_LOGOUT_PROCESS';
+
 const ROOT_URL = 'http://127.0.0.1:8081/AccountAPI';
 
 export function guestLoginProcess(loginForm){
@@ -78,6 +80,21 @@ export function userFetchPrincipalFailure(error){
 export function resetUserFetchPrincipal(){
     return {
         type : RESET_USER_FETCH_PRINCIPAL
+    }
+}
+
+export function userLogoutProcess(userToken){
+    localStorage.removeItem('jwtToken');
+    const request = axios.delete(`${ROOT_URL}/common/logout`, {
+        headers:
+            {
+                'Authorization': `Bearer ${userToken}`
+            }
+        }
+    );
+    return {
+        type : USER_LOGOUT_PROCESS,
+        payload : request
     }
 }
 
