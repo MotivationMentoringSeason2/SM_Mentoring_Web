@@ -132,12 +132,7 @@ class ApplicationRouter extends Component{
         const accountOpen = Boolean(anchor);
 
         let router;
-        const { principal, error } = this.props.accessAccount;
-
-        if(error !== null){
-            alert(error);
-            window.location.href = "/";
-        }
+        const { principal } = this.props.accessAccount;
 
         if(principal === null){
             router = <GuestRouter />;
@@ -233,7 +228,7 @@ class ApplicationRouter extends Component{
                         : ''
                 }
                 {
-                    (principal !== null && (principal.type === 'PROFESSOR' || principal.type === 'EMPLOYEE' || principal.type === 'CHAIRMAN_MENTO' || principal.type === 'CHAIRMAN_MENTI' || principal.type === 'CHAIRMAN_NORMAL')) ?
+                    (principal !== null && (principal.type === 'PROFESSOR' || principal.type === 'EMPLOYEE' || principal.studentStatus === 'CHAIRMAN_MENTO' || principal.studentStatus === 'CHAIRMAN_MENTI' || principal.studentStatus === 'CHAIRMAN_NORMAL')) ?
                         <div>
                             <List>{adminItems}</List>
                             <Divider />
