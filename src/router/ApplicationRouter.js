@@ -22,6 +22,7 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import {FooterContext} from "../component/footer_component";
 import {adminItems, introDefaultItems, introAdminItems, noticeItems, applicationItems, guestItems, mentiItems, mentoItems} from "../component/left_menu/MenuData";
 import {GuestRouter, UserRouter, MentiRouter, MentoRouter, AdminRouter} from ".";
+import {MenuProfileContainer} from "../container";
 
 const drawerWidth = 240;
 
@@ -190,6 +191,9 @@ class ApplicationRouter extends Component{
                     </IconButton>
                 </div>
                 <Divider />
+                {
+                    (principal !== null) ? <MenuProfileContainer /> : ''
+                }
                 <List>{noticeItems}</List>
                 <Divider />
                 {
@@ -313,9 +317,6 @@ class ApplicationRouter extends Component{
                                             </Link>
                                             <Link to="/account/profile/edit" style={{ textDecoration: 'none' }}>
                                                 <MenuItem onClick={this.handleClose}>프로필 설정</MenuItem>
-                                            </Link>
-                                            <Link to="/account/logout" style={{ textDecoration: 'none' }}>
-                                                <MenuItem onClick={this.handleClose}>로그아웃</MenuItem>
                                             </Link>
                                         </Menu>
                                     </div>

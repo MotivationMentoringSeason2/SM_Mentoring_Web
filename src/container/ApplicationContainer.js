@@ -18,7 +18,7 @@ const mapDispatchToProps = (dispatch) => {
                     localStorage.setItem('jwtToken', accessToken);
                     dispatch(userFetchPrincipalSuccess(response.payload))
                 }).catch((response) => {
-                    sessionStorage.removeItem('jwtToken');
+                    localStorage.removeItem('jwtToken');
                     dispatch(userFetchPrincipalFailure('사용자 로그인 유효 시간이 지났습니다. 유효 시간은 1시간 30분입니다.'));
                 });
         },
