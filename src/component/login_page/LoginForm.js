@@ -83,6 +83,12 @@ class LoginForm extends Component{
                         </Avatar>
                     </div>
                     <div>
+                        <h3>SKHU Mentoring 로그인</h3>
+                        <p>학생 아이디는 학번입니다.</p>
+                        <p>교 / 직원 아이디를 잃었다면 아이디 찾기 기능을 이용하시길 바랍니다.</p>
+                    </div>
+                    <br/>
+                    <div>
                         <Field name="identity" className={classes.textField} type="text" component={renderTextField} label="사용자 ID" placeholder="ID를 입력하세요." />
                     </div>
                     <br/>
