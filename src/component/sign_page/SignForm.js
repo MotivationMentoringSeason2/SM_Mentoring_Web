@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-import { reduxForm, Field } from 'redux-form';
+import { withRouter } from 'react-router-dom';
+import { reduxForm, Field, SubmissionError } from 'redux-form';
 import {renderTextField, renderRadioGroup, renderSelectField, renderCheckBox } from "../form_render";
 
 import PropTypes from 'prop-types';
@@ -14,6 +15,8 @@ import FormLabel from '@material-ui/core/FormLabel';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
+
+import {guestCreateAccount, guestCreateAccountSuccess, guestCreateAccountFailure} from "../../action/action_account";
 
 const RESOURCE_ROOT_URL = 'http://127.0.0.1:8081/AccountAPI/resource';
 
@@ -49,7 +52,7 @@ function validate(values){
         hasErrors = true;
     }
 
-    var emailExp = /[0-9a-zA-Z][_0-9a-zA-Z-]*@[_0-9a-zA-Z-]+(\.[_0-9a-zA-Z-]+){1,2}$/;
+    var emailExp = /[0-9a-zA-Z][_0-9a-zA-Z-]*@[_0-9a-zA-Z-]+(\.[_0-9a-zA-Z-]+){1,4}$/;
     if(!values.email || values.email.trim() === ''){
         errors.email = '이메일을 입력하세요.';
         hasErrors = true;
@@ -68,8 +71,20 @@ function validate(values){
         hasErrors = true;
     }
 
+    if(!values.gender){
+        errors.gender = '성별을 선택하세요.';
+        hasErrors = true;
+    }
+
+    if(values.type === 'STUDENT'){
+        if(!values.grade){
+            errors.grade = '학년을 선택하세요.';
+            hasErrors = true;
+        }
+    }
+
     if(values.type === 'STUDENT' || values.type === 'PROFESSOR')
-        if(!values.departmentId || values.departmentId === 0){
+        if(!values.departmentId || values.departmentId == 0){
             errors.departmentId = values.type ? '전공 학과를 선택하세요.' : '주 담당 학과를 선택하세요.';
             hasErrors = true;
         }
@@ -86,7 +101,15 @@ function validate(values){
             errors.officePhone = '사무실 전화번호를 입력하세요.';
             hasErrors = true;
         } else if(!values.officePhone.match(officePhoneExp)){
-            errors.officePlace = '전화 번호 형식을 확인하세요.';
+            errors.officePhone = '전화 번호 형식을 확인하세요.';
+            hasErrors = true;
+        }
+    }
+
+    if(values.type === 'EMPLOYEE'){
+        let selectDepts = Object.keys(values).filter(key => key.startsWith('muldept_', 0));
+        if(selectDepts.length === 0){
+            errors.muldept_1 = '담당 학과를 선택하세요.';
             hasErrors = true;
         }
     }
@@ -95,7 +118,64 @@ function validate(values){
 }
 
 const validateAndSubmitSign = (value, dispatch) => {
-    console.log(value);
+    let signForm = {};
+    let type = '';
+    let selectDepts = Object.keys(value).filter(key => key.startsWith('muldept_', 0));
+    switch(value.type){
+        case 'STUDENT' :
+            signForm = {
+                identity : value.identity,
+                password : value.main_password,
+                name : value.name,
+                email : value.email,
+                phone : value.phone,
+                grade : value.grade * 1,
+                gender : value.gender,
+                departmentId : value.departmentId * 1,
+                multiDepartments : selectDepts.length > 0 ? selectDepts.filter(key => value[key] && value.departmentId != key.replace(/[^0-9]/g, '')).map(key => key.replace(/[^0-9]/g, '') * 1) : []
+            };
+            type = 'student';
+            break;
+        case 'PROFESSOR' :
+            signForm = {
+                identity : value.identity,
+                password : value.main_password,
+                name : value.name,
+                email : value.email,
+                phone : value.phone,
+                gender : value.gender,
+                officePhone : value.officePhone,
+                officePlace : value.officePlace,
+                hasChairman : value.hasChairman === undefined ? false : value.hasChairman,
+                departmentId : value.departmentId * 1,
+                multiDepartments : selectDepts.length > 0 ? selectDepts.filter(key => value[key] && value.departmentId != key.replace(/[^0-9]/g, '')).map(key => key.replace(/[^0-9]/g, '') * 1) : []
+            }
+            type = 'professor';
+            break;
+        case 'EMPLOYEE' :
+            signForm = {
+                identity : value.identity,
+                password : value.main_password,
+                name : value.name,
+                email : value.email,
+                phone : value.phone,
+                gender : value.gender,
+                officePhone : value.officePhone,
+                officePlace : value.officePlace,
+                departments : selectDepts.length > 0 ? selectDepts.filter(key => value[key]).map(key => key.replace(/[^0-9]/g, '') * 1) : []
+            }
+            type = 'employee';
+            break;
+    }
+    return dispatch(guestCreateAccount(type, signForm)).then(
+        (response) => {
+            if(response.payload && response.payload.status !== 201){
+                dispatch(guestCreateAccountFailure(response.payload));
+                throw new SubmissionError(response.payload.data);
+            }
+            dispatch(guestCreateAccountSuccess(response.payload));
+        }
+    )
 }
 
 const styles = theme => ({
@@ -129,6 +209,7 @@ class SignForm extends Component {
 
     componentWillUnmount(){
         this.props.resetFetchDepartments();
+        this.props.resetCreateAccount();
     }
 
     handleChangeType(anotherType){
@@ -160,8 +241,19 @@ class SignForm extends Component {
         const { type, confirm } = this.state;
         const { classes, handleSubmit, signForm } = this.props;
         const { departments } = this.props.departmentList;
+        const { message, error } = this.props.signStatus;
+
+        if(message){
+            alert(message);
+            this.props.history.push("/login");
+        } else if(error){
+            alert(error);
+            this.props.history.push("/");
+        }
+
         this.props.change('type', type);
         this.props.change('confirm', confirm);
+
         return(
             <form onSubmit={handleSubmit(validateAndSubmitSign)} className={classes.form}>
                 <Grid align="center">
@@ -196,6 +288,7 @@ class SignForm extends Component {
                     <button type="button" className={`w3-button w3-round-large ${confirm ? 'w3-green' : 'w3-red'}`} onClick={() => this.handleClickConfirm()}>
                         { confirm ? '확인 되었습니다.' : '중복 확인' }
                     </button>
+                    <br/>
 
                     <div>
                         <Field name="main_password" className={classes.textField} type="password" component={renderTextField} label="사용자 비밀번호" placeholder="이용할 비밀번호를 입력하세요." />
@@ -251,6 +344,9 @@ class SignForm extends Component {
                                 control={<Radio color="secondary" />}
                                 label="여"
                             />
+                            <div className="w3-text-pink">
+                                <h7>{ signForm && signForm.syncErrors !== undefined ? signForm.syncErrors.gender : '' }</h7>
+                            </div>
                         </Field>
                     </div>
                     <br/>
@@ -299,6 +395,9 @@ class SignForm extends Component {
                                     label="4"
                                 />
                             </Field>
+                            <div className="w3-text-pink">
+                                <h7>{ signForm && signForm.syncErrors ? signForm.syncErrors.grade : '' }</h7>
+                            </div>
                             <br/>
                         </div> : ''
                     }
@@ -312,6 +411,9 @@ class SignForm extends Component {
                                 })
                                 .map(department => <Field key={`muldept${department.id}`} name={`muldept_${department.id}`} label={department.name} component={ renderCheckBox } />)
                         }
+                        <div className="w3-text-pink">
+                            <h7>{ signForm && signForm.syncErrors ? signForm.syncErrors.muldept_1 : '' }</h7>
+                        </div>
                     </div>
 
                     <div>
@@ -332,4 +434,4 @@ SignForm.propTypes = {
 export default reduxForm({
     form : 'signForm',
     validate
-})(withStyles(styles)(SignForm));
+})(withStyles(styles)(withRouter(SignForm)));

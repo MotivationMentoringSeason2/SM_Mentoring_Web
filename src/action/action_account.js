@@ -4,6 +4,11 @@ export const GUEST_LOGIN_PROCESS = 'GUEST_LOGIN_PROCESS';
 export const GUEST_LOGIN_SUCCESS = 'GUEST_LOGIN_SUCCESS';
 export const GUEST_LOGIN_FAILURE = 'GUEST_LOGIN_FAILURE';
 
+export const GUEST_CREATE_ACCOUNT = 'GUEST_CREATE_ACCOUNT';
+export const GUEST_CREATE_ACCOUNT_SUCCESS = 'GUEST_CREATE_ACCOUNT_SUCCESS';
+export const GUEST_CREATE_ACCOUNT_FAILURE = 'GUEST_CREATE_ACCOUNT_FAILURE';
+export const RESET_GUEST_CREATE_ACCOUNT = 'RESET_GUEST_CREATE_ACCOUNT';
+
 export const USER_FETCH_PRINCIPAL = 'USER_FETCH_PRINCIPAL';
 export const USER_FETCH_PRINCIPAL_SUCCESS = 'USER_FETCH_PRINCIPAL_SUCCESS';
 export const USER_FETCH_PRINCIPAL_FAILURE = 'USER_FETCH_PRINCIPAL_FAILURE';
@@ -45,6 +50,38 @@ export function guestLoginFailure(error){
     return {
         type : GUEST_LOGIN_FAILURE,
         payload : error
+    }
+}
+
+export function guestCreateAccount(type, formData){
+    const request = axios({
+        url : `${ROOT_URL}/guest/sign/${type}`,
+        data : formData,
+        method : 'post'
+    });
+    return {
+        type : GUEST_CREATE_ACCOUNT,
+        payload : request
+    }
+}
+
+export function guestCreateAccountSuccess(message){
+    return {
+        type : GUEST_CREATE_ACCOUNT_SUCCESS,
+        payload : message.data
+    }
+}
+
+export function guestCreateAccountFailure(error){
+    return {
+        type : GUEST_CREATE_ACCOUNT_FAILURE,
+        payload : error
+    }
+}
+
+export function resetGuestCreateAccount(){
+    return {
+        type : RESET_GUEST_CREATE_ACCOUNT
     }
 }
 
