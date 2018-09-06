@@ -15,6 +15,7 @@ import FormLabel from '@material-ui/core/FormLabel';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
+import CheckIcon from '@material-ui/icons/Check';
 
 import {guestCreateAccount, guestCreateAccountSuccess, guestCreateAccountFailure} from "../../action/action_account";
 
@@ -26,8 +27,11 @@ function validate(values){
 
     var pattern = /^[A-Za-z0-9]{6,12}$/;
 
-    if(!values.confirm){
+    if(values.confirm === null){
         errors.identity = '아이디 확인 진행 바랍니다.';
+        hasErrors = true;
+    } else if(values.confirm === false){
+        errors.identity = '이미 존재하는 아이디입니다.';
         hasErrors = true;
     }
 
@@ -186,7 +190,7 @@ const styles = theme => ({
     textField: {
         marginLeft: theme.spacing.unit,
         marginRight: theme.spacing.unit,
-        width: 300,
+        width: (window.innerWidth >= 450) ? 420 : 300,
     },
     avatar: {
         margin: theme.spacing.unit,
@@ -200,7 +204,7 @@ const styles = theme => ({
 class SignForm extends Component {
     constructor(props){
         super(props);
-        this.state = { type : 'STUDENT', confirm : false }
+        this.state = { type : 'STUDENT', confirm : null }
     }
 
     componentWillMount(){
@@ -215,7 +219,7 @@ class SignForm extends Component {
     handleChangeType(anotherType){
         this.setState({
             type : anotherType,
-            confirm : false
+            confirm : null
         });
         this.props.reset();
     }
@@ -228,7 +232,7 @@ class SignForm extends Component {
                     this.setState({
                         confirm : !response.data
                     });
-                });
+                }).catch(reason => this.setState({ confirm : null }));
             } else {
                 alert("아이디를 입력 해 주세요! 학생은 학번입니다.");
             }
@@ -285,8 +289,8 @@ class SignForm extends Component {
                     </div>
                     <br/>
 
-                    <button type="button" className={`w3-button w3-round-large ${confirm ? 'w3-green' : 'w3-red'}`} onClick={() => this.handleClickConfirm()}>
-                        { confirm ? '확인 되었습니다.' : '중복 확인' }
+                    <button type="button" className={`w3-button w3-round-large ${confirm === null ? 'w3-blue' : confirm ? 'w3-green' : 'w3-red'}`} onClick={() => this.handleClickConfirm()}>
+                        { confirm === null ? '중복 확인' : confirm ? '확인 되었습니다.' : '다시 시도' }
                     </button>
                     <br/>
 
@@ -415,10 +419,11 @@ class SignForm extends Component {
                             <h7>{ signForm && signForm.syncErrors ? signForm.syncErrors.muldept_1 : '' }</h7>
                         </div>
                     </div>
+                    <br/>
 
                     <div>
                         <Button variant="contained" type="submit" color="primary">
-                            가입 진행
+                            <CheckIcon className={classes.leftIcon} /> 가입 진행
                         </Button>
                     </div>
                 </Grid>

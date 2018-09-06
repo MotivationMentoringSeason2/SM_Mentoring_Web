@@ -208,7 +208,7 @@ class ApplicationRouter extends Component{
                         </div>
                 }
                 {
-                    (principal !== null && principal.type === 'STUDENT' && principal.studentType === 'NORMAL') ?
+                    (principal !== null && principal.type === 'STUDENT' && principal.studentStatus === 'NORMAL') ?
                         <div>
                             <List>{applicationItems}</List>
                             <Divider />
@@ -216,7 +216,7 @@ class ApplicationRouter extends Component{
                         : ''
                 }
                 {
-                    (principal !== null && ( principal.studentStatus === 'MENTI' || principal.studentType === 'CHAIRMAN_MENTI' )) ?
+                    (principal !== null && ( principal.studentStatus === 'MENTI' || principal.studentStatus === 'CHAIRMAN_MENTI' )) ?
                         <div>
                             <List>{mentiItems}</List>
                             <Divider />
@@ -224,7 +224,7 @@ class ApplicationRouter extends Component{
                         : ''
                 }
                 {
-                    (principal !== null && ( principal.studentStatus === 'MENTO' || principal.studentType === 'CHAIRMAN_MENTO' )) ?
+                    (principal !== null && ( principal.studentStatus === 'MENTO' || principal.studentStatus === 'CHAIRMAN_MENTO' )) ?
                         <div>
                             <List>{mentoItems}</List>
                             <Divider />
