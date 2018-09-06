@@ -4,6 +4,11 @@ export const GUEST_LOGIN_PROCESS = 'GUEST_LOGIN_PROCESS';
 export const GUEST_LOGIN_SUCCESS = 'GUEST_LOGIN_SUCCESS';
 export const GUEST_LOGIN_FAILURE = 'GUEST_LOGIN_FAILURE';
 
+export const GUEST_FIND_IDENTITY = 'GUEST_FIND_IDENTITY';
+export const GUEST_FIND_IDENTITY_SUCCESS = 'GUEST_FIND_IDENTITY_SUCCESS';
+export const GUEST_FIND_IDENTITY_FAILURE = 'GUEST_FIND_IDENTITY_FAILURE';
+export const RESET_GUEST_FIND_IDENTITY = 'RESET_GUEST_FIND_IDENTITY';
+
 export const GUEST_CREATE_ACCOUNT = 'GUEST_CREATE_ACCOUNT';
 export const GUEST_CREATE_ACCOUNT_SUCCESS = 'GUEST_CREATE_ACCOUNT_SUCCESS';
 export const GUEST_CREATE_ACCOUNT_FAILURE = 'GUEST_CREATE_ACCOUNT_FAILURE';
@@ -52,6 +57,39 @@ export function guestLoginFailure(error){
         payload : error
     }
 }
+
+export function guestFindIdentity(findForm){
+    const request = axios({
+        url : `${ROOT_URL}/guest/account/identity`,
+        data : findForm,
+        method : 'get'
+    });
+    return {
+        type : GUEST_FIND_IDENTITY,
+        payload : request
+    }
+}
+
+export function guestFindIdentitySuccess(message){
+    return {
+        type : GUEST_FIND_IDENTITY_SUCCESS,
+        payload : message.data
+    }
+}
+
+export function guestFindIdentityFailure(error){
+    return {
+        type : GUEST_FIND_IDENTITY_FAILURE,
+        payload : error
+    }
+}
+
+export function resetGuestFindIdentity(){
+    return {
+        type : RESET_GUEST_FIND_IDENTITY
+    }
+}
+
 
 export function guestCreateAccount(type, formData){
     const request = axios({
