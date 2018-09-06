@@ -11,7 +11,7 @@ const FooterContext = () => (
         <div className="w3-threequarter w3-left-align">
             <h6>08359 서울시 구로구 연동로 320 / 지하철 1, 7호선 온수역(성공회대입구역)</h6>
             <h6><PhoneIcon /> TEL : 02 - 2610 - 4114 &nbsp;&nbsp;|&nbsp;&nbsp; <PrintIcon /> FAX : 02 - 2683 - 8858</h6>
-            <h7>COPYRIGHT (C) 2018 SUNGKONGHOE UNIVERSITY. SOFTWARE ENGINEERING DEPT. ALL RIGHTS RESERVED.</h7>
+            <h7>COPYRIGHT (C) 2017-{new Date().getFullYear()} SUNGKONGHOE UNIVERSITY. SOFTWARE ENGINEERING DEPT. ALL RIGHTS RESERVED.</h7>
         </div>
     </div>
 );

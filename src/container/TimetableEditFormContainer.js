@@ -7,14 +7,15 @@ import {
 function mapStateToProps(state){
     const {timetables} = state.timetable.singleTimetable;
     let timetableSettings = {
-        monAvailable : timetables.filter(timetable => timetable.day === 'MON').length > 0 ? timetables.filter(timetable => timetable.day === 'MON') : [{}],
-        tueAvailable : timetables.filter(timetable => timetable.day === 'TUE').length > 0 ? timetables.filter(timetable => timetable.day === 'TUE') : [{}],
-        wedAvailable : timetables.filter(timetable => timetable.day === 'WED').length > 0 ? timetables.filter(timetable => timetable.day === 'WED') : [{}],
-        thuAvailable : timetables.filter(timetable => timetable.day === 'THU').length > 0 ? timetables.filter(timetable => timetable.day === 'THU') : [{}],
-        friAvailable : timetables.filter(timetable => timetable.day === 'FRI').length > 0 ? timetables.filter(timetable => timetable.day === 'FRI') : [{}],
+        monAvailable : timetables.filter(timetable => timetable.day === 'MON').map(timetable => ({ startTime : timetable.startTime, endTime : timetable.endTime })),
+        tueAvailable : timetables.filter(timetable => timetable.day === 'TUE').map(timetable => ({ startTime : timetable.startTime, endTime : timetable.endTime })),
+        wedAvailable : timetables.filter(timetable => timetable.day === 'WED').map(timetable => ({ startTime : timetable.startTime, endTime : timetable.endTime })),
+        thuAvailable : timetables.filter(timetable => timetable.day === 'THU').map(timetable => ({ startTime : timetable.startTime, endTime : timetable.endTime })),
+        friAvailable : timetables.filter(timetable => timetable.day === 'FRI').map(timetable => ({ startTime : timetable.startTime, endTime : timetable.endTime }))
     };
     return {
-        initialValues : timetableSettings
+        initialValues : timetableSettings,
+        timetableForm : state.form.timetableForm
     }
 }
 
