@@ -297,11 +297,11 @@ class ApplicationRouter extends Component{
                                             anchorEl={anchor}
                                             anchorOrigin={{
                                                 vertical: 'top',
-                                                horizontal: 'right',
+                                                horizontal: 'left',
                                             }}
                                             transformOrigin={{
                                                 vertical: 'top',
-                                                horizontal: 'right',
+                                                horizontal: 'left',
                                             }}
                                             open={accountOpen}
                                             onClose={this.handleClose}
@@ -313,7 +313,7 @@ class ApplicationRouter extends Component{
                                                 <MenuItem onClick={this.handleClose}>비밀번호 변경</MenuItem>
                                             </Link>
                                             <Link to="/account/timetable/edit" style={{ textDecoration: 'none' }}>
-                                                <MenuItem onClick={this.handleClose}>시간표 조율 설정</MenuItem>
+                                                <MenuItem onClick={this.handleClose}>{principal.type === 'STUDENT' ? '멘토링 가능한 시간 설정' : '멘토링 상담 가능 시간 설정'}</MenuItem>
                                             </Link>
                                             <Link to="/account/profile/edit" style={{ textDecoration: 'none' }}>
                                                 <MenuItem onClick={this.handleClose}>프로필 설정</MenuItem>

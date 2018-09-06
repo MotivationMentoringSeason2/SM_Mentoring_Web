@@ -9,12 +9,12 @@ import ScrollToTop from "./ScrollToTop";
 const GuestRouter = () => (
     <div>
         <ScrollToTop>
-                <Route exact path="/account/logout" render={() => <Redirect to="/" />} />
-                <Route exact path="/" component={IndexPage} />
-                <Route exact path="/login" component={LoginPage} />
-                <Route exact path="/account/identity" component={FindIdentityPage} />
-                <Route exact path="/sign" component={SignPage} />
-                <Route path="/notice/list" render={() => <div>공지사항</div>} />
+            <Route exact path="/account/logout" render={() => <Redirect to="/" />} />
+            <Route exact path="/" component={IndexPage} />
+            <Route exact path="/login" component={LoginPage} />
+            <Route exact path="/account/identity" component={FindIdentityPage} />
+            <Route exact path="/sign" component={SignPage} />
+            <Route path="/notice/list" render={() => <div>공지사항</div>} />
         </ScrollToTop>
     </div>
 );
