@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 
+import { withRouter } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Avatar from '@material-ui/core/Avatar';
@@ -10,9 +11,9 @@ import CheckIcon from '@material-ui/icons/Check';
 
 import EventAvailableIcon from '@material-ui/icons/EventAvailable';
 
-import {reduxForm, FieldArray} from "redux-form";
+import {reduxForm, FieldArray, SubmissionError} from "redux-form";
 import {renderTimetable} from "../form_render";
-
+import {executeAccountSaveTimetable, executeAccountSaveTimetableSuccess, executeAccountSaveTimetableFailure} from "../../action/action_available_time";
 
 function validate(values){
     var errors = {};
@@ -55,9 +56,13 @@ function validate(values){
                     errors[dayKey] = `${j + 1} 번째 종료 시간 단위는 15분으로 입력하세요.`;
                     hasErrors = true;
                     break;
-                }else {
+                } else {
                     if (moment(dayArray[j].endTime, "HH:mm").isAfter(moment("21:00", "HH:mm"))) {
                         errors[dayKey] = `${j + 1} 번째 시작 시간을 21시 이전으로 입력하세요.`;
+                        hasErrors = true;
+                        break;
+                    } else if(moment(dayArray[j].endTime, "HH:mm").isSame(moment(dayArray[j].startTime, "HH:mm")) || moment(dayArray[j].endTime, "HH:mm").isBefore(moment(dayArray[j].startTime, "HH:mm"))){
+                        errors[dayKey] = `${j + 1} 번째 시작 시간과 종료 시간의 범위가 유효하지 않습니다.`;
                         hasErrors = true;
                         break;
                     } else {
@@ -94,8 +99,49 @@ function validate(values){
     return hasErrors && errors;
 }
 
+const fields = ['monAvailable', 'tueAvailable', 'wedAvailable', 'thuAvailable', 'friAvailable']
+
 const validateAndSubmitTimetable = (value, dispatch) => {
-    console.log(value);
+    let accessToken = localStorage.getItem('jwtToken');
+    if(!accessToken || accessToken === '') return;
+    let selectedFields = fields.filter(key => value[key].length > 0);
+    let saveForm = [];
+    for(var i=0;i<selectedFields.length;i++){
+        var day;
+        switch(selectedFields[i]){
+            case 'monAvailable' :
+                day = 'MON';
+                break;
+            case 'tueAvailable' :
+                day = 'TUE';
+                break;
+            case 'wedAvailable' :
+                day = 'WED';
+                break;
+            case 'thuAvailable' :
+                day = 'THU';
+                break;
+            case 'friAvailable' :
+                day = 'FRI';
+                break;
+        }
+        let timeArrays = value[selectedFields[i]];
+        for(var k=0;k<timeArrays.length;k++){
+            saveForm.push({
+                day : day,
+                startTime : timeArrays[k].startTime,
+                endTime : timeArrays[k].endTime
+            })
+        }
+    }
+
+    return dispatch(executeAccountSaveTimetable(accessToken, saveForm)).then(response => {
+        if(response.payload && response.payload.status !== 200){
+            dispatch(executeAccountSaveTimetableFailure(response.payload));
+            throw new SubmissionError(response.payload.data);
+        }
+        dispatch(executeAccountSaveTimetableSuccess(response.payload));
+    })
 }
 
 const styles = theme => ({
@@ -123,12 +169,23 @@ class TimetableEditForm extends Component{
     }
 
     componentWillUnmount(){
+        this.props.resetSaveStatus();
         this.props.resetFetchCurrentTimetables();
     }
 
     render(){
         const { classes, handleSubmit } = this.props;
         const { timetableForm } = this.props;
+        const { message, error } = this.props.saveStatus;
+
+        if(message){
+            alert(message);
+            this.props.history.push("/");
+        } else if(error){
+            alert(error);
+            this.props.history.push("/");
+        }
+
         return (
             <form onSubmit={handleSubmit(validateAndSubmitTimetable)} className={classes.form}>
                 <Grid align="center">
@@ -155,7 +212,7 @@ class TimetableEditForm extends Component{
                         timetableForm && timetableForm.syncErrors ?
                             <div className="w3-text-pink">
                                 <h7>{ timetableForm && timetableForm.syncErrors ? timetableForm.syncErrors.monAvailable : '' }</h7>
-                                <br/>
+                                <br/><br/>
                             </div>
                             : ''
                     }
@@ -170,7 +227,7 @@ class TimetableEditForm extends Component{
                         timetableForm && timetableForm.syncErrors ?
                             <div className="w3-text-pink">
                                 <h7>{ timetableForm && timetableForm.syncErrors ? timetableForm.syncErrors.tueAvailable : '' }</h7>
-                                <br/>
+                                <br/><br/>
                             </div>
                             : ''
                     }
@@ -185,7 +242,7 @@ class TimetableEditForm extends Component{
                         timetableForm && timetableForm.syncErrors ?
                             <div className="w3-text-pink">
                                 <h7>{ timetableForm && timetableForm.syncErrors ? timetableForm.syncErrors.wedAvailable : '' }</h7>
-                                <br/>
+                                <br/><br/>
                             </div>
                             : ''
                     }
@@ -200,7 +257,7 @@ class TimetableEditForm extends Component{
                         timetableForm && timetableForm.syncErrors ?
                             <div className="w3-text-pink">
                                 <h7>{ timetableForm && timetableForm.syncErrors ? timetableForm.syncErrors.thuAvailable : '' }</h7>
-                                <br/>
+                                <br/><br/>
                             </div>
                             : ''
                     }
@@ -215,7 +272,7 @@ class TimetableEditForm extends Component{
                         timetableForm && timetableForm.syncErrors ?
                             <div className="w3-text-pink">
                                 <h7>{ timetableForm && timetableForm.syncErrors ? timetableForm.syncErrors.friAvailable : '' }</h7>
-                                <br/>
+                                <br/><br/>
                             </div>
                             : ''
                     }
@@ -225,6 +282,7 @@ class TimetableEditForm extends Component{
                         timetableForm && timetableForm.syncErrors ?
                             <div className="w3-text-pink">
                                 <h7>{ timetableForm && timetableForm.syncErrors ? timetableForm.syncErrors.totalMessage : '' }</h7>
+                                <br/><br/>
                             </div>
                             :
                             <div>
@@ -247,4 +305,4 @@ export default reduxForm({
     form : 'timetableForm',
     enableReinitialize : true,
     validate
-})(withStyles(styles)(TimetableEditForm));
+})(withStyles(styles)(withRouter(TimetableEditForm)));

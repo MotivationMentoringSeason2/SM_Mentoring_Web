@@ -1,7 +1,7 @@
 import {TimetableEditForm} from "../component/timetable_edit_page";
 import {connect} from 'react-redux';
 import {
-    fetchAccountTimetable, fetchAccountTimetableSuccess, fetchAccountTimetableFailure, resetFetchAccountTimetable
+    fetchAccountTimetable, fetchAccountTimetableSuccess, fetchAccountTimetableFailure, resetFetchAccountTimetable, resetExecuteAccountSaveTimetable
 } from "../action/action_available_time";
 
 function mapStateToProps(state){
@@ -15,7 +15,8 @@ function mapStateToProps(state){
     };
     return {
         initialValues : timetableSettings,
-        timetableForm : state.form.timetableForm
+        timetableForm : state.form.timetableForm,
+        saveStatus : state.timetable.saveStatus
     }
 }
 
@@ -32,7 +33,8 @@ const mapDispatchToProps = (dispatch) => {
                 }
             })
         },
-        resetFetchCurrentTimetables : () => dispatch(resetFetchAccountTimetable())
+        resetFetchCurrentTimetables : () => dispatch(resetFetchAccountTimetable()),
+        resetSaveStatus : () => dispatch(resetExecuteAccountSaveTimetable())
     }
 }
 
