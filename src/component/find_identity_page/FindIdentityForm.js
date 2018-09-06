@@ -1,5 +1,8 @@
 import React, {Component} from 'react';
 import {renderTextField} from "../form_render";
+import {
+    guestFindIdentity, guestFindIdentitySuccess, guestFindIdentityFailure
+} from "../../action/action_account";
 
 import {reduxForm, Field, SubmissionError} from 'redux-form';
 import PropTypes from 'prop-types';
@@ -11,6 +14,8 @@ import { withStyles } from '@material-ui/core/styles';
 
 import CheckIcon from '@material-ui/icons/Check';
 import FindIcon from '@material-ui/icons/FindInPage';
+import DoneOutlineIcon from '@material-ui/icons/DoneOutline';
+import ReportProblemIcon from '@material-ui/icons/ReportProblem';
 
 function validate(values){
     var errors = {};
@@ -50,7 +55,7 @@ const styles = theme => ({
     textField: {
         marginLeft: theme.spacing.unit,
         marginRight: theme.spacing.unit,
-        width: 300,
+        width: (window.innerWidth >= 450) ? 420 : 300,
     },
     avatar: {
         margin: theme.spacing.unit,
@@ -63,11 +68,38 @@ const styles = theme => ({
 
 const validateAndFindIdentity = (values, dispatch) => {
     console.log(values);
+    return dispatch(guestFindIdentity(values)).then((response) => {
+        if(response.payload && response.payload.status !== 200){
+            dispatch(guestFindIdentityFailure(response.payload));
+            throw new SubmissionError(response.payload.data);
+        }
+        dispatch(guestFindIdentitySuccess(response.payload));
+    })
 }
 
 class FindIdentityForm extends Component {
+    componentWillUnmount(){
+        this.props.resetFindIdentity();
+    }
     render(){
+        let findResult;
         const {classes, handleSubmit} = this.props;
+        const { message, error } = this.props.findStatus;
+        if(message){
+            findResult = (
+                <div className="w3-panel w3-card-4 w3-pale-green w3-round-large" style={{ width : window.innerWidth >= 450 ? '60%' : '90%' }}>
+                    { (window.innerWidth >= 450) ? <h3><DoneOutlineIcon /> 회원 아이디 조회를 성공하였습니다.</h3> : <h4><DoneOutlineIcon /> 회원 아이디 조회를 성공하였습니다.</h4> }
+                    <p>{message}</p>
+                </div>
+            );
+        } else if(error){
+            findResult = (
+                <div className="w3-panel w3-card-4 w3-pale-red w3-round-large" style={{ width : window.innerWidth >= 450 ? '60%' : '90%' }}>
+                    { (window.innerWidth >= 450) ? <h3><ReportProblemIcon /> 회원 아이디 조회에 문제 발생!</h3> : <h4><ReportProblemIcon /> 회원 아이디 조회에 문제 발생!</h4> }
+                    <p>{error}</p>
+                </div>
+            )
+        }
         return(
             <form onSubmit={handleSubmit(validateAndFindIdentity)} className={classes.form}>
                 <Grid align="center">
@@ -100,6 +132,8 @@ class FindIdentityForm extends Component {
                             <CheckIcon className={classes.leftIcon} /> 조회하기
                         </Button>
                     </div>
+                    <br/>
+                    {findResult}
                 </Grid>
             </form>
         )
@@ -111,5 +145,6 @@ FindIdentityForm.propTypes = {
 };
 
 export default reduxForm({
-    form : 'findIdentityForm'
+    form : 'identityFindForm',
+    validate
 })(withStyles(styles)(FindIdentityForm));

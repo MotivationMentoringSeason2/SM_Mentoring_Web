@@ -62,7 +62,7 @@ export function guestFindIdentity(findForm){
     const request = axios({
         url : `${ROOT_URL}/guest/account/identity`,
         data : findForm,
-        method : 'get'
+        method : 'post'
     });
     return {
         type : GUEST_FIND_IDENTITY,

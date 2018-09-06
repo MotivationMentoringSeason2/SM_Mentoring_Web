@@ -48,7 +48,7 @@ const styles = theme => ({
     textField: {
         marginLeft: theme.spacing.unit,
         marginRight: theme.spacing.unit,
-        width: 300,
+        width: (window.innerWidth >= 450) ? 420 : 300,
     },
     avatar: {
         margin: theme.spacing.unit,
@@ -60,6 +60,9 @@ const styles = theme => ({
 });
 
 class LoginForm extends Component{
+    componentWillUmmount(){
+        this.props.resetLoginStatus();
+    }
     render(){
         const { handleSubmit, classes } = this.props;
         const { loading, error } = this.props.accessAccount;
@@ -69,8 +72,9 @@ class LoginForm extends Component{
         }
         if(error){
             loginResult =
-                <div className="w3-panel w3-pale-red w3-round-large">
-                    <h3><ReportProblemIcon /> {error}</h3>
+                <div className="w3-card-4 w3-panel w3-pale-red w3-round-large" style={{ width : window.innerWidth >= 450 ? '60%' : '90%' }}>
+                    { (window.innerWidth >= 450) ? <h3><ReportProblemIcon /> 로그인 중 문제 발생</h3> : <h4><ReportProblemIcon /> 로그인 중 문제 발생</h4> }
+                    <p>{error}</p>
                 </div>
         }
         return(
