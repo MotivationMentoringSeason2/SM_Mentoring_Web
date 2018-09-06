@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import {Link, BrowserRouter} from 'react-router-dom';
+import {Link, BrowserRouter as Router} from 'react-router-dom';
 
 import {withStyles} from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -251,7 +251,7 @@ class ApplicationRouter extends Component{
         );
 
         return(
-            <BrowserRouter>
+            <Router onChange={() => window.scrollTo(0, 0)}>
                 <div className={classes.root}>
                     <div className={classes.appFrame}>
                         <AppBar
@@ -339,7 +339,7 @@ class ApplicationRouter extends Component{
                         </main>
                     </div>
                 </div>
-            </BrowserRouter>
+            </Router>
         );
     }
 }
