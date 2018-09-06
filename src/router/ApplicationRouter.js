@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import {Link, BrowserRouter} from 'react-router-dom';
+import {Link, BrowserRouter as Router} from 'react-router-dom';
 
 import {withStyles} from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -251,7 +251,7 @@ class ApplicationRouter extends Component{
         );
 
         return(
-            <BrowserRouter>
+            <Router onChange={() => window.scrollTo(0, 0)}>
                 <div className={classes.root}>
                     <div className={classes.appFrame}>
                         <AppBar
@@ -297,11 +297,11 @@ class ApplicationRouter extends Component{
                                             anchorEl={anchor}
                                             anchorOrigin={{
                                                 vertical: 'top',
-                                                horizontal: 'right',
+                                                horizontal: 'left',
                                             }}
                                             transformOrigin={{
                                                 vertical: 'top',
-                                                horizontal: 'right',
+                                                horizontal: 'left',
                                             }}
                                             open={accountOpen}
                                             onClose={this.handleClose}
@@ -313,7 +313,7 @@ class ApplicationRouter extends Component{
                                                 <MenuItem onClick={this.handleClose}>비밀번호 변경</MenuItem>
                                             </Link>
                                             <Link to="/account/timetable/edit" style={{ textDecoration: 'none' }}>
-                                                <MenuItem onClick={this.handleClose}>시간표 조율 설정</MenuItem>
+                                                <MenuItem onClick={this.handleClose}>{principal.type === 'STUDENT' ? '멘토링 가능한 시간 설정' : '멘토링 상담 가능 시간 설정'}</MenuItem>
                                             </Link>
                                             <Link to="/account/profile/edit" style={{ textDecoration: 'none' }}>
                                                 <MenuItem onClick={this.handleClose}>프로필 설정</MenuItem>
@@ -339,7 +339,7 @@ class ApplicationRouter extends Component{
                         </main>
                     </div>
                 </div>
-            </BrowserRouter>
+            </Router>
         );
     }
 }

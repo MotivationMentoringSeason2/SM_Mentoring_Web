@@ -4,3 +4,4 @@ export {default as UserRouter} from './UserRouter';
 export {default as MentiRouter} from './MentiRouter';
 export {default as MentoRouter} from './MentoRouter';
 export {default as AdminRouter} from './AdminRouter';
+export {default as ScrollToTop} from './ScrollToTop';
