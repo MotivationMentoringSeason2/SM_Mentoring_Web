@@ -4,6 +4,7 @@ import {
     GUEST_CREATE_ACCOUNT, GUEST_CREATE_ACCOUNT_SUCCESS, GUEST_CREATE_ACCOUNT_FAILURE, RESET_GUEST_CREATE_ACCOUNT,
     USER_FETCH_PRINCIPAL, USER_FETCH_PRINCIPAL_SUCCESS, USER_FETCH_PRINCIPAL_FAILURE, RESET_USER_FETCH_PRINCIPAL,
     USER_FETCH_SIGN_FORM, USER_FETCH_SIGN_FORM_SUCCESS, USER_FETCH_SIGN_FORM_FAILURE, RESET_USER_FETCH_SIGN_FORM,
+    USER_UPDATE_SIGN_FORM, USER_UPDATE_SIGN_FORM_SUCCESS, USER_UPDATE_SIGN_FORM_FAILURE, RESET_USER_UPDATE_SIGN_FORM,
     USER_LOGOUT_PROCESS
 } from "../action/action_account";
 
@@ -49,13 +50,17 @@ export default function(state = INITIAL_STATE, action){
             return { ...state, findStatus : { message : null, loading : false, error : null }};
 
         case GUEST_CREATE_ACCOUNT :
+        case USER_UPDATE_SIGN_FORM :
             return { ...state, signStatus : { message : null, loading : true, error : null }};
         case GUEST_CREATE_ACCOUNT_SUCCESS :
+        case USER_UPDATE_SIGN_FORM_SUCCESS :
             return { ...state, signStatus : { message : action.payload, loading : false, error : null }};
         case GUEST_CREATE_ACCOUNT_FAILURE :
+        case USER_UPDATE_SIGN_FORM_FAILURE :
             error = action.payload || { message : action.payload };
             return { ...state, signStatus : { message : null, loading : false, error : error }};
         case RESET_GUEST_CREATE_ACCOUNT :
+        case RESET_USER_UPDATE_SIGN_FORM :
             return { ...state, signStatus : { message : null, loading : false, error : null }};
 
         case USER_FETCH_PRINCIPAL :

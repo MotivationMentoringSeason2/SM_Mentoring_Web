@@ -1,7 +1,8 @@
 import {SignUpdateForm} from "../component/sign_update_page";
 import {connect} from 'react-redux';
 import {
-    userFetchSignForm, userFetchSignFormSuccess, userFetchSignFormFailure, resetUserFetchSignForm
+    userFetchSignForm, userFetchSignFormSuccess, userFetchSignFormFailure, resetUserFetchSignForm,
+    resetUserUpdateSignForm
 } from "../action/action_account";
 import {
     anybodyLoadDepartments, anybodyLoadDepartmentsFailure, anybodyLoadDepartmentsSuccess, resetAnybodyLoadDepartments
@@ -68,8 +69,9 @@ function mapStateToProps(state){
     return {
         initialValues : signModel,
         accessAccount : state.account.accessAccount,
-        signUpdateForm : state.form.signUpdateForm,
-        departmentList : state.department.departmentList
+        signStatus : state.account.signStatus,
+        departmentList : state.department.departmentList,
+        signUpdateForm : state.form.signUpdateForm
     }
 }
 
@@ -94,7 +96,8 @@ const mapDispatchToProps = (dispatch) => {
             })
         },
         resetFetchDepartments : () => dispatch(resetAnybodyLoadDepartments()),
-        resetFetchCurrentSignForm : () => dispatch(resetUserFetchSignForm())
+        resetFetchCurrentSignForm : () => dispatch(resetUserFetchSignForm()),
+        resetSaveStatus : () => dispatch(resetUserUpdateSignForm())
     }
 }
 

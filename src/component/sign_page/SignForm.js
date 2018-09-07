@@ -189,7 +189,7 @@ const validateAndSubmitSign = (value, dispatch) => {
         }
     ).catch(reason => {
         dispatch(guestCreateAccountFailure("회원의 이름과 이메일이 중복된 회원이 있거나 서버 측에서 회원 가입 오류입니다. 다시 시도 바랍니다."));
-    })
+    });
 }
 
 const styles = theme => ({

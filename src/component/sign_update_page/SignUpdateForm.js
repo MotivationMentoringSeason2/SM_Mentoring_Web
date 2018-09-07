@@ -3,6 +3,9 @@ import axios from 'axios';
 import { withRouter } from 'react-router-dom';
 import { reduxForm, Field, SubmissionError } from 'redux-form';
 import {renderTextField, renderRadioGroup, renderSelectField, renderCheckBox } from "../form_render";
+import {
+    userUpdateSignForm, userUpdateSignFormSuccess, userUpdateSignFormFailure
+} from "../../action/action_account";
 
 import PropTypes from 'prop-types';
 
@@ -115,6 +118,8 @@ function validate(values){
 }
 
 const validateAndSubmitSign = (value, dispatch) => {
+    let accessToken = localStorage.getItem('jwtToken');
+    if(!accessToken || accessToken === '') return;
     let signForm = {};
     let type = '';
     let selectDepts = Object.keys(value).filter(key => key.startsWith('muldept_', 0));
@@ -164,7 +169,17 @@ const validateAndSubmitSign = (value, dispatch) => {
             type = 'employee';
             break;
     }
-    console.log(signForm);
+    return dispatch(userUpdateSignForm(accessToken, type, signForm)).then(
+        (response) => {
+            if(response.payload && response.payload.status !== 200){
+                dispatch(userUpdateSignFormFailure(response.payload));
+                throw new SubmissionError(response.payload.data);
+            }
+            dispatch(userUpdateSignFormSuccess(response.payload));
+        }
+    ).catch(reason => {
+        dispatch(userUpdateSignFormFailure("회원의 이름과 이메일이 중복된 회원이 있거나 서버 측에서 회원 가입 오류입니다. 다시 시도 바랍니다."));
+    });
 }
 
 const styles = theme => ({
@@ -201,6 +216,7 @@ class SignUpdateForm extends Component {
     componentWillUnmount(){
         this.props.resetFetchDepartments();
         this.props.resetFetchCurrentSignForm();
+        this.props.resetSaveStatus();
     }
 
     handleClickPasswordConfirm(){
@@ -233,12 +249,11 @@ class SignUpdateForm extends Component {
         const { classes, handleSubmit, signUpdateForm } = this.props;
         const { departments } = this.props.departmentList;
         const { principal } = this.props.accessAccount;
-        // const { message, error } = this.props.signStatus;
+        const { message, error } = this.props.signStatus;
 
         this.props.change('type', principal && principal.type);
         this.props.change('confirm', confirm);
 
-        /*
         if(message){
             alert(message);
             this.props.history.push("/");
@@ -246,7 +261,6 @@ class SignUpdateForm extends Component {
             alert(error);
             this.props.history.push("/");
         }
-        */
 
         return(
             <form onSubmit={handleSubmit(validateAndSubmitSign)} className={classes.form}>

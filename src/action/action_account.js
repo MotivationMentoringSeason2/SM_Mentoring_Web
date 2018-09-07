@@ -25,6 +25,11 @@ export const USER_FETCH_SIGN_FORM_SUCCESS = 'USER_FETCH_SIGN_FORM_SUCCESS';
 export const USER_FETCH_SIGN_FORM_FAILURE = 'USER_FETCH_SIGN_FORM_FAILURE';
 export const RESET_USER_FETCH_SIGN_FORM = 'RESET_USER_FETCH_SIGN_FORM';
 
+export const USER_UPDATE_SIGN_FORM = 'USER_UPDATE_SIGN_FORM';
+export const USER_UPDATE_SIGN_FORM_SUCCESS = 'USER_UPDATE_SIGN_FORM_SUCCESS';
+export const USER_UPDATE_SIGN_FORM_FAILURE = 'USER_UPDATE_SIGN_FORM_FAILURE';
+export const RESET_USER_UPDATE_SIGN_FORM = 'RESET_USER_UPDATE_SIGN_FORM';
+
 export const USER_LOGOUT_PROCESS = 'USER_LOGOUT_PROCESS';
 
 const ROOT_URL = 'http://127.0.0.1:8081/AccountAPI';
@@ -201,6 +206,42 @@ export function userFetchSignFormFailure(error){
 export function resetUserFetchSignForm(){
     return {
         type : RESET_USER_FETCH_SIGN_FORM
+    }
+}
+
+export function userUpdateSignForm(userToken, type, signForm){
+    const request = axios({
+        url : `${ROOT_URL}/common/sign_form/${type}`,
+        method : 'put',
+        data : signForm,
+        headers :
+            {
+                'Authorization' : `Bearer ${userToken}`
+            }
+    });
+    return {
+        type : USER_UPDATE_SIGN_FORM,
+        payload : request
+    }
+}
+
+export function userUpdateSignFormSuccess(message){
+    return {
+        type : USER_UPDATE_SIGN_FORM_SUCCESS,
+        payload : message.data
+    }
+}
+
+export function userUpdateSignFormFailure(error){
+    return {
+        type : USER_UPDATE_SIGN_FORM_FAILURE,
+        payload : error
+    }
+}
+
+export function resetUserUpdateSignForm(){
+    return {
+        type : RESET_USER_UPDATE_SIGN_FORM
     }
 }
 
