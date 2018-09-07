@@ -20,6 +20,11 @@ export const USER_FETCH_PRINCIPAL_SUCCESS = 'USER_FETCH_PRINCIPAL_SUCCESS';
 export const USER_FETCH_PRINCIPAL_FAILURE = 'USER_FETCH_PRINCIPAL_FAILURE';
 export const RESET_USER_FETCH_PRINCIPAL = 'RESET_USER_FETCH_PRINCIPAL';
 
+export const USER_FETCH_SIGN_FORM = 'USER_FETCH_SIGN_FORM';
+export const USER_FETCH_SIGN_FORM_SUCCESS = 'USER_FETCH_SIGN_FORM_SUCCESS';
+export const USER_FETCH_SIGN_FORM_FAILURE = 'USER_FETCH_SIGN_FORM_FAILURE';
+export const RESET_USER_FETCH_SIGN_FORM = 'RESET_USER_FETCH_SIGN_FORM';
+
 export const USER_LOGOUT_PROCESS = 'USER_LOGOUT_PROCESS';
 
 const ROOT_URL = 'http://127.0.0.1:8081/AccountAPI';
@@ -165,9 +170,8 @@ export function resetUserFetchPrincipal(){
     }
 }
 
-export function userLogoutProcess(userToken){
-    localStorage.removeItem('jwtToken');
-    const request = axios.delete(`${ROOT_URL}/common/logout`, {
+export function userFetchSignForm(userToken, type){
+    const request = axios.get(`${ROOT_URL}/common/sign_form/${type}`, {
         headers:
             {
                 'Authorization': `Bearer ${userToken}`
@@ -175,8 +179,42 @@ export function userLogoutProcess(userToken){
         }
     );
     return {
-        type : USER_LOGOUT_PROCESS,
+        type : USER_FETCH_SIGN_FORM,
         payload : request
     }
 }
 
+export function userFetchSignFormSuccess(signForm){
+    return {
+        type : USER_FETCH_SIGN_FORM_SUCCESS,
+        payload : signForm.data
+    }
+}
+
+export function userFetchSignFormFailure(error){
+    return {
+        type : USER_FETCH_SIGN_FORM_FAILURE,
+        payload : error
+    }
+}
+
+export function resetUserFetchSignForm(){
+    return {
+        type : RESET_USER_FETCH_SIGN_FORM
+    }
+}
+
+export function userLogoutProcess(userToken){
+    localStorage.removeItem('jwtToken');
+    const request = axios.delete(`${ROOT_URL}/common/logout`, {
+            headers:
+                {
+                    'Authorization': `Bearer ${userToken}`
+                }
+        }
+    );
+    return {
+        type : USER_LOGOUT_PROCESS,
+        payload : request
+    }
+}

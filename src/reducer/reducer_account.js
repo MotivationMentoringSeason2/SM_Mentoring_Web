@@ -3,12 +3,16 @@ import {
     GUEST_FIND_IDENTITY, GUEST_FIND_IDENTITY_SUCCESS, GUEST_FIND_IDENTITY_FAILURE, RESET_GUEST_FIND_IDENTITY,
     GUEST_CREATE_ACCOUNT, GUEST_CREATE_ACCOUNT_SUCCESS, GUEST_CREATE_ACCOUNT_FAILURE, RESET_GUEST_CREATE_ACCOUNT,
     USER_FETCH_PRINCIPAL, USER_FETCH_PRINCIPAL_SUCCESS, USER_FETCH_PRINCIPAL_FAILURE, RESET_USER_FETCH_PRINCIPAL,
+    USER_FETCH_SIGN_FORM, USER_FETCH_SIGN_FORM_SUCCESS, USER_FETCH_SIGN_FORM_FAILURE, RESET_USER_FETCH_SIGN_FORM,
     USER_LOGOUT_PROCESS
 } from "../action/action_account";
 
 const INITIAL_STATE = {
     accessAccount : {
         principal : null, loading : false, error : null
+    },
+    accessSignForm : {
+        model : null, loading : false, error : null
     },
     findStatus : {
         message : null, loading : false, error : null
@@ -49,7 +53,7 @@ export default function(state = INITIAL_STATE, action){
         case GUEST_CREATE_ACCOUNT_SUCCESS :
             return { ...state, signStatus : { message : action.payload, loading : false, error : null }};
         case GUEST_CREATE_ACCOUNT_FAILURE :
-            error = action.payload.data || { message : action.payload };
+            error = action.payload || { message : action.payload };
             return { ...state, signStatus : { message : null, loading : false, error : error }};
         case RESET_GUEST_CREATE_ACCOUNT :
             return { ...state, signStatus : { message : null, loading : false, error : null }};
@@ -61,9 +65,19 @@ export default function(state = INITIAL_STATE, action){
         case USER_FETCH_PRINCIPAL_FAILURE :
             error = action.payload || { message : action.payload };
             return { ...state, accessAccount : { principal : null, loading : false, error : error }};
-        case USER_LOGOUT_PROCESS :
         case RESET_USER_FETCH_PRINCIPAL :
+        case USER_LOGOUT_PROCESS :
             return { ...state, accessAccount : { principal : null, loading : false, error : null }};
+
+        case USER_FETCH_SIGN_FORM :
+            return { ...state, accessSignForm : { model : null, loading : true, error : null }};
+        case USER_FETCH_SIGN_FORM_SUCCESS :
+            return { ...state, accessSignForm : { model : action.payload, loading : false, error : null }};
+        case USER_FETCH_SIGN_FORM_FAILURE :
+            error = action.payload || { message : action.payload };
+            return { ...state, accessSignForm : { model : null, loading : false, error : error }};
+        case RESET_USER_FETCH_SIGN_FORM :
+            return { ...state, accessSignForm : { model : null, loading : false, error : null }};
 
         default :
             return state;

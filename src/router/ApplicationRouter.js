@@ -173,6 +173,9 @@ class ApplicationRouter extends Component{
                         case 'CHAIRMAN_NORMAL' :
                             router = <AdminRouter />;
                             break;
+                        default :
+                            router = <UserRouter />
+                            break;
                     }
                     break;
                 default :
@@ -212,7 +215,7 @@ class ApplicationRouter extends Component{
                         </div>
                 }
                 {
-                    (principal !== null && principal.type === 'STUDENT' && principal.studentStatus === 'NORMAL') ?
+                    (principal !== null && principal.type === 'STUDENT' && (principal.studentStatus === 'NORMAL' || principal.studentStatus === 'CHAIRMAN_NORMAL')) ?
                         <div>
                             <List>{applicationItems}</List>
                             <Divider />
@@ -310,11 +313,8 @@ class ApplicationRouter extends Component{
                                             open={accountOpen}
                                             onClose={this.handleClose}
                                         >
-                                            <Link to="/account/info/edit" style={{ textDecoration: 'none' }}>
-                                                <MenuItem onClick={this.handleClose}>계정 정보 변경</MenuItem>
-                                            </Link>
-                                            <Link to="/account/info/password" style={{ textDecoration: 'none' }}>
-                                                <MenuItem onClick={this.handleClose}>비밀번호 변경</MenuItem>
+                                            <Link to="/account/sign/edit" style={{ textDecoration: 'none' }}>
+                                                <MenuItem onClick={this.handleClose}>회원 정보 변경</MenuItem>
                                             </Link>
                                             <Link to="/account/timetable/edit" style={{ textDecoration: 'none' }}>
                                                 <MenuItem onClick={this.handleClose}>{principal.type === 'STUDENT' ? '멘토링 가능한 시간 설정' : '멘토링 상담 가능 시간 설정'}</MenuItem>
