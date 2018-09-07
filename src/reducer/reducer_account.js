@@ -1,5 +1,5 @@
 import {
-    GUEST_LOGIN_PROCESS, GUEST_LOGIN_SUCCESS, GUEST_LOGIN_FAILURE,
+    GUEST_LOGIN_PROCESS, GUEST_LOGIN_SUCCESS, GUEST_LOGIN_FAILURE, RESET_GUEST_LOGIN,
     GUEST_FIND_IDENTITY, GUEST_FIND_IDENTITY_SUCCESS, GUEST_FIND_IDENTITY_FAILURE, RESET_GUEST_FIND_IDENTITY,
     GUEST_CREATE_ACCOUNT, GUEST_CREATE_ACCOUNT_SUCCESS, GUEST_CREATE_ACCOUNT_FAILURE, RESET_GUEST_CREATE_ACCOUNT,
     USER_FETCH_PRINCIPAL, USER_FETCH_PRINCIPAL_SUCCESS, USER_FETCH_PRINCIPAL_FAILURE, RESET_USER_FETCH_PRINCIPAL,
@@ -15,6 +15,9 @@ const INITIAL_STATE = {
     },
     signStatus : {
         message : null, loading : false, error : null
+    },
+    loginStatus : {
+        loading : false, error : null
     }
 }
 
@@ -22,12 +25,14 @@ export default function(state = INITIAL_STATE, action){
     let error;
     switch(action.type){
         case GUEST_LOGIN_PROCESS :
-            return { ...state, accessAccount : { principal : null, loading : true, error : null }};
+            return { ...state, loginStatus : { loading : true, error : null }};
         case GUEST_LOGIN_SUCCESS :
-            return { ...state, accessAccount : { principal : action.payload, loading : false, error : null }};
+            return { ...state, loginStatus : { loading : false, error : null }, accessAccount : { principal : action.payload, loading : false, error : null }};
         case GUEST_LOGIN_FAILURE :
             error = action.payload.data || { message : action.payload };
-            return { ...state, accessAccount : { principal : null, loading : false, error : error }};
+            return { ...state, loginStatus : { loading : false, error : error }};
+        case RESET_GUEST_LOGIN :
+            return { ...state, loginStatus : { loading : false, error : null }};
 
         case GUEST_FIND_IDENTITY :
             return { ...state, findStatus : { message : null, loading : true, error : null }};
@@ -54,7 +59,7 @@ export default function(state = INITIAL_STATE, action){
         case USER_FETCH_PRINCIPAL_SUCCESS :
             return { ...state, accessAccount : { principal : action.payload, loading : false, error : null }};
         case USER_FETCH_PRINCIPAL_FAILURE :
-            error = action.payload.data || { message : action.payload.data };
+            error = action.payload || { message : action.payload };
             return { ...state, accessAccount : { principal : null, loading : false, error : error }};
         case USER_LOGOUT_PROCESS :
         case RESET_USER_FETCH_PRINCIPAL :

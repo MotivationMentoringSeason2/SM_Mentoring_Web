@@ -141,8 +141,12 @@ class ApplicationRouter extends Component{
         const accountOpen = Boolean(anchor);
 
         let router;
-        const { principal } = this.props.accessAccount;
+        const { principal, error } = this.props.accessAccount;
 
+        if(error) {
+            alert(error);
+            window.location.href = "/";
+        }
         if(principal === null){
             router = <GuestRouter />;
         } else {

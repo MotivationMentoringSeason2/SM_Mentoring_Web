@@ -3,6 +3,7 @@ import axios from 'axios';
 export const GUEST_LOGIN_PROCESS = 'GUEST_LOGIN_PROCESS';
 export const GUEST_LOGIN_SUCCESS = 'GUEST_LOGIN_SUCCESS';
 export const GUEST_LOGIN_FAILURE = 'GUEST_LOGIN_FAILURE';
+export const RESET_GUEST_LOGIN = 'RESET_GUEST_LOGIN';
 
 export const GUEST_FIND_IDENTITY = 'GUEST_FIND_IDENTITY';
 export const GUEST_FIND_IDENTITY_SUCCESS = 'GUEST_FIND_IDENTITY_SUCCESS';
@@ -55,6 +56,12 @@ export function guestLoginFailure(error){
     return {
         type : GUEST_LOGIN_FAILURE,
         payload : error
+    }
+}
+
+export function resetGuestLogin(){
+    return {
+        type : RESET_GUEST_LOGIN
     }
 }
 

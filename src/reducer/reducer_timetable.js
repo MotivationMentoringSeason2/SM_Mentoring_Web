@@ -8,7 +8,7 @@ const INITIAL_STATE = {
         timetables : [], loading : false, error : null
     },
     saveStatus : {
-        message : [], loading : false, error : null
+        message : null, loading : false, error : null
     }
 }
 
