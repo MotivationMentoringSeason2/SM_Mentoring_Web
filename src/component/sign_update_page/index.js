@@ -1,0 +1,1 @@
+export {default as SignUpdateForm} from './SignUpdateForm';

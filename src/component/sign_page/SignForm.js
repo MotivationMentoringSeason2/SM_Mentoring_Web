@@ -25,9 +25,15 @@ function validate(values){
     var errors = {};
     var hasErrors = false;
 
-    var pattern = /^[A-Za-z0-9]{6,12}$/;
+    var studentNumEmp = /^20([0-9]{7})$/;
 
-    if(values.confirm === null){
+    if(!values.identity || values.identity.trim() === ''){
+        errors.identity = '아이디를 입력 바랍니다.';
+        hasErrors = true;
+    } else if(values.type === 'STUDENT' && !values.identity.match(studentNumEmp)){
+        errors.identity = '학생 아이디는 학번입니다.';
+        hasErrors = true;
+    } else if(values.confirm === null){
         errors.identity = '아이디 확인 진행 바랍니다.';
         hasErrors = true;
     } else if(values.confirm === false){
@@ -35,10 +41,12 @@ function validate(values){
         hasErrors = true;
     }
 
+    var passwordPattern = /^[A-Za-z0-9]{6,12}$/;
+
     if(!values.main_password || values.main_password.trim() === ''){
         errors.main_password = '비밀번호를 입력하세요.';
         hasErrors = true;
-    } else if(!values.main_password.match(pattern)){
+    } else if(!values.main_password.match(passwordPattern)){
         errors.main_password = '비밀번호도 영어 대-소문자, 숫자를 포함한 6~12자로 입력하세요.';
         hasErrors = true;
     }
@@ -179,7 +187,9 @@ const validateAndSubmitSign = (value, dispatch) => {
             }
             dispatch(guestCreateAccountSuccess(response.payload));
         }
-    )
+    ).catch(reason => {
+        dispatch(guestCreateAccountFailure("회원의 이름과 이메일이 중복된 회원이 있거나 서버 측에서 회원 가입 오류입니다. 다시 시도 바랍니다."));
+    });
 }
 
 const styles = theme => ({
@@ -226,16 +236,14 @@ class SignForm extends Component {
 
     handleClickConfirm(){
         const { signForm } = this.props;
-        if(signForm.values){
-            if(signForm.values.identity !== undefined){
+        var studentNumEmp = /^20([0-9]{7})$/;
+        if(signForm.values && signForm.values.identity !== undefined){
+            if((signForm.values.type === 'STUDENT' && signForm.values.identity.match(studentNumEmp)) || signForm.values.type === 'EMPLOYEE' || signForm.values.type === 'PROFESSOR')
                 axios.get(`${RESOURCE_ROOT_URL}/exist_account/${signForm.values.identity}`).then(response => {
                     this.setState({
                         confirm : !response.data
                     });
                 }).catch(reason => this.setState({ confirm : null }));
-            } else {
-                alert("아이디를 입력 해 주세요! 학생은 학번입니다.");
-            }
         } else {
             alert("아이디를 입력 해 주세요! 학생은 학번입니다.");
         }
@@ -285,12 +293,12 @@ class SignForm extends Component {
                     <br/>
 
                     <div>
-                        <Field name="identity" className={classes.textField} type="text" component={renderTextField} label="사용자 ID" placeholder="이용할 ID를 입력하세요." />
+                        <Field name="identity" className={classes.textField} type="text" component={renderTextField} label="사용자 ID" placeholder="이용할 ID를 입력하세요." readOnly={confirm ? true : false} />
                     </div>
                     <br/>
 
-                    <button type="button" className={`w3-button w3-round-large ${confirm === null ? 'w3-blue' : confirm ? 'w3-green' : 'w3-red'}`} onClick={() => this.handleClickConfirm()}>
-                        { confirm === null ? '중복 확인' : confirm ? '확인 되었습니다.' : '다시 시도' }
+                    <button type="button" className={`w3-button w3-round-large ${confirm === null ? 'w3-blue' : confirm && signForm.syncErrors && !signForm.syncErrors.identity ? 'w3-green' : 'w3-red'}`} onClick={() => this.handleClickConfirm()}>
+                        { confirm === null  ? '중복 확인' : confirm && signForm.syncErrors && !signForm.syncErrors.identity ? '확인 되었습니다.' : '다시 시도' }
                     </button>
                     <br/>
 

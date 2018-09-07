@@ -65,7 +65,7 @@ class LoginForm extends Component{
     }
     render(){
         const { handleSubmit, classes } = this.props;
-        const { loading, error } = this.props.accessAccount;
+        const { loading, error } = this.props.loginStatus;
         let loginResult = null;
         if(loading){
             loginResult = <LinearProgress color="secondary" />

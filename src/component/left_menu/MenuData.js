@@ -68,7 +68,7 @@ export const introDefaultItems = (
                 <ListItemText primary="SM 사업이란?" />
             </ListItem>
         </Link>
-        <Link to="/intro/schedule" style={{ textDecoration: 'none' }}>
+        <Link to="/schedule/view" style={{ textDecoration: 'none' }}>
             <ListItem button>
                 <ListItemIcon>
                     <ArrowForwardIcon />
@@ -95,7 +95,7 @@ export const introAdminItems = (
                 <ListItemText primary="SM 사업이란?" />
             </ListItem>
         </Link>
-        <Link to="/intro/schedule" style={{ textDecoration: 'none' }}>
+        <Link to="/schedule/view" style={{ textDecoration: 'none' }}>
             <ListItem button>
                 <ListItemIcon>
                     <ArrowForwardIcon />
@@ -111,7 +111,7 @@ export const introAdminItems = (
                 <ListItemText primary="사업문 수정" />
             </ListItem>
         </Link>
-        <Link to="/intro/schedule/edit" style={{ textDecoration: 'none' }}>
+        <Link to="/schedule/edit" style={{ textDecoration: 'none' }}>
             <ListItem button>
                 <ListItemIcon>
                     <ArrowForwardIcon />

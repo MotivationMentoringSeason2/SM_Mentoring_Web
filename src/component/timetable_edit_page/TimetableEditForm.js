@@ -49,7 +49,7 @@ function validate(values){
                     }
                 }
                 if(!dayArray[j].endTime || dayArray[j].endTime.trim() === ''){
-                    errors[dayKey] = `${j+1} 번째 종료 시간을 입력해주세요.`;
+                    errors[dayKey] = `${j + 1} 번째 종료 시간을 입력해주세요.`;
                     hasErrors = true;
                     break;
                 } else if(moment(dayArray[j].endTime, "HH:mm").minute() % 15 !== 0) {
@@ -177,7 +177,6 @@ class TimetableEditForm extends Component{
         const { classes, handleSubmit } = this.props;
         const { timetableForm } = this.props;
         const { message, error } = this.props.saveStatus;
-
         if(message){
             alert(message);
             this.props.history.push("/");
