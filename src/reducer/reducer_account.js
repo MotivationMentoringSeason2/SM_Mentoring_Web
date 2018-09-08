@@ -5,6 +5,7 @@ import {
     USER_FETCH_PRINCIPAL, USER_FETCH_PRINCIPAL_SUCCESS, USER_FETCH_PRINCIPAL_FAILURE, RESET_USER_FETCH_PRINCIPAL,
     USER_FETCH_SIGN_FORM, USER_FETCH_SIGN_FORM_SUCCESS, USER_FETCH_SIGN_FORM_FAILURE, RESET_USER_FETCH_SIGN_FORM,
     USER_UPDATE_SIGN_FORM, USER_UPDATE_SIGN_FORM_SUCCESS, USER_UPDATE_SIGN_FORM_FAILURE, RESET_USER_UPDATE_SIGN_FORM,
+    ADMIN_FETCH_ACCOUNT_LIST, ADMIN_FETCH_ACCOUNT_LIST_SUCCESS, ADMIN_FETCH_ACCOUNT_LIST_FAILURE, RESET_ADMIN_FETCH_ACCOUNT_LIST,
     USER_LOGOUT_PROCESS
 } from "../action/action_account";
 
@@ -23,6 +24,9 @@ const INITIAL_STATE = {
     },
     loginStatus : {
         loading : false, error : null
+    },
+    accountList : {
+        accounts : [], pagination : null, loading : false, error : null
     }
 }
 
@@ -83,6 +87,16 @@ export default function(state = INITIAL_STATE, action){
             return { ...state, accessSignForm : { model : null, loading : false, error : error }};
         case RESET_USER_FETCH_SIGN_FORM :
             return { ...state, accessSignForm : { model : null, loading : false, error : null }};
+
+        case ADMIN_FETCH_ACCOUNT_LIST :
+            return { ...state, accountList : { accounts : [], pagination : null, loading : true, error : null }};
+        case ADMIN_FETCH_ACCOUNT_LIST_SUCCESS :
+            return { ...state, accountList : { accounts : action.payload && (action.payload.accounts || []), pagination : action.payload && action.payload.accountPagination, loading : false, error : null }};
+        case ADMIN_FETCH_ACCOUNT_LIST_FAILURE :
+            error = action.payload || { message : action.payload };
+            return { ...state, accountList : { accounts : [], pagination : null, loading : false, error : error }};
+        case RESET_ADMIN_FETCH_ACCOUNT_LIST :
+            return { ...state, accountList : { accounts : [], pagination : null, loading : false, error : null }};
 
         default :
             return state;
