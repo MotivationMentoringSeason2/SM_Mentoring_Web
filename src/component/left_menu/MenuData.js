@@ -267,12 +267,20 @@ export const adminItems = (
                 <ListItemText primary="멘토링 개설 / 폐쇄" />
             </ListItem>
         </Link>
-        <Link to="/admin/accounts/list?page=1" style={{ textDecoration: 'none' }}>
+        <Link to="/admin/accounts/list?pg=1" style={{ textDecoration: 'none' }}>
             <ListItem button>
                 <ListItemIcon>
                     <ArrowForwardIcon />
                 </ListItemIcon>
                 <ListItemText primary="회원 관리" />
+            </ListItem>
+        </Link>
+        <Link to="/admin/excel_upload" style={{ textDecoration: 'none' }}>
+            <ListItem button>
+                <ListItemIcon>
+                    <ArrowForwardIcon />
+                </ListItemIcon>
+                <ListItemText primary="회원 Excel 업로드" />
             </ListItem>
         </Link>
         <Link to="/admin/report/checking" style={{ textDecoration: 'none' }}>
