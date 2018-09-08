@@ -1,4 +1,5 @@
 import axios from 'axios';
+import queryString from 'query-string';
 
 export const GUEST_LOGIN_PROCESS = 'GUEST_LOGIN_PROCESS';
 export const GUEST_LOGIN_SUCCESS = 'GUEST_LOGIN_SUCCESS';
@@ -29,6 +30,11 @@ export const USER_UPDATE_SIGN_FORM = 'USER_UPDATE_SIGN_FORM';
 export const USER_UPDATE_SIGN_FORM_SUCCESS = 'USER_UPDATE_SIGN_FORM_SUCCESS';
 export const USER_UPDATE_SIGN_FORM_FAILURE = 'USER_UPDATE_SIGN_FORM_FAILURE';
 export const RESET_USER_UPDATE_SIGN_FORM = 'RESET_USER_UPDATE_SIGN_FORM';
+
+export const ADMIN_FETCH_ACCOUNT_LIST = 'ADMIN_FETCH_ACCOUNT_LIST';
+export const ADMIN_FETCH_ACCOUNT_LIST_SUCCESS = 'ADMIN_FETCH_ACCOUNT_LIST_SUCCESS';
+export const ADMIN_FETCH_ACCOUNT_LIST_FAILURE = 'ADMIN_FETCH_ACCOUNT_LIST_FAILURE';
+export const RESET_ADMIN_FETCH_ACCOUNT_LIST = 'RESET_ADMIN_FETCH_ACCOUNT_LIST';
 
 export const USER_LOGOUT_PROCESS = 'USER_LOGOUT_PROCESS';
 
@@ -245,13 +251,48 @@ export function resetUserUpdateSignForm(){
     }
 }
 
+export function adminFetchAccountList(userToken, pagination){
+    const request = axios({
+        url : `${ROOT_URL}/admin/account/list?${queryString.stringify(pagination)}`,
+        method : 'get',
+        headers :
+            {
+                'Authorization' : `Bearer ${userToken}`
+            }
+    });
+    return {
+        type : ADMIN_FETCH_ACCOUNT_LIST,
+        payload : request
+    }
+}
+
+export function adminFetchAccountListSuccess(accounts){
+    return {
+        type : ADMIN_FETCH_ACCOUNT_LIST_SUCCESS,
+        payload : accounts.data
+    }
+}
+
+export function adminFetchAccountListFailure(error){
+    return {
+        type : ADMIN_FETCH_ACCOUNT_LIST_FAILURE,
+        payload : error
+    }
+}
+
+export function resetAdminFetchAccountList(){
+    return {
+        type : RESET_ADMIN_FETCH_ACCOUNT_LIST
+    }
+}
+
 export function userLogoutProcess(userToken){
     localStorage.removeItem('jwtToken');
     const request = axios.delete(`${ROOT_URL}/common/logout`, {
-            headers:
-                {
-                    'Authorization': `Bearer ${userToken}`
-                }
+        headers:
+            {
+                'Authorization': `Bearer ${userToken}`
+            }
         }
     );
     return {
