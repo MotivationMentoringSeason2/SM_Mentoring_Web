@@ -231,7 +231,7 @@ class AccountTable extends Component{
                             <h3>회원 관리</h3>
                             <p>관리자는 회원 정보를 관리할 수 있습니다.</p>
                             <p>관리자는 학과 별 회장, 교수, 직원들에 해당됩니다.</p>
-                            <p>그리고 학생 회장 여부 설정은 관리자만 진행할 수 있습니다.</p>
+                            <p>그리고 학생 회장 설정은 교수, 직원만 진행할 수 있습니다.</p>
                         </div>
                         <br/>
                         <div className="w3-center">

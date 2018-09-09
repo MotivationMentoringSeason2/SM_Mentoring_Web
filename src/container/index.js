@@ -12,4 +12,5 @@ export {default as TimetableEditFormContainer} from './TimetableEditFormContaine
 
 // 관리자 Containers
 export {default as AccountTableContainer} from './AccountTableContainer';
+export {default as AccountViewContainer} from './AccountViewContainer';
 export {default as ExcelFormContainer} from './ExcelFormContainer';
