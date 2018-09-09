@@ -18,7 +18,7 @@ class ProfileImage extends Component{
 
     propsUpdating(identity){
         let self = this;
-        axios.get(`${RESOURCE_ROOT_URL}/image_profile/${identity}`)
+        axios.get(`${RESOURCE_ROOT_URL}/profile/${identity}`)
             .then(response =>
                 self.setState({ status : response.status })
             );

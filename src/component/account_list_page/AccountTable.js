@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 
 import axios from 'axios';
+import queryString from 'query-string';
 import { withRouter } from 'react-router-dom';
-import { reduxForm, Field, SubmissionError } from 'redux-form';
+import { reduxForm, Field } from 'redux-form';
 import {renderTextField, renderSelectField } from "../form_render";
 
 import PropTypes from 'prop-types';
@@ -37,18 +38,36 @@ const styles = theme => ({
     }
 });
 
-const validateAndSearchAccountList = (value, dispatch) => {
-    console.log(value);
-}
-
 class AccountTable extends Component{
     constructor(props){
         super(props);
         this.state = { orderBy : [], searchBy : [] };
     }
-    componentWillMount(){
 
+    componentWillMount(){
+        let pagination = queryString.parse(this.props.location.search);
+        let newPaginationModel = {
+            pg : pagination && (pagination.pg || 1),
+            sb : pagination && (pagination.sb || 0),
+            ob : pagination && (pagination.ob || 0),
+            tb : pagination && (pagination.tb || 0),
+            sz : pagination && (pagination.sz || 10),
+            st : pagination && (pagination.st || ''),
+        };
+        this.props.fetchAccountList(newPaginationModel);
+        this.handleInitialize(newPaginationModel);
     }
+
+    handleInitialize(paginationModel) {
+        const initData = {
+            sb : (paginationModel.sb === undefined) ? 0 : paginationModel.sb,
+            ob : (paginationModel.ob === undefined) ? 0 : paginationModel.ob,
+            tb : (paginationModel.tb === undefined) ? 0 : paginationModel.tb,
+            st : (paginationModel.st === undefined) ? '' : paginationModel.st
+        };
+        this.props.initialize(initData);
+    }
+
     componentDidMount(){
         let accessToken = localStorage.getItem('jwtToken');
         if(!accessToken || accessToken === '') return;
@@ -68,16 +87,139 @@ class AccountTable extends Component{
             method: 'get'
         }).then(response => this.setState({ orderBy : response.data }));
     }
-    componentWillUnmount(){
 
+    handleClickAccount(id){
+        this.props.history.push({
+            pathname: '/admin/accounts/view',
+            search: `?id=${id}&` + this.props.location.search.replace("?", "")
+        });
     }
+
+    componentWillUnmount(){
+        this.props.resetFetchAccountList();
+    }
+
+    handleSearchSubmit(event){
+        this.props.resetFetchAccountList();
+
+        const {values} = this.props.searchForm;
+        event.preventDefault();
+
+        let newPaginationModel = {
+            pg : 1,
+            sb : values && (values.sb || 0),
+            ob : values && (values.ob || 0),
+            tb : values && (values.tb || 0),
+            sz : 10,
+            st : values && (values.sb * 1 !== 0 ? values.st : '' || '')
+        };
+
+        this.props.history.push({
+           pathname: '/admin/accounts/list',
+           search: "?" + queryString.stringify(newPaginationModel)
+        });
+
+        this.props.fetchAccountList(newPaginationModel);
+        window.scroll({
+            top: 0,
+            left: 0,
+            behavior: 'smooth'
+        });
+    }
+
+    handlePagination(event){
+        this.props.resetFetchAccountList();
+
+        const { pagination } = this.props.accountList;
+        let newPaginationModel = {
+            pg : event.target.id,
+            sb : pagination && (pagination.sb || 0),
+            ob : pagination && (pagination.ob || 0),
+            tb : pagination && (pagination.tb || 0),
+            sz : pagination && (pagination.sz || 10),
+            st : pagination && (pagination.st || ''),
+        };
+
+        this.props.history.push({
+            pathname: '/admin/accounts/list',
+            search: "?" + queryString.stringify(newPaginationModel)
+        });
+
+        this.props.fetchAccountList(newPaginationModel);
+        window.scroll({
+            top: 0,
+            left: 0,
+            behavior: 'smooth'
+        });
+    }
+
     render(){
-        const { classes, handleSubmit } = this.props;
+        const { classes } = this.props;
         const { searchBy, orderBy } = this.state;
+        const { pagination, accounts } = this.props.accountList;
+
+        const pageNumbers = [];
+        const barCount = 10;
+        const pageCount = (pagination !== null) ? Math.ceil(pagination.requestCount / pagination.sz) : 1;
+        let base = (pagination !== null) ? Math.floor((pagination.pg - 1) / 10) * 10 : 0;
+
+        if(base > 0)
+            pageNumbers.push(base);
+
+        for (let i = 1; i <= barCount; i++) {
+            let n = base + i;
+            if(n > pageCount) break;
+            pageNumbers.push(n);
+        }
+
+        let n = base + 11;
+        if(n <= pageCount)
+            pageNumbers.push(n);
+
+        const renderPageNumbers = pageNumbers.map((number, idx) => {
+            return (
+                (number > base && number < base + 11) ?
+                    <button className={((pagination === null) || pagination.pg === number) ? "w3-button w3-round-large w3-border w3-border-indigo w3-blue" : "w3-button w3-round-large w3-border w3-border-indigo w3-pale-blue w3-hover-blue"}
+                        key={number}
+                        id={number}
+                        onClick={this.handlePagination.bind(this)}
+                    >
+                        &nbsp;{number}&nbsp;
+                    </button> :
+                    (idx === 0) ?
+                        <button className="w3-button w3-round-large w3-border w3-border-red w3-pale-red w3-hover-pink"
+                                key={number}
+                                id={number}
+                                onClick={this.handlePagination.bind(this)}
+                        >
+                            &nbsp;이전&nbsp;
+                        </button> :
+                        <button className="w3-button w3-round-large w3-border w3-border-red w3-pale-red w3-hover-pink"
+                            key={number}
+                            id={number}
+                            onClick={this.handlePagination.bind(this)}
+                        >
+                            &nbsp;다음&nbsp;
+                        </button>
+            );
+        });
+
+        let accountTr = accounts.length > 0 ?
+            accounts.map(account => (
+                <tr key={`account_${account.id}`} className="w3-hover-pale-green" style={{ cursor : 'pointer' }} onClick={() => this.handleClickAccount(account.id)}>
+                    <td>{account.id}</td>
+                    <td>{account.identity}</td>
+                    <td>{account.name}</td>
+                    <td>{account.type}</td>
+                    { window.innerWidth <= 425 ? null : <td>{account.department}</td> }
+                </tr>
+            )) : <tr>
+                    <td colSpan={ window.innerWidth <= 425 ? 4 : 5}>현재 입력하신 검색 조건으로 나온 회원이 없습니다.</td>
+                </tr>
 
         return (
             <div>
-                <form onSubmit={handleSubmit(validateAndSearchAccountList)} className={classes.form}>
+                <form onSubmit={this.handleSearchSubmit.bind(this)} className={classes.form}>
                     <Grid align="center">
                         <hr/>
                         <div>
@@ -89,13 +231,13 @@ class AccountTable extends Component{
                             <h3>회원 관리</h3>
                             <p>관리자는 회원 정보를 관리할 수 있습니다.</p>
                             <p>관리자는 학과 별 회장, 교수, 직원들에 해당됩니다.</p>
-                            <p>그리고 학생 회장 여부 설정은 관리자만 진행할 수 있습니다.</p>
+                            <p>그리고 학생 회장 설정은 교수, 직원만 진행할 수 있습니다.</p>
                         </div>
                         <br/>
                         <div className="w3-center">
                             <div className="w3-bar">
                                 <div className="w3-bar-item">
-                                    <Field name="sb" component={renderSelectField} children={ searchBy.map((sb) => <option value={`search_${sb.value}`}>{sb.label}</option>) } label="검색어 기준" />
+                                    <Field name="sb" component={renderSelectField} children={ searchBy.map((sb) => <option key={`search_${sb.value}`} value={sb.value}>{sb.label}</option>) } label="검색어 기준" />
                                 </div>
                                 <div className="w3-bar-item">
                                     <Field name="ob" component={renderSelectField} children={ orderBy.map((ob) => <option key={`order_${ob.value}`} value={ob.value}>{ob.label}</option>) } label="정렬 기준" />
@@ -124,6 +266,7 @@ class AccountTable extends Component{
                 <Grid align="center">
                     <div className={`w3-responsive ${ window.innerWidth <= 425 ? 'w3-small' : 'w3-large'}`} style={{ width : window.innerWidth <= 425 ? '95%' : '60%'}}>
                         <table className="w3-table-all w3-centered">
+                            <thead>
                             <tr className="w3-teal">
                                 <th>No.</th>
                                 <th>{ window.innerWidth <= 425 ? 'ID' : '회원 아이디'}</th>
@@ -131,12 +274,16 @@ class AccountTable extends Component{
                                 <th>{ window.innerWidth <= 425 ? '권한' : '회원 권한'}</th>
                                 { window.innerWidth <= 425 ? null : <th>소속 / 담당 학과</th> }
                             </tr>
+                            </thead>
+                            <tbody>
+                            {accountTr}
+                            </tbody>
                         </table>
                     </div>
                 </Grid>
                 <br/>
-                <div className="w3-center">
-                    
+                <div className="w3-bar w3-center">
+                    {renderPageNumbers}
                 </div>
             </div>
         )

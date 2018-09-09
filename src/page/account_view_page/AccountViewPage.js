@@ -1,13 +1,13 @@
 import React from 'react';
-import {AccountTableContainer} from "../../container";
+import {AccountViewContainer} from "../../container";
 import SKHUImage from "../../resource_image/skhu_photo.png";
 
-const AccountListPage = () => (
+const AccountViewPage = () => (
     <div>
         <img src={SKHUImage} width="100%" className="w3-round-large" />
         <br/><br/>
-        <AccountTableContainer />
+        <AccountViewContainer />
     </div>
-);
+)
 
-export default AccountListPage;
+export default AccountViewPage;
