@@ -36,6 +36,11 @@ export const ADMIN_FETCH_ACCOUNT_LIST_SUCCESS = 'ADMIN_FETCH_ACCOUNT_LIST_SUCCES
 export const ADMIN_FETCH_ACCOUNT_LIST_FAILURE = 'ADMIN_FETCH_ACCOUNT_LIST_FAILURE';
 export const RESET_ADMIN_FETCH_ACCOUNT_LIST = 'RESET_ADMIN_FETCH_ACCOUNT_LIST';
 
+export const ADMIN_FETCH_ACCOUNT_VIEW = 'ADMIN_FETCH_ACCOUNT_VIEW';
+export const ADMIN_FETCH_ACCOUNT_VIEW_SUCCESS = 'ADMIN_FETCH_ACCOUNT_VIEW_SUCCESS';
+export const ADMIN_FETCH_ACCOUNT_VIEW_FAILURE = 'ADMIN_FETCH_ACCOUNT_VIEW_FAILURE';
+export const RESET_ADMIN_FETCH_ACCOUNT_VIEW = 'RESET_ADMIN_FETCH_ACCOUNT_VIEW';
+
 export const USER_LOGOUT_PROCESS = 'USER_LOGOUT_PROCESS';
 
 const ROOT_URL = 'http://127.0.0.1:8081/AccountAPI';
@@ -283,6 +288,41 @@ export function adminFetchAccountListFailure(error){
 export function resetAdminFetchAccountList(){
     return {
         type : RESET_ADMIN_FETCH_ACCOUNT_LIST
+    }
+}
+
+export function adminFetchAccountView(userToken, id){
+    const request = axios({
+        url : `${ROOT_URL}/admin/account/view/${id}`,
+        method : 'get',
+        headers :
+            {
+                'Authorization' : `Bearer ${userToken}`
+            }
+    });
+    return {
+        type : ADMIN_FETCH_ACCOUNT_VIEW,
+        payload : request
+    }
+}
+
+export function adminFetchAccountViewSuccess(account){
+    return {
+        type : ADMIN_FETCH_ACCOUNT_VIEW_SUCCESS,
+        payload : account.data
+    }
+}
+
+export function adminFetchAccountViewFailure(error){
+    return {
+        type : ADMIN_FETCH_ACCOUNT_VIEW_FAILURE,
+        payload : error
+    }
+}
+
+export function resetAdminFetchAccountView(){
+    return {
+        type : RESET_ADMIN_FETCH_ACCOUNT_VIEW
     }
 }
 
