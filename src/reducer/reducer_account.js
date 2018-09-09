@@ -7,6 +7,7 @@ import {
     USER_UPDATE_SIGN_FORM, USER_UPDATE_SIGN_FORM_SUCCESS, USER_UPDATE_SIGN_FORM_FAILURE, RESET_USER_UPDATE_SIGN_FORM,
     ADMIN_FETCH_ACCOUNT_LIST, ADMIN_FETCH_ACCOUNT_LIST_SUCCESS, ADMIN_FETCH_ACCOUNT_LIST_FAILURE, RESET_ADMIN_FETCH_ACCOUNT_LIST,
     ADMIN_FETCH_ACCOUNT_VIEW, ADMIN_FETCH_ACCOUNT_VIEW_SUCCESS, ADMIN_FETCH_ACCOUNT_VIEW_FAILURE, RESET_ADMIN_FETCH_ACCOUNT_VIEW,
+    ADMIN_EXECUTE_SETTING_CHAIRMAN, ADMIN_EXECUTE_SETTING_CHAIRMAN_SUCCESS, ADMIN_EXECUTE_SETTING_CHAIRMAN_FAILURE, RESET_ADMIN_EXECUTE_SETTING_CHAIRMAN,
     USER_LOGOUT_PROCESS
 } from "../action/action_account";
 
@@ -59,16 +60,20 @@ export default function(state = INITIAL_STATE, action){
 
         case GUEST_CREATE_ACCOUNT :
         case USER_UPDATE_SIGN_FORM :
+        case ADMIN_EXECUTE_SETTING_CHAIRMAN :
             return { ...state, signStatus : { message : null, loading : true, error : null }};
         case GUEST_CREATE_ACCOUNT_SUCCESS :
         case USER_UPDATE_SIGN_FORM_SUCCESS :
+        case ADMIN_EXECUTE_SETTING_CHAIRMAN_SUCCESS :
             return { ...state, signStatus : { message : action.payload, loading : false, error : null }};
         case GUEST_CREATE_ACCOUNT_FAILURE :
         case USER_UPDATE_SIGN_FORM_FAILURE :
+        case ADMIN_EXECUTE_SETTING_CHAIRMAN_FAILURE :
             error = action.payload || { message : action.payload };
             return { ...state, signStatus : { message : null, loading : false, error : error }};
         case RESET_GUEST_CREATE_ACCOUNT :
         case RESET_USER_UPDATE_SIGN_FORM :
+        case RESET_ADMIN_EXECUTE_SETTING_CHAIRMAN :
             return { ...state, signStatus : { message : null, loading : false, error : null }};
 
         case USER_FETCH_PRINCIPAL :

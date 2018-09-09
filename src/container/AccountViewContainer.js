@@ -1,12 +1,14 @@
 import {AccountView} from "../component/account_view_page";
 import {connect} from 'react-redux';
 import {
-    adminFetchAccountView, adminFetchAccountViewSuccess, adminFetchAccountViewFailure, resetAdminFetchAccountView
+    adminFetchAccountView, adminFetchAccountViewSuccess, adminFetchAccountViewFailure, resetAdminFetchAccountView,
+    adminExecuteSettingChairman, adminExecuteSettingChairmanSuccess, adminExecuteSettingChairmanFailure, resetAdminExecuteSettingChairman
 } from "../action/action_account";
 
 function mapStateToProps(state){
     return {
         accountView : state.account.accountView,
+        signStatus : state.account.signStatus,
         accessAccount : state.account.accessAccount
     }
 }
@@ -24,7 +26,18 @@ const mapDispatchToProps = (dispatch) => {
                 }
             })
         },
-        resetFetchAccountView : () => dispatch(resetAdminFetchAccountView())
+        executeCurrentAccountSettingChairman : (method, id) => {
+            let accessToken = localStorage.getItem('jwtToken');
+            if(!accessToken || accessToken === '') return;
+            dispatch(adminExecuteSettingChairman(accessToken, method, id)).then(response => {
+                if(response.payload.status !== 200)
+                    dispatch(adminExecuteSettingChairmanFailure(response.payload.data));
+                else
+                    dispatch(adminExecuteSettingChairmanSuccess(response.payload))
+            })
+        },
+        resetFetchAccountView : () => dispatch(resetAdminFetchAccountView()),
+        resetExecuteSettingChairman : () => dispatch(resetAdminExecuteSettingChairman())
     }
 }
 

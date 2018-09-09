@@ -28,7 +28,14 @@ class AccountView extends Component{
         this.props.fetchAccountView(pagination.id);
     }
     componentWillUnmount(){
+        this.props.resetExecuteSettingChairman();
         this.props.resetFetchAccountView();
+    }
+    handleClickAppointing(id){
+        this.props.executeCurrentAccountSettingChairman('appoint', id);
+    }
+    handleClickReleasing(id){
+        this.props.executeCurrentAccountSettingChairman('release', id);
     }
     handleClickBack(){
         let pagination = queryString.parse(this.props.location.search);
@@ -47,11 +54,18 @@ class AccountView extends Component{
         });
     }
     render(){
-        const {classes} = this.props;
+        const {classes, signStatus} = this.props;
         const {account, error} = this.props.accountView;
         const {principal} = this.props.accessAccount;
         if(error){
             alert(error);
+            this.handleClickBack();
+        }
+        if(signStatus.error){
+            alert(signStatus.error);
+            this.handleClickBack();
+        } else if(signStatus.message){
+            alert(signStatus.message);
             this.handleClickBack();
         }
 
@@ -171,10 +185,10 @@ class AccountView extends Component{
                                     (account && account.hasChairman !== undefined) ?
                                         account.hasChairman ?
                                             <div className="w3-bar-item">
-                                                <button className={`w3-button w3-round-large w3-red`}>{ account && account.status !== undefined ? '학생 회장 해지' : '학과장 해지'}</button>
+                                                <button className={`w3-button w3-round-large w3-red`} onClick={() => this.handleClickReleasing(account && account.id)}>{ account && account.status !== undefined ? '학생 회장 해지' : '학과장 해지'}</button>
                                             </div> :
                                             <div className="w3-bar-item">
-                                                <button className={`w3-button w3-round-large w3-blue`}>{ account && account.status !== undefined ? '학생 회장 임명' : '학과장 임명'}</button>
+                                                <button className={`w3-button w3-round-large w3-blue`} onClick={() => this.handleClickAppointing(account && account.id)}>{ account && account.status !== undefined ? '학생 회장 임명' : '학과장 임명'}</button>
                                             </div>
                                         : ''
                                     : ''

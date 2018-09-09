@@ -41,6 +41,11 @@ export const ADMIN_FETCH_ACCOUNT_VIEW_SUCCESS = 'ADMIN_FETCH_ACCOUNT_VIEW_SUCCES
 export const ADMIN_FETCH_ACCOUNT_VIEW_FAILURE = 'ADMIN_FETCH_ACCOUNT_VIEW_FAILURE';
 export const RESET_ADMIN_FETCH_ACCOUNT_VIEW = 'RESET_ADMIN_FETCH_ACCOUNT_VIEW';
 
+export const ADMIN_EXECUTE_SETTING_CHAIRMAN = 'ADMIN_EXECUTE_SETTING_CHAIRMAN';
+export const ADMIN_EXECUTE_SETTING_CHAIRMAN_SUCCESS = 'ADMIN_EXECUTE_SETTING_CHAIRMAN_SUCCESS';
+export const ADMIN_EXECUTE_SETTING_CHAIRMAN_FAILURE = 'ADMIN_EXECUTE_SETTING_CHAIRMAN_FAILURE';
+export const RESET_ADMIN_EXECUTE_SETTING_CHAIRMAN = 'RESET_ADMIN_EXECUTE_SETTING_CHAIRMAN';
+
 export const USER_LOGOUT_PROCESS = 'USER_LOGOUT_PROCESS';
 
 const ROOT_URL = 'http://127.0.0.1:8081/AccountAPI';
@@ -323,6 +328,41 @@ export function adminFetchAccountViewFailure(error){
 export function resetAdminFetchAccountView(){
     return {
         type : RESET_ADMIN_FETCH_ACCOUNT_VIEW
+    }
+}
+
+export function adminExecuteSettingChairman(userToken, method, id){
+    const request = axios({
+        url : `${ROOT_URL}/admin/account/chairman/${method === 'appoint' ? 'appoint' : 'release'}/${id}`,
+        method : 'put',
+        headers :
+            {
+                'Authorization' : `Bearer ${userToken}`
+            }
+    });
+    return {
+        type : ADMIN_EXECUTE_SETTING_CHAIRMAN,
+        payload : request
+    }
+}
+
+export function adminExecuteSettingChairmanSuccess(message){
+    return {
+        type : ADMIN_EXECUTE_SETTING_CHAIRMAN_SUCCESS,
+        payload : message.data
+    }
+}
+
+export function adminExecuteSettingChairmanFailure(error){
+    return {
+        type : ADMIN_EXECUTE_SETTING_CHAIRMAN_FAILURE,
+        payload : error
+    }
+}
+
+export function resetAdminExecuteSettingChairman(){
+    return {
+        type : RESET_ADMIN_EXECUTE_SETTING_CHAIRMAN
     }
 }
 
