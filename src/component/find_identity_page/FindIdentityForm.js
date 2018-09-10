@@ -67,7 +67,6 @@ const styles = theme => ({
 });
 
 const validateAndFindIdentity = (values, dispatch) => {
-    console.log(values);
     return dispatch(guestFindIdentity(values)).then((response) => {
         if(response.payload && response.payload.status !== 200){
             dispatch(guestFindIdentityFailure(response.payload));

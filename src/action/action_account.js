@@ -46,6 +46,11 @@ export const ADMIN_EXECUTE_SETTING_CHAIRMAN_SUCCESS = 'ADMIN_EXECUTE_SETTING_CHA
 export const ADMIN_EXECUTE_SETTING_CHAIRMAN_FAILURE = 'ADMIN_EXECUTE_SETTING_CHAIRMAN_FAILURE';
 export const RESET_ADMIN_EXECUTE_SETTING_CHAIRMAN = 'RESET_ADMIN_EXECUTE_SETTING_CHAIRMAN';
 
+export const ADMIN_EXECUTE_EXCEL_UPLOADING = 'ADMIN_EXECUTE_EXCEL_UPLOADING';
+export const ADMIN_EXECUTE_EXCEL_UPLOADING_SUCCESS = 'ADMIN_EXECUTE_EXCEL_UPLOADING_SUCCESS';
+export const ADMIN_EXECUTE_EXCEL_UPLOADING_FAILURE = 'ADMIN_EXECUTE_EXCEL_UPLOADING_FAILURE';
+export const RESET_ADMIN_EXECUTE_EXCEL_UPLOADING = 'RESET_ADMIN_EXECUTE_EXCEL_UPLOADING';
+
 export const USER_LOGOUT_PROCESS = 'USER_LOGOUT_PROCESS';
 
 const ROOT_URL = 'http://127.0.0.1:8081/AccountAPI';
@@ -363,6 +368,47 @@ export function adminExecuteSettingChairmanFailure(error){
 export function resetAdminExecuteSettingChairman(){
     return {
         type : RESET_ADMIN_EXECUTE_SETTING_CHAIRMAN
+    }
+}
+
+export function adminExecuteExcelUploading(userToken, excelFile){
+    let formData = new FormData();
+    formData.append('file', excelFile);
+
+    const request = axios({
+        url : `${ROOT_URL}/admin/account/excel/upload`,
+        method : 'post',
+        data : formData,
+        headers :
+            {
+                'Authorization' : `Bearer ${userToken}`,
+                "Content-Type" : "multipart/form-data"
+            }
+    });
+
+    return {
+        type : ADMIN_EXECUTE_EXCEL_UPLOADING,
+        payload : request
+    }
+}
+
+export function adminExecuteExcelUploadingSuccess(message){
+    return {
+        type : ADMIN_EXECUTE_EXCEL_UPLOADING_SUCCESS,
+        payload : message.data
+    }
+}
+
+export function adminExecuteExcelUploadingFailure(error){
+    return {
+        type : ADMIN_EXECUTE_EXCEL_UPLOADING_FAILURE,
+        payload : error
+    }
+}
+
+export function resetAdminExecuteExcelUploading(){
+    return {
+        type : RESET_ADMIN_EXECUTE_EXCEL_UPLOADING
     }
 }
 
