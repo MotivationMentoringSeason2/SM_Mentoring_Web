@@ -8,6 +8,7 @@ class MenuProfile extends Component{
     render(){
         const {principal} = this.props.accessAccount;
         let student, type;
+
         switch(principal && principal.type){
             case 'STUDENT' :
                 type = '학생';
