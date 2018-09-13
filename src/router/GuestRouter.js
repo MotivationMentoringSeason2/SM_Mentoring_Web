@@ -3,6 +3,7 @@ import {Route, Redirect} from 'react-router-dom';
 import {IndexPage} from "../page/index_page";
 import {LoginPage} from "../page/login_page";
 import {SignPage} from "../page/sign_page"
+import {NoticePage} from "../page/notice_page";
 import {FindIdentityPage} from "../page/find_identity_page";
 import ScrollToTop from "./ScrollToTop";
 
@@ -14,7 +15,7 @@ const GuestRouter = () => (
             <Route exact path="/login" component={LoginPage} />
             <Route exact path="/account/identity" component={FindIdentityPage} />
             <Route exact path="/sign" component={SignPage} />
-            <Route path="/notice/list" render={() => <div>공지사항</div>} />
+            <Route path="/notice/list" component={NoticePage} />
         </ScrollToTop>
     </div>
 );
