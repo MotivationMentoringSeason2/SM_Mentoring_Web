@@ -2,7 +2,9 @@ import React from 'react';
 
 const IndexPage = () =>
     <div>
-        인덱스 페이지 입니다.
+        <div>공지 사항 컴포넌트</div>
+        <div> 일정 안내 컴포넌트 </div>
+
     </div>
 
 export default IndexPage;
