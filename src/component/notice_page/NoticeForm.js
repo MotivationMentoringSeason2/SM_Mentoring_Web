@@ -10,6 +10,7 @@ const Container = styled.div`
   // justify-content: center;
   // align-items: center;
   flex-direction: column;
+  margin-right: 3%;
 `;
 
 const Title = styled.h1`
@@ -21,7 +22,7 @@ const Title = styled.h1`
 
 export default class NoticeForm extends Component {
 	componentWillMount() {
- 
+    
   }
 
   render() {
