@@ -7,6 +7,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import './table.css';
 
 const styles = {
   root: {
@@ -49,7 +50,7 @@ function SimpleTable(props) {
         <TableBody>
           {data.map(n => {
             return (
-              <TableRow key={n.id}>
+              <TableRow key={n.id} >
                 <TableCell component="th" scope="row">
                   {n.name}
                 </TableCell>

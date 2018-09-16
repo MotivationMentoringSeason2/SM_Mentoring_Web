@@ -1,0 +1,4 @@
+tbody>tr:hover{
+    background: rgba(131, 181, 193, 0.87);
+    cursor:pointer;
+}
