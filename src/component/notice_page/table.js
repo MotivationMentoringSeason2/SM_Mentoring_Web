@@ -7,6 +7,8 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import './table.css';
+
 
 const styles = {
   root: {
@@ -17,6 +19,8 @@ const styles = {
     minWidth: 700,
   },
 };
+
+
 
 let id = 0;
 function createData(name, calories, fat, carbs, protein) {
@@ -31,6 +35,12 @@ const data = [
   createData('Cupcake', 305, 3.7, 67, 4.3),
   createData('Gingerbread', 356, 16.0, 49, 3.9),
 ];
+
+  function handleClick(e) {
+    e.preventDefault();
+    window.location.replace("http://localhost:3000/card");
+  }
+
 
 function SimpleTable(props) {
   const { classes } = props;
@@ -49,14 +59,18 @@ function SimpleTable(props) {
         <TableBody>
           {data.map(n => {
             return (
-              <TableRow key={n.id}>
+       
+              <TableRow key={n.id} onClick={handleClick} >
+           
                 <TableCell component="th" scope="row">
                   {n.name}
                 </TableCell>
                 <TableCell numeric>{n.calories}</TableCell>
                 <TableCell numeric>{n.fat}</TableCell>
                 <TableCell numeric>{n.carbs}</TableCell>
-              </TableRow>
+                
+              </TableRow>  
+          
             );
           })}
         </TableBody>

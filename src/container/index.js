@@ -5,6 +5,7 @@ export {default as LoginFormContainer} from './LoginFormContainer';
 export {default as FindIdentityFormContainer} from './FindIdentityFormContainer';
 export {default as SignFormContainer} from './SignFormContainer';
 export {default as NoticeFormContainer} from './NoticeFormContainer';
+export {default as CardFormContainer} from './CardFormContainer';
 
 // 모든 회원 Containers
 export {default as MenuProfileContainer} from './MenuProfileContainer';

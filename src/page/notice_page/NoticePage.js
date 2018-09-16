@@ -3,8 +3,7 @@ import {NoticeFormContainer} from "../../container";
 
 const NoticePage = () => (
     <div>
-
-        <br/><br/>
+        <br/>
         <NoticeFormContainer />
     </div>
 );
