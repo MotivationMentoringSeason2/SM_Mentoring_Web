@@ -11,8 +11,10 @@ const Notice = styled.div`
 
 const IndexPage = () =>
     <div>
-         <Notice> <NoticeFormContainer /> <NoticeFormContainer /></Notice>
-
+         <Notice>
+             <NoticeFormContainer />
+             <NoticeFormContainer />
+         </Notice>
     </div>
 
 export default IndexPage;

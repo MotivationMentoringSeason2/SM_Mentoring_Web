@@ -8,6 +8,8 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import './table.css';
+import {withRouter} from 'react-router-dom';
+
 import axios from 'axios';
 
 const styles = {
@@ -22,11 +24,9 @@ const styles = {
 
 
 function handleClick(e) {
-
     e.preventDefault();
     window.location.replace("http://localhost:3000/card?"+e.target.parentNode.id);
-  
-  }
+}
 
 
 function SimpleTable(props) {
@@ -38,9 +38,9 @@ function SimpleTable(props) {
       <Table className={classes.table}>
         <TableHead>
           <TableRow>
-            <TableCell> 제목 </TableCell>
-            <TableCell numeric>날짜 </TableCell>
-            <TableCell numeric> 작성자 </TableCell>
+            <TableCell>제목</TableCell>
+            <TableCell numeric>날짜</TableCell>
+            <TableCell numeric>작성자</TableCell>
             <TableCell numeric>조회수</TableCell>
           </TableRow>
         </TableHead>
@@ -48,18 +48,14 @@ function SimpleTable(props) {
 
           {props.data.map(n => {
             return (
-       
-              <TableRow key={n.id} onClick={handleClick} id={n.id}>
-           
+              <TableRow key={n.id} onClick={() => (props.history.push(`/notice/view?id=${n.id}`))} id={n.id}>
                 <TableCell component="th" scope="row">
                   {n.title}
                 </TableCell>
                 <TableCell numeric>{n.title}</TableCell>
                 <TableCell numeric>{n.writer}</TableCell>
                 <TableCell numeric>{n.views}</TableCell>
-                
-              </TableRow>  
-          
+              </TableRow>
             );
           })}
         </TableBody>
@@ -72,4 +68,4 @@ SimpleTable.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(SimpleTable);
+export default withStyles(styles)(withRouter(SimpleTable));

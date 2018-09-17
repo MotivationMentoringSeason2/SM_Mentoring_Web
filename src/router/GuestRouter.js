@@ -18,7 +18,7 @@ const GuestRouter = () => (
             <Route exact path="/account/identity" component={FindIdentityPage} />
             <Route exact path="/sign" component={SignPage} />
             <Route path="/notice/list" component={NoticePage} />
-            <Route path="/card" component={CardPage} />
+            <Route path="/notice/view" component={CardPage} />
         </ScrollToTop>
     </div>
 );

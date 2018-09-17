@@ -4,7 +4,8 @@ import Table from './table';
 import Typography from '@material-ui/core/Typography';
 import styled from 'styled-components';
 import axios from 'axios';
-
+import {withRouter} from 'react-router-dom';
+import queryString from 'query-string';
 
 const Container = styled.div`
   display: flex;
@@ -18,58 +19,57 @@ const Title = styled.h1`
   font-size : 1em;
   margin-bottom : 1em;
   color : #000000;
-
 `;
 
-export default class NoticeForm extends Component {
+const NOTICE_URL = 'http://localhost:8083/NoticeAPI';
 
-  constructor(props) {
-    super(props)
-    this.state = {data: [] ,};
-  }  
+class NoticeForm extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {data: [], typeName : '', query : ''};
+    }
   
 	componentDidMount() {
-    function createData(id,title,writer,views) {
-
-      return {id,title,writer,views };
+        let data = [];
+        const {id} = queryString.parse(this.props.location.search);
+        function createData(id,title,writer,views) {
+            return {
+                id : id,
+                title : title,
+                writer : writer,
+                views : views
+            };
+        }
+        axios.get(`${NOTICE_URL}/notice/posts?tid=${id === undefined ? 1 : id}`).then(r => {
+            for(var i=0; i<r.data.length; i++){
+                let a= r.data[i];
+                data.push(createData(a.id,a.title,a.writer,a.views));
+            }
+            this.setState({
+                data : data
+            });
+        });
+        axios.get(`${NOTICE_URL}/notice/type/${id === undefined ? 1 : id}`).then(r => {
+            const {name} = r && ( r.data || '' );
+            this.setState({
+                typeName : name
+            });
+        });
     }
-    
-    let data = [];
-    function createData(id,title,writer,views) {
-    
-      return {id,title,writer,views };
+
+    render() {
+        const {typeName, data} = this.state;
+        return (
+            <Container>
+                <div>
+                    <Typography variant="display1" gutterBottom>
+                        <Title>{typeName}</Title>
+                    </Typography>
+                    <Table data={data}/>
+                </div>
+            </Container>
+        );
     }
-    
-    const url = "http://localhost:8083/";
-
-      axios
-      .get(
-          url+`NoticeAPI/notice/posts?tid=1`
-      )
-      .then(r => {
-        for(var i=0; i<r.data.length; i++){
-          let a= r.data[i]; 
-         data.push( createData(a.id,a.title,a.writer,a.views));   
-        } 
-        this.setState({data:data})    
-      });
-
-  }
-
-  render() {
-    
-    return (
-      
-      <Container>
-      <div >
-         <Typography variant="display1" gutterBottom>
-             <Title>공지사항</Title>
-          </Typography>
-          <Table data={this.state.data}/>;
-      
-      </div>
-      </Container>
-      );
-  }
 }
 
+export default withRouter(NoticeForm);

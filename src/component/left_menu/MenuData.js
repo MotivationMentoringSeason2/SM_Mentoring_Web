@@ -38,7 +38,7 @@ export const noticeItems = (
                 <ListItemIcon>
                     <ArrowForwardIcon />
                 </ListItemIcon>
-                <ListItemText primary="FAQ" />
+                <ListItemText primary="자유게시판" />
             </ListItem>
         </Link>
         <Link to="/notice/list?id=3&pg=1" style={{ textDecoration: 'none' }}>
@@ -46,7 +46,7 @@ export const noticeItems = (
                 <ListItemIcon>
                     <ArrowForwardIcon />
                 </ListItemIcon>
-                <ListItemText primary="자유게시판" />
+                <ListItemText primary="FAQ" />
             </ListItem>
         </Link>
     </div>
