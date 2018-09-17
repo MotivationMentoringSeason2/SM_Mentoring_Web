@@ -20,39 +20,12 @@ const styles = {
   },
 };
 
-function createData(id,title,writer,views) {
-
-  return {id,title,writer,views };
-}
-
-let data = [];
-function createData(id,title,writer,views) {
-
-  return {id,title,writer,views };
-}
-
-
-let tbody;
-
-function NoticeAxios(){
-  axios
-  .get(
-      `http://localhost:8083/NoticeAPI/notice/posts?tid=1`
-  )
-  .then(r => {
-    for(var i=0; i<r.data.length; i++){
-      let a= r.data[i]; 
-     data.push( createData(a.id,a.title,a.writer,a.views));   
-    }
-
-  });
-}
-
-NoticeAxios();
 
 function handleClick(e) {
+
     e.preventDefault();
-    window.location.replace("http://localhost:3000/card");
+    window.location.replace("http://localhost:3000/card?"+e.target.parentNode.id);
+  
   }
 
 
@@ -73,10 +46,10 @@ function SimpleTable(props) {
         </TableHead>
         <TableBody>
 
-          {data.map(n => {
+          {props.data.map(n => {
             return (
        
-              <TableRow key={n.id} onClick={handleClick} >
+              <TableRow key={n.id} onClick={handleClick} id={n.id}>
            
                 <TableCell component="th" scope="row">
                   {n.title}

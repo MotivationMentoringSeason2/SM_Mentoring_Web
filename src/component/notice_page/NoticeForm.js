@@ -22,14 +22,39 @@ const Title = styled.h1`
 `;
 
 export default class NoticeForm extends Component {
+
   constructor(props) {
     super(props)
-    this.state = {data1: [] };
+    this.state = {data: [] ,};
   }  
   
 	componentDidMount() {
-  
+    function createData(id,title,writer,views) {
+
+      return {id,title,writer,views };
     }
+    
+    let data = [];
+    function createData(id,title,writer,views) {
+    
+      return {id,title,writer,views };
+    }
+    
+    const url = "http://localhost:8083/";
+
+      axios
+      .get(
+          url+`NoticeAPI/notice/posts?tid=1`
+      )
+      .then(r => {
+        for(var i=0; i<r.data.length; i++){
+          let a= r.data[i]; 
+         data.push( createData(a.id,a.title,a.writer,a.views));   
+        } 
+        this.setState({data:data})    
+      });
+
+  }
 
   render() {
     
@@ -40,8 +65,8 @@ export default class NoticeForm extends Component {
          <Typography variant="display1" gutterBottom>
              <Title>공지사항</Title>
           </Typography>
-        
-      <Table data={this.state.data1}/>
+          <Table data={this.state.data}/>;
+      
       </div>
       </Container>
       );

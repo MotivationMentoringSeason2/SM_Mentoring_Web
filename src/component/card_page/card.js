@@ -17,11 +17,12 @@ import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import axios from 'axios';
-
+import './card.css'
 
 const styles = theme => ({
   card: {
     maxWidth: 1000,
+    width:1000,
     
   },
   media: {
@@ -47,39 +48,45 @@ const styles = theme => ({
   avatar: {
     backgroundColor: red[500],
   },
+  cardContent:{
+    width : 1000,
+  },
+
 });
 
 
 
-let title; 
-let context;
-let writer;
-let views;
-let writtenDate;
 
-function NoticeAxios(){
-  axios
-  .get(
-      `http://localhost:8083/NoticeAPI/notice/post/1`
-  )
-  .then(r => {
-      title=r.data.title;
-      context=r.data.context;
-      writer=r.data.writer;
-      views=r.data.views;
-      writtenDate=r.data.writtenDate;
-
-  });
-}
-
-NoticeAxios()
 
 class RecipeReviewCard extends React.Component {
   state = { expanded: false };
 
+  constructor(props) {
+    super(props)
+    this.state = {title: "제목",context: "내용", writer: "작성자", views: "조회수",writtenDate: "작성일",};
+  }  
   handleExpandClick = () => {
     this.setState(state => ({ expanded: !state.expanded }));
   };
+
+  componentDidMount() {
+    let split= window.location.href.split('?');
+
+    const url = "http://localhost:8083/";
+
+      axios
+      .get(
+          url+`NoticeAPI/notice/post/`+split[1]
+      )
+      .then(r => {
+        this.setState({title:r.data.title});
+        this.setState({context :r.data.context});
+        this.setState({writer:r.data.writer});
+        this.setState({views:r.data.views});
+        this.setState({writtenDate:r.data.writtenDate+" 작성자 "+ r.data.writer});
+      });
+    
+  }
 
   render() {
     const { classes } = this.props;
@@ -89,26 +96,22 @@ class RecipeReviewCard extends React.Component {
         <CardHeader
           avatar={
             <Avatar aria-label="Recipe" className={classes.avatar}>
-              R
+              공지
             </Avatar>
           }
           action={
             <IconButton>
-              <MoreVertIcon />
+             {this.state.views}
             </IconButton>
           }
-          title={title}
-          subheader="September 14, 2016"
+          title={this.state.title}
+          subheader={this.state.writtenDate}
+  
         />
-        <CardMedia
-          className={classes.media}
-          image="/static/images/cards/paella.jpg"
-          title="Contemplative Reptile"
-        />
-        <CardContent>
+
+        <CardContent className="cardContent">
           <Typography component="p">
-            This impressive paella is a perfect party dish and a fun meal to cook together with your
-            guests. Add 1 cup of frozen peas along with the mussels, if you like.
+            {this.state.context}
           </Typography>
         </CardContent>
         <CardActions className={classes.actions} disableActionSpacing>
@@ -132,7 +135,7 @@ class RecipeReviewCard extends React.Component {
         <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
           <CardContent>
             <Typography paragraph variant="body2">
-              Method:
+             댓글:
             </Typography>
             <Typography paragraph>
               Heat 1/2 cup of the broth in a pot until simmering, add saffron and set aside for 10
@@ -156,6 +159,16 @@ class RecipeReviewCard extends React.Component {
             <Typography>
               Set aside off of the heat to let rest for 10 minutes, and then serve.
             </Typography>
+          </CardContent>
+
+           <CardContent>
+            <Typography paragraph variant="body2">
+             댓글:
+            </Typography>
+            <Typography paragraph>
+              Heat 1/2 cup of the broth in a pot until simmering, add saffron and set aside for 10
+              minutes.
+              </Typography>
           </CardContent>
         </Collapse>
       </Card>
