@@ -3,6 +3,7 @@ import { Component } from 'react';
 import Table from './table';
 import Typography from '@material-ui/core/Typography';
 import styled from 'styled-components';
+import axios from 'axios';
 
 
 const Container = styled.div`
@@ -10,6 +11,7 @@ const Container = styled.div`
   // justify-content: center;
   // align-items: center;
   flex-direction: column;
+  margin-right: 3%;
 `;
 
 const Title = styled.h1`
@@ -20,8 +22,38 @@ const Title = styled.h1`
 `;
 
 export default class NoticeForm extends Component {
-	componentWillMount() {
- 
+
+  constructor(props) {
+    super(props)
+    this.state = {data: [] ,};
+  }  
+  
+	componentDidMount() {
+    function createData(id,title,writer,views) {
+
+      return {id,title,writer,views };
+    }
+    
+    let data = [];
+    function createData(id,title,writer,views) {
+    
+      return {id,title,writer,views };
+    }
+    
+    const url = "http://localhost:8083/";
+
+      axios
+      .get(
+          url+`NoticeAPI/notice/posts?tid=1`
+      )
+      .then(r => {
+        for(var i=0; i<r.data.length; i++){
+          let a= r.data[i]; 
+         data.push( createData(a.id,a.title,a.writer,a.views));   
+        } 
+        this.setState({data:data})    
+      });
+
   }
 
   render() {
@@ -33,8 +65,8 @@ export default class NoticeForm extends Component {
          <Typography variant="display1" gutterBottom>
              <Title>공지사항</Title>
           </Typography>
-        
-      <Table/>
+          <Table data={this.state.data}/>;
+      
       </div>
       </Container>
       );

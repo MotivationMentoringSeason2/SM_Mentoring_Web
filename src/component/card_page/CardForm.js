@@ -4,7 +4,6 @@ import Card from './card';
 import Typography from '@material-ui/core/Typography';
 import styled from 'styled-components';
 
-
 const Container = styled.div`
   display: flex;
   justify-content: center;
@@ -20,9 +19,6 @@ const Title = styled.h1`
 `;
 
 export default class CardForm extends Component {
-	componentWillMount() {
- 
-  }
 
   render() {
     
@@ -34,7 +30,7 @@ export default class CardForm extends Component {
 
           </Typography>
         
-      <Card/>
+      <Card />
       </div>
       </Container>
       );

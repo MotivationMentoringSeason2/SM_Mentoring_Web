@@ -1,9 +1,17 @@
 import React from 'react';
+import {NoticeFormContainer} from "../../container";
+import styled from 'styled-components';
+
+const Notice = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+//   flex-direction: column;
+`;
 
 const IndexPage = () =>
     <div>
-        <div>공지 사항 컴포넌트</div>
-        <div> 일정 안내 컴포넌트 </div>
+         <Notice> <NoticeFormContainer /> <NoticeFormContainer /></Notice>
 
     </div>
 
