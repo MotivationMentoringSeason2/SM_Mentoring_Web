@@ -3,6 +3,7 @@ import { Component } from 'react';
 import Table from './table';
 import Typography from '@material-ui/core/Typography';
 import styled from 'styled-components';
+import axios from 'axios';
 
 
 const Container = styled.div`
@@ -21,9 +22,16 @@ const Title = styled.h1`
 `;
 
 export default class NoticeForm extends Component {
-	componentWillMount() {
-    
+  constructor(props) {
+    super(props)
+    this.state = {data: [] };
+
   }
+
+  
+	componentWillMount() {
+
+      }
 
   render() {
     
