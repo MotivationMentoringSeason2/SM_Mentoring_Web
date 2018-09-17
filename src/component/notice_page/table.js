@@ -20,16 +20,19 @@ const styles = {
   },
 };
 
-// function createData(id,title,writer,views) {
+function createData(id,title,writer,views) {
 
-//   return {id,title,writer,views };
-// }
+  return {id,title,writer,views };
+}
 
 let data = [];
 function createData(id,title,writer,views) {
 
   return {id,title,writer,views };
 }
+
+
+let tbody;
 
 function NoticeAxios(){
   axios
@@ -39,14 +42,13 @@ function NoticeAxios(){
   .then(r => {
     for(var i=0; i<r.data.length; i++){
       let a= r.data[i]; 
-   data.push( createData(a.id,a.title,a.writer,a.views));
+     data.push( createData(a.id,a.title,a.writer,a.views));   
     }
+
   });
 }
 
 NoticeAxios();
-
-console.log(data);
 
 function handleClick(e) {
     e.preventDefault();
@@ -56,7 +58,8 @@ function handleClick(e) {
 
 function SimpleTable(props) {
   const { classes } = props;
-  
+  // data.push(props.data);
+
   return (
     <Paper className={classes.root}>
       <Table className={classes.table}>
@@ -70,7 +73,6 @@ function SimpleTable(props) {
         </TableHead>
         <TableBody>
 
-          
           {data.map(n => {
             return (
        

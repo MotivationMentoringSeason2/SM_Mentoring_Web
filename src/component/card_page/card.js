@@ -16,6 +16,8 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import axios from 'axios';
+
 
 const styles = theme => ({
   card: {
@@ -47,6 +49,31 @@ const styles = theme => ({
   },
 });
 
+
+
+let title; 
+let context;
+let writer;
+let views;
+let writtenDate;
+
+function NoticeAxios(){
+  axios
+  .get(
+      `http://localhost:8083/NoticeAPI/notice/post/1`
+  )
+  .then(r => {
+      title=r.data.title;
+      context=r.data.context;
+      writer=r.data.writer;
+      views=r.data.views;
+      writtenDate=r.data.writtenDate;
+
+  });
+}
+
+NoticeAxios()
+
 class RecipeReviewCard extends React.Component {
   state = { expanded: false };
 
@@ -56,7 +83,7 @@ class RecipeReviewCard extends React.Component {
 
   render() {
     const { classes } = this.props;
-
+ 
     return (
       <Card className={classes.card}>
         <CardHeader
@@ -70,7 +97,7 @@ class RecipeReviewCard extends React.Component {
               <MoreVertIcon />
             </IconButton>
           }
-          title="Shrimp and Chorizo Paella"
+          title={title}
           subheader="September 14, 2016"
         />
         <CardMedia

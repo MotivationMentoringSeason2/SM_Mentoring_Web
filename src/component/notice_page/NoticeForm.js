@@ -24,14 +24,12 @@ const Title = styled.h1`
 export default class NoticeForm extends Component {
   constructor(props) {
     super(props)
-    this.state = {data: [] };
-
-  }
-
+    this.state = {data1: [] };
+  }  
   
-	componentWillMount() {
-
-      }
+	componentDidMount() {
+  
+    }
 
   render() {
     
@@ -43,7 +41,7 @@ export default class NoticeForm extends Component {
              <Title>공지사항</Title>
           </Typography>
         
-      <Table/>
+      <Table data={this.state.data1}/>
       </div>
       </Container>
       );
