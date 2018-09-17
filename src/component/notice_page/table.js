@@ -8,7 +8,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import './table.css';
-
+import axios from 'axios';
 
 const styles = {
   root: {
@@ -21,29 +21,17 @@ const styles = {
 };
 
 
+function handleClick(e) {
 
-let id = 0;
-function createData(name, calories, fat, carbs, protein) {
-  id += 1;
-  return { id, name, calories, fat, carbs, protein };
-}
-
-const data = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
-
-  function handleClick(e) {
     e.preventDefault();
-    window.location.replace("http://localhost:3000/card");
+    window.location.replace("http://localhost:3000/card?"+e.target.parentNode.id);
+  
   }
 
 
 function SimpleTable(props) {
   const { classes } = props;
+  // data.push(props.data);
 
   return (
     <Paper className={classes.root}>
@@ -57,17 +45,18 @@ function SimpleTable(props) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map(n => {
+
+          {props.data.map(n => {
             return (
        
-              <TableRow key={n.id} onClick={handleClick} >
+              <TableRow key={n.id} onClick={handleClick} id={n.id}>
            
                 <TableCell component="th" scope="row">
-                  {n.name}
+                  {n.title}
                 </TableCell>
-                <TableCell numeric>{n.calories}</TableCell>
-                <TableCell numeric>{n.fat}</TableCell>
-                <TableCell numeric>{n.carbs}</TableCell>
+                <TableCell numeric>{n.title}</TableCell>
+                <TableCell numeric>{n.writer}</TableCell>
+                <TableCell numeric>{n.views}</TableCell>
                 
               </TableRow>  
           
