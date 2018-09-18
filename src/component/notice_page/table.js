@@ -40,7 +40,7 @@ function SimpleTable(props) {
         <TableBody>
           {props.data.map(n => {
             return (
-              <TableRow key={n.id} onClick={() => (props.history.push(`/notice/view?id=${n.id}&${props.pagination.queryString}`))} id={n.id}>
+              <TableRow key={n.id} onClick={() => (!indexed ? props.history.push(`/notice/view?id=${n.id}&${props.pagination.queryString}`) : props.history.push(`/notice/view?id=${n.id}&tid=1&sz=10&pg=1`))} id={n.id}>
                 <TableCell component="th" scope="row">
                     {n.writer}
                 </TableCell>

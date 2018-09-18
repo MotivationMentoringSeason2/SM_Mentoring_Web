@@ -25,7 +25,7 @@ export const noticeItems = (
             </ListItemIcon>
             <ListItemText primary="알립니다" />
         </ListItem>
-        <Link to="/notice/list?tid=1&pg=1&sz=10" style={{ textDecoration: 'none' }}>
+        <Link to="/notice/1/list/_move?pg=1&sz=10" style={{ textDecoration: 'none' }}>
             <ListItem button>
                 <ListItemIcon>
                     <ArrowForwardIcon />
@@ -33,7 +33,7 @@ export const noticeItems = (
                 <ListItemText primary="공지사항" />
             </ListItem>
         </Link>
-        <Link to="/notice/list?tid=2&pg=1&sz=10" style={{ textDecoration: 'none' }}>
+        <Link to="/notice/2/list/_move?pg=1&sz=10" style={{ textDecoration: 'none' }}>
             <ListItem button>
                 <ListItemIcon>
                     <ArrowForwardIcon />
@@ -41,7 +41,7 @@ export const noticeItems = (
                 <ListItemText primary="자유게시판" />
             </ListItem>
         </Link>
-        <Link to="/notice/list?tid=3&pg=1&sz=10" style={{ textDecoration: 'none' }}>
+        <Link to="/notice/3/list/_move?pg=1&sz=10" style={{ textDecoration: 'none' }}>
             <ListItem button>
                 <ListItemIcon>
                     <ArrowForwardIcon />

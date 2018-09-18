@@ -17,7 +17,11 @@ const GuestRouter = () => (
             <Route exact path="/login" component={LoginPage} />
             <Route exact path="/account/identity" component={FindIdentityPage} />
             <Route exact path="/sign" component={SignPage} />
-            <Route path="/notice/list" component={NoticePage} />
+            <Route path="/notice/:id/list" component={NoticePage} />
+            <Route path="/notice/:id/list/_move" render={({ match, location }) => {
+                window.location.href = `/notice/${match.params.id}/list${location.search}`
+                return <Redirect to={`/notice/${match.params.id}/list${location.search}`}/>
+            }} />
             <Route path="/notice/view" component={CardPage} />
         </ScrollToTop>
     </div>
