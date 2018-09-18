@@ -31,7 +31,7 @@ function handleClick(e) {
 
 function SimpleTable(props) {
   const { classes } = props;
-  // data.push(props.data);
+    // data.push(props.data);
 
   return (
     <Paper className={classes.root}>
