@@ -4,7 +4,6 @@ import { withStyles } from '@material-ui/core/styles';
 import classnames from 'classnames';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Collapse from '@material-ui/core/Collapse';
@@ -15,7 +14,10 @@ import red from '@material-ui/core/colors/red';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
+
+import queryString from 'query-string';
+import {withRouter} from 'react-router-dom';
+
 import axios from 'axios';
 import './card.css'
 
@@ -54,15 +56,13 @@ const styles = theme => ({
 
 });
 
-
-
-
+const NOTICE_URL = 'http://localhost:8083/NoticeAPI';
 
 class RecipeReviewCard extends React.Component {
   state = { expanded: false };
 
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {title: "제목",context: "내용", writer: "작성자", views: "조회수",writtenDate: "작성일",};
   }  
   handleExpandClick = () => {
@@ -70,21 +70,15 @@ class RecipeReviewCard extends React.Component {
   };
 
   componentDidMount() {
-    let split= window.location.href.split('?');
-
-    const url = "http://localhost:8083/";
-
-      axios
-      .get(
-          url+`NoticeAPI/notice/post/`+split[1]
-      )
-      .then(r => {
-        this.setState({title:r.data.title});
-        this.setState({context :r.data.context});
-        this.setState({writer:r.data.writer});
-        this.setState({views:r.data.views});
-        this.setState({writtenDate:r.data.writtenDate+" 작성자 "+ r.data.writer});
-      });
+    const {id} = queryString.parse(this.props.location.search);
+    axios.get(`${NOTICE_URL}/notice/post/${id}`)
+    .then(r => {
+      this.setState({title:r.data.title});
+      this.setState({context :r.data.context});
+      this.setState({writer:r.data.writer});
+      this.setState({views:r.data.views});
+      this.setState({writtenDate:r.data.writtenDate+" 작성자 "+ r.data.writer});
+    });
     
   }
 
@@ -180,4 +174,4 @@ RecipeReviewCard.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(RecipeReviewCard);
+export default withStyles(styles)(withRouter(RecipeReviewCard));
