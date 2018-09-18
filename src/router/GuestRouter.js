@@ -7,6 +7,7 @@ import {NoticePage} from "../page/notice_page";
 import {CardPage} from "../page/card_page";
 import {FindIdentityPage} from "../page/find_identity_page";
 import ScrollToTop from "./ScrollToTop";
+import {IntroViewPage} from "../page/intro_view_page";
 
 
 const GuestRouter = () => (
@@ -23,6 +24,7 @@ const GuestRouter = () => (
                 return <Redirect to={`/notice/${match.params.id}/list${location.search}`}/>
             }} />
             <Route path="/notice/view" component={CardPage} />
+            <Route exact path="/intro/view" component={IntroViewPage} />
         </ScrollToTop>
     </div>
 );
