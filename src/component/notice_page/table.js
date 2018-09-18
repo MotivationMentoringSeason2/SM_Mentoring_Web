@@ -31,7 +31,7 @@ function handleClick(e) {
 
 function SimpleTable(props) {
   const { classes } = props;
-    // data.push(props.data);
+
 
   return (
     <Paper className={classes.root}>
@@ -54,7 +54,7 @@ function SimpleTable(props) {
                 <TableCell component="th" scope="row">
                   {n.title}
                 </TableCell>
-                <TableCell numeric>{n.title}</TableCell>
+                <TableCell numeric>{n.writtenDate}</TableCell>
                 <TableCell numeric>{n.writer}</TableCell>
                 <TableCell numeric>{n.views}</TableCell>
                 

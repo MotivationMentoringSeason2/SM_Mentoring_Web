@@ -29,16 +29,12 @@ export default class NoticeForm extends Component {
   }  
   
 	componentDidMount() {
-    function createData(id,title,writer,views) {
+    function createData(id,title,writer,views,writtenDate) {
 
-      return {id,title,writer,views };
+      return {id,title,writer,views,writtenDate };
     }
     
     let data = [];
-    function createData(id,title,writer,views) {
-    
-      return {id,title,writer,views };
-    }
     
     const url = "http://localhost:8083/";
 
@@ -49,7 +45,10 @@ export default class NoticeForm extends Component {
       .then(r => {
         for(var i=0; i<r.data.length; i++){
           let a= r.data[i]; 
-         data.push( createData(a.id,a.title,a.writer,a.views));   
+          let split = a.writtenDate.split('T');
+
+
+         data.push( createData(a.id,a.title,a.writer,a.views,split[0]));   
         } 
         this.setState({data:data})    
       });
