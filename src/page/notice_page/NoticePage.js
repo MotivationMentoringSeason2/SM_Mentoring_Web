@@ -4,7 +4,7 @@ import {NoticeFormContainer} from "../../container";
 const NoticePage = () => (
     <div>
         <br/>
-        <NoticeFormContainer />
+        <NoticeFormContainer indexed={false} />
     </div>
 );
 export default NoticePage;

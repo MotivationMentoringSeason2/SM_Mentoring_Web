@@ -10,32 +10,25 @@ import Paper from '@material-ui/core/Paper';
 import './table.css';
 import {withRouter} from 'react-router-dom';
 
-import axios from 'axios';
-
-const styles = {
+const styles = theme => ({
   root: {
-    width: '100%',
+    width: '80%',
+    marginTop: theme.spacing.unit * 3,
     overflowX: 'auto',
   },
   table: {
-    minWidth: 700,
+    minWidth: window.innerWidth > 450 ? 800 : 320,
   },
-};
-
-
-function handleClick(e) {
-    e.preventDefault();
-    window.location.replace("http://localhost:3000/card?"+e.target.parentNode.id);
-}
-
+  tableIndexed : {
+    minWidth : window.innerWidth > 450 ? 600 : 320
+  }
+});
 
 function SimpleTable(props) {
-  const { classes } = props;
-  // data.push(props.data);
-
+  const { classes, indexed } = props;
   return (
     <Paper className={classes.root}>
-      <Table className={classes.table}>
+      <Table className={indexed ? classes.tableIndexed : classes.table}>
         <TableHead>
           <TableRow>
             <TableCell>제목</TableCell>
@@ -45,15 +38,14 @@ function SimpleTable(props) {
           </TableRow>
         </TableHead>
         <TableBody>
-
           {props.data.map(n => {
             return (
-              <TableRow key={n.id} onClick={() => (props.history.push(`/notice/view?id=${n.id}`))} id={n.id}>
+              <TableRow key={n.id} onClick={() => (props.history.push(`/notice/view?id=${n.id}&${props.pagination.queryString}`))} id={n.id}>
                 <TableCell component="th" scope="row">
-                  {n.title}
+                    {n.writer}
                 </TableCell>
+                <TableCell numeric>{n.writtenDate}</TableCell>
                 <TableCell numeric>{n.title}</TableCell>
-                <TableCell numeric>{n.writer}</TableCell>
                 <TableCell numeric>{n.views}</TableCell>
               </TableRow>
             );
