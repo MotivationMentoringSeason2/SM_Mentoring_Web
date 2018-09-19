@@ -2,13 +2,16 @@ import {IntroTitleList} from "../component/intro_edit_page";
 import {connect} from 'react-redux';
 import {
     adminLoadIntroTitles, adminLoadIntroTitlesSuccess, adminLoadIntroTitlesFailure, resetAdminLoadIntroTitles,
-    adminUpdateIntroTitle, adminUpdateIntroTitleSuccess, adminUpdateIntroTitleFailure, resetAdminUpdateIntroTitle
+    adminCreateIntroTitle, adminCreateIntroTitleSuccess, adminCreateIntroTitleFailure,
+    adminUpdateIntroTitle, adminUpdateIntroTitleSuccess, adminUpdateIntroTitleFailure, resetAdminSaveIntroTitle,
+    adminRemoveIntroTitleMulti, adminRemoveIntroTitleMultiSuccess, adminRemoveIntroTitleMultiFailure, resetAdminRemoveIntroTitle
 } from "../action/action_intro";
 
 function mapStateToProps(state){
     return {
         introList : state.intro.introList,
         saveStatus : state.intro.saveStatus,
+        deleteStatus : state.intro.deleteStatus,
         accessAccount : state.account.accessAccount
     }
 }
@@ -28,7 +31,20 @@ const mapDispatchToProps = (dispatch) => {
             else
                 dispatch(adminUpdateIntroTitleFailure(response.payload));
         }),
-        resetExecuteUpdateTitle : () => dispatch(resetAdminUpdateIntroTitle())
+        executeCreateTitle : (introForm, writer) => dispatch(adminCreateIntroTitle(introForm, writer)).then((response) => {
+            if(response.payload && response.payload.status === 200)
+                dispatch(adminCreateIntroTitleSuccess(response.payload));
+            else
+                dispatch(adminCreateIntroTitleFailure(response.payload));
+        }),
+        resetExecuteSaveTitle : () => dispatch(resetAdminSaveIntroTitle()),
+        executeRemoveTitles : (ids) => dispatch(adminRemoveIntroTitleMulti(ids)).then((response) => {
+            if(response.payload && response.payload.status === 200)
+                dispatch(adminRemoveIntroTitleMultiSuccess(response.payload));
+            else
+                dispatch(adminRemoveIntroTitleMultiFailure(response.payload));
+        }),
+        resetExecuteRemoveTitle : () => dispatch(resetAdminRemoveIntroTitle())
     }
 }
 

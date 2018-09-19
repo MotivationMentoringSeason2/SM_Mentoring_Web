@@ -12,10 +12,21 @@ export const ADMIN_LOAD_INTRO_TITLES_SUCCESS = 'ADMIN_LOAD_INTRO_TITLES_SUCCESS'
 export const ADMIN_LOAD_INTRO_TITLES_FAILURE = 'ADMIN_LOAD_INTRO_TITLES_FAILURE';
 export const RESET_ADMIN_LOAD_INTRO_TITLES = 'RESET_ADMIN_LOAD_INTRO_TITLES';
 
+export const ADMIN_CREATE_INTRO_TITLE = 'ADMIN_CREATE_INTRO_TITLE';
+export const ADMIN_CREATE_INTRO_TITLE_SUCCESS = 'ADMIN_CREATE_INTRO_TITLE_SUCCESS';
+export const ADMIN_CREATE_INTRO_TITLE_FAILURE = 'ADMIN_CREATE_INTRO_TITLE_FAILURE';
+
 export const ADMIN_UPDATE_INTRO_TITLE = 'ADMIN_UPDATE_INTRO_TITLE';
 export const ADMIN_UPDATE_INTRO_TITLE_SUCCESS = 'ADMIN_UPDATE_INTRO_TITLE_SUCCESS';
 export const ADMIN_UPDATE_INTRO_TITLE_FAILURE = 'ADMIN_UPDATE_INTRO_TITLE_FAILURE';
-export const RESET_ADMIN_UPDATE_INTRO_TITLE = 'RESET_ADMIN_UPDATE_INTRO_TITLE';
+
+export const RESET_ADMIN_SAVE_INTRO_TITLE = 'RESET_ADMIN_SAVE_INTRO_TITLE';
+
+export const ADMIN_REMOVE_INTRO_TITLE_MULTI = 'ADMIN_REMOVE_INTRO_TITLE_MULTI';
+export const ADMIN_REMOVE_INTRO_TITLE_MULTI_SUCCESS = 'ADMIN_REMOVE_INTRO_TITLE_MULTI_SUCCESS';
+export const ADMIN_REMOVE_INTRO_TITLE_MULTI_FAILURE = 'ADMIN_REMOVE_INTRO_TITLE_MULTI_FAILURE';
+
+export const RESET_ADMIN_REMOVE_INTRO_TITLE = 'RESET_ADMIN_REMOVE_INTRO_TITLE';
 
 export function anybodyLoadIntroAccordion(){
     const request = axios({
@@ -79,6 +90,32 @@ export function resetAdminLoadIntroTitles(){
     }
 }
 
+export function adminCreateIntroTitle(introForm, writer){
+    const request = axios({
+        url : `${ROOT_URL}/intro/${writer}`,
+        method : 'post',
+        data : introForm
+    });
+    return {
+        type : ADMIN_CREATE_INTRO_TITLE,
+        payload : request
+    }
+}
+
+export function adminCreateIntroTitleSuccess(message){
+    return {
+        type : ADMIN_CREATE_INTRO_TITLE_SUCCESS,
+        payload : message.data
+    }
+}
+
+export function adminCreateIntroTitleFailure(error){
+    return {
+        type : ADMIN_CREATE_INTRO_TITLE_FAILURE,
+        payload : error
+    }
+}
+
 export function adminUpdateIntroTitle(introForm, writer){
     const request = axios({
         url : `${ROOT_URL}/intro/${writer}`,
@@ -105,8 +142,40 @@ export function adminUpdateIntroTitleFailure(error){
     }
 }
 
-export function resetAdminUpdateIntroTitle(){
+export function resetAdminSaveIntroTitle(){
     return {
-        type : RESET_ADMIN_UPDATE_INTRO_TITLE
+        type : RESET_ADMIN_SAVE_INTRO_TITLE
+    }
+}
+
+export function adminRemoveIntroTitleMulti(ids){
+    const request = axios({
+        url : `${ROOT_URL}/intros`,
+        method : 'delete',
+        data : ids
+    });
+    return {
+        type : ADMIN_REMOVE_INTRO_TITLE_MULTI,
+        payload : request
+    }
+}
+
+export function adminRemoveIntroTitleMultiSuccess(message){
+    return {
+        type : ADMIN_REMOVE_INTRO_TITLE_MULTI_SUCCESS,
+        payload : message.data
+    }
+}
+
+export function adminRemoveIntroTitleMultiFailure(error){
+    return {
+        type : ADMIN_REMOVE_INTRO_TITLE_MULTI_FAILURE,
+        payload : error
+    }
+}
+
+export function resetAdminRemoveIntroTitle(){
+    return {
+        type : RESET_ADMIN_REMOVE_INTRO_TITLE
     }
 }

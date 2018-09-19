@@ -14,17 +14,23 @@ class IntroEditModal extends Component{
     }
 
     handleSubmit(event){
-        const { writer, updating } = this.props;
+        const { writer, updating, creating } = this.props;
         const {id, context} = this.state;
         if(context.trim() === '') {
             alert("제목은 공백이 존재할 수 없습니다. 다시 입력하세요.");
             event.preventDefault();
         }
         else{
-            updating({
-                introId : id,
-                context : context,
-            }, writer);
+            if(id !== 0)
+                updating({
+                    introId : id,
+                    context : context
+                }, writer);
+            else
+                creating({
+                    introId : id,
+                    context : context
+                }, writer)
             event.preventDefault();
         }
     }
@@ -37,16 +43,15 @@ class IntroEditModal extends Component{
             <div className={showHideClassName}>
                 <section className="modal-main-comment w3-round-large">
                     <div className="w3-container w3-sand w3-round-large">
-                        <h2 className="w3-text-black">소개문 제목을 수정합니다.</h2>
+                        <h2 className="w3-text-black">소개문 제목을 {data.id === 0 ? '등록' : '수정'}합니다.</h2>
                     </div>
                     <div className="w3-container">
-                        <br/>
-                        <p>원제 : {data.context}</p>
+                        {data.id !== 0 ? <p>원제 : {data.context}</p> : ''}
                         <br/>
                         <form onSubmit={this.handleSubmit.bind(this)}>
-                            <input className="w3-input" type="text" name="context" onChange={this.handleChange.bind(this)} placeholder={"수정할 제목 내용을 입력하세요."} value={context} />
+                            <input className="w3-input" type="text" name="context" onChange={this.handleChange.bind(this)} placeholder={`${data.id === 0 ? '등록' : '수정'}할 제목 내용을 입력하세요.`} value={context} />
                             <br/><br/>
-                            <button type="submit" className="w3-button w3-round-large w3-green">제목 수정하기</button>
+                            <button type="submit" className="w3-button w3-round-large w3-green">제목 {data.id === 0 ? '등록' : '수정'}하기</button>
                             <br/><br/>
                             <button type="button" className="w3-button w3-round-large w3-red" onClick={() => cancel()}>취소하기</button>
                             <br/><br/>
