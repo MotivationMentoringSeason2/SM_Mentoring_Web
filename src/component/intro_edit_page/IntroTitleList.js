@@ -112,7 +112,7 @@ class IntroTitleList extends Component{
                                     <button className="w3-small w3-button w3-round-large w3-red" onClick={() => this.handleClickCheck(intro.id, intro.context)}>선택</button>
                             }
                             &nbsp;
-                            <Link to={`/intro/detail/${intro.id}`}><button className="w3-small w3-button w3-round-large w3-purple">상세내용 조회</button></Link>
+                            <Link to={`/intro/${intro.id}/detail/edit`}><button className="w3-small w3-button w3-round-large w3-purple">상세내용 조회</button></Link>
                         </td>
                     </tr>
                 );

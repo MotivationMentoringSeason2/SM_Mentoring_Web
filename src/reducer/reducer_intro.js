@@ -3,7 +3,8 @@ import {
     ADMIN_LOAD_INTRO_TITLES, ADMIN_LOAD_INTRO_TITLES_SUCCESS, ADMIN_LOAD_INTRO_TITLES_FAILURE, RESET_ADMIN_LOAD_INTRO_TITLES,
     ADMIN_CREATE_INTRO_TITLE, ADMIN_CREATE_INTRO_TITLE_SUCCESS, ADMIN_CREATE_INTRO_TITLE_FAILURE,
     ADMIN_UPDATE_INTRO_TITLE, ADMIN_UPDATE_INTRO_TITLE_SUCCESS, ADMIN_UPDATE_INTRO_TITLE_FAILURE, RESET_ADMIN_SAVE_INTRO_TITLE,
-    ADMIN_REMOVE_INTRO_TITLE_MULTI, ADMIN_REMOVE_INTRO_TITLE_MULTI_SUCCESS, ADMIN_REMOVE_INTRO_TITLE_MULTI_FAILURE, RESET_ADMIN_REMOVE_INTRO_TITLE
+    ADMIN_REMOVE_INTRO_TITLE_MULTI, ADMIN_REMOVE_INTRO_TITLE_MULTI_SUCCESS, ADMIN_REMOVE_INTRO_TITLE_MULTI_FAILURE, RESET_ADMIN_REMOVE_INTRO_TITLE,
+    ADMIN_LOAD_DETAIL_LIST, ADMIN_LOAD_DETAIL_LIST_SUCCESS, ADMIN_LOAD_DETAIL_LIST_FAILURE, RESET_ADMIN_LOAD_DETAIL_LIST
 } from "../action/action_intro";
 
 const INITIAL_STATE = {
@@ -12,6 +13,9 @@ const INITIAL_STATE = {
     },
     introList : {
         intros : [], loading : false, error : null
+    },
+    detailList : {
+        details : [], loading : false, error : null
     },
     saveStatus : {
         message : null, loading : false, error : null
@@ -67,6 +71,16 @@ export default function(state = INITIAL_STATE, action) {
             return { ...state, deleteStatus : { message : null, loading : false, error : error }};
         case RESET_ADMIN_REMOVE_INTRO_TITLE :
             return { ...state, deleteStatus : { message : null, loading : false, error : null }};
+
+        case ADMIN_LOAD_DETAIL_LIST :
+            return { ...state, detailList : { details : [], loading : true, error : null }};
+        case ADMIN_LOAD_DETAIL_LIST_SUCCESS :
+            return { ...state, detailList : { details : action.payload, loading : false, error : null }};
+        case ADMIN_LOAD_DETAIL_LIST_FAILURE :
+            error = action.payload.data || { message : action.payload.data };
+            return { ...state, detailList : { details : [], loading : false, error : error }};
+        case RESET_ADMIN_LOAD_DETAIL_LIST :
+            return { ...state, detailList : { details : [], loading : false, error : null }};
 
         default :
             return state;

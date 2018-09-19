@@ -12,6 +12,7 @@ import {ProfileEditPage} from "../page/profile_edit_page";
 import {NoticePage} from "../page/notice_page";
 import {IntroViewPage} from "../page/intro_view_page";
 import {IntroEditPage} from "../page/intro_edit_page";
+import {DetailEditPage} from "../page/intro_detail_edit_page";
 
 const AdminRouter = () => (
     <div>
@@ -26,6 +27,7 @@ const AdminRouter = () => (
             <Route exact path="/intro/view" component={IntroViewPage} />
             <Route exact path="/intro/edit" component={IntroEditPage} />
             <Route exact path="/intro/edit/_refresh" render={() => <Redirect to="/intro/edit" />} />
+            <Route exact path="/intro/:id/detail/edit" component={DetailEditPage} />
             <Route exact path="/account/sign/edit" component={SignUpdatePage} />
             <Route exact path="/account/timetable/edit" component={TimetableEditPage} />
             <Route exact path="/account/profile/edit" component={ProfileEditPage} />

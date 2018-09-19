@@ -28,6 +28,11 @@ export const ADMIN_REMOVE_INTRO_TITLE_MULTI_FAILURE = 'ADMIN_REMOVE_INTRO_TITLE_
 
 export const RESET_ADMIN_REMOVE_INTRO_TITLE = 'RESET_ADMIN_REMOVE_INTRO_TITLE';
 
+export const ADMIN_LOAD_DETAIL_LIST = 'ADMIN_LOAD_DETAIL_LIST';
+export const ADMIN_LOAD_DETAIL_LIST_SUCCESS = 'ADMIN_LOAD_DETAIL_LIST_SUCCESS';
+export const ADMIN_LOAD_DETAIL_LIST_FAILURE = 'ADMIN_LOAD_DETAIL_LIST_FAILURE';
+export const RESET_ADMIN_LOAD_DETAIL_LIST = 'RESET_ADMIN_LOAD_DETAIL_LIST';
+
 export function anybodyLoadIntroAccordion(){
     const request = axios({
         url : `${ROOT_URL}/accordion`,
@@ -177,5 +182,36 @@ export function adminRemoveIntroTitleMultiFailure(error){
 export function resetAdminRemoveIntroTitle(){
     return {
         type : RESET_ADMIN_REMOVE_INTRO_TITLE
+    }
+}
+
+export function adminLoadDetailList(introId){
+    const request = axios({
+        url : `${ROOT_URL}/details/${introId}`,
+        method : 'get'
+    });
+    return {
+        type : ADMIN_LOAD_DETAIL_LIST,
+        payload : request
+    }
+}
+
+export function adminLoadDetailListSuccess(details){
+    return {
+        type : ADMIN_LOAD_DETAIL_LIST_SUCCESS,
+        payload : details.data
+    }
+}
+
+export function adminLoadDetailListFailure(error){
+    return {
+        type : ADMIN_LOAD_DETAIL_LIST_FAILURE,
+        payload : error
+    }
+}
+
+export function resetAdminLoadDetailList(){
+    return {
+        type : RESET_ADMIN_LOAD_DETAIL_LIST
     }
 }
