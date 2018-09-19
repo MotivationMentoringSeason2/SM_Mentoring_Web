@@ -4,7 +4,7 @@ import ScrollToTop from "./ScrollToTop";
 
 import {IndexPage} from "../page/index_page";
 import {SignUpdatePage} from "../page/sign_update_page";
-import {TimetableViewPage} from "../page/timetable_view_page";
+// import {TimetableViewPage} from "../page/timetable_view_page";
 import {TimetableEditPage} from "../page/timetable_edit_page";
 import {AccountListPage} from "../page/account_list_page";
 import {AccountViewPage} from "../page/account_view_page";
