@@ -12,6 +12,8 @@ import {ProfileEditPage} from "../page/profile_edit_page";
 import {NoticePage} from "../page/notice_page";
 import {IntroViewPage} from "../page/intro_view_page";
 import {IntroEditPage} from "../page/intro_edit_page";
+import {SchedulePage} from "../page/schedule_page";
+import {ScheduleEditPage} from "../page/schedule_edit_page";
 import {DetailEditPage} from "../page/intro_detail_edit_page";
 
 const AdminRouter = () => (
@@ -27,6 +29,9 @@ const AdminRouter = () => (
             <Route exact path="/intro/view" component={IntroViewPage} />
             <Route exact path="/intro/edit" component={IntroEditPage} />
             <Route exact path="/intro/edit/_refresh" render={() => <Redirect to="/intro/edit" />} />
+            <Route path="/schedule/view" component={SchedulePage} />
+            <Route exact path="/schedule/edit" component={ScheduleEditPage} />
+            <Route exact path="/schedule/edit/_refresh" render={() => <Redirect to="/schedule/edit" />} />
             <Route exact path="/intro/:id/detail/edit" component={DetailEditPage} />
             <Route exact path="/intro/:id/detail/edit/_refresh" render={({ match }) => <Redirect to={`/intro/${match.params.id}/detail/edit`} />} />
             <Route exact path="/account/sign/edit" component={SignUpdatePage} />

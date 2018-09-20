@@ -7,10 +7,10 @@ export const ANYBODY_LOAD_CALENDAR_LIST_SUCCESS = 'ANYBODY_LOAD_CALENDAR_LIST_SU
 export const ANYBODY_LOAD_CALENDAR_LIST_FAILURE = 'ANYBODY_LOAD_CALENDAR_LIST_FAILURE';
 export const RESET_ANYBODY_LOAD_CALENDAR_LIST = 'RESET_ANYBODY_LOAD_CALENDAR_LIST';
 
-export const ANYBODY_UPDATE_CALENDAR_ELEMENT = 'ANYBODY_UPDATE_CALENDAR_ELEMENT';
-export const ANYBODY_UPDATE_CALENDAR_ELEMENT_SUCCESS = 'ANYBODY_UPDATE_CALENDAR_ELEMENT_SUCCESS';
-export const ANYBODY_UPDATE_CALENDAR_ELEMENT_FAILURE = 'ANYBODY_UPDATE_CALENDAR_ELEMENT_FAILURE';
-export const RESET_ANYBODY_UPDATE_CALENDAR_ELEMENT = 'RESET_ANYBODY_UPDATE_CALENDAR_ELEMENT';
+export const ADMIN_UPDATE_CALENDAR_ELEMENT = 'ADMIN_UPDATE_CALENDAR_ELEMENT';
+export const ADMIN_UPDATE_CALENDAR_ELEMENT_SUCCESS = 'ADMIN_UPDATE_CALENDAR_ELEMENT_SUCCESS';
+export const ADMIN_UPDATE_CALENDAR_ELEMENT_FAILURE = 'ADMIN_UPDATE_CALENDAR_ELEMENT_FAILURE';
+export const RESET_ADMIN_UPDATE_CALENDAR_ELEMENT = 'RESET_ADMIN_UPDATE_CALENDAR_ELEMENT';
 
 export function anybodyLoadCalendarList(){
     const request = axios({
@@ -40,5 +40,37 @@ export function anybodyLoadCalendarListFailure(error){
 export function resetAnybodyLoadCalendarList(){
     return {
         type : RESET_ANYBODY_LOAD_CALENDAR_LIST
+    }
+}
+
+export function adminUpdateCalendarElement(calendarForm, writer){
+    const request = axios({
+        url : `${ROOT_URL}/calendar/${writer}`,
+        method : 'put',
+        data : calendarForm
+    });
+    return {
+        type : ADMIN_UPDATE_CALENDAR_ELEMENT,
+        payload : request
+    }
+}
+
+export function adminUpdateCalendarElementSuccess(message){
+    return {
+        type : ADMIN_UPDATE_CALENDAR_ELEMENT_SUCCESS,
+        payload : message.data
+    }
+}
+
+export function adminUpdateCalendarElementFailure(error){
+    return {
+        type : ADMIN_UPDATE_CALENDAR_ELEMENT_FAILURE,
+        payload : error
+    }
+}
+
+export function resetAdminUpdateCalendarElement(){
+    return {
+        type : RESET_ADMIN_UPDATE_CALENDAR_ELEMENT
     }
 }
