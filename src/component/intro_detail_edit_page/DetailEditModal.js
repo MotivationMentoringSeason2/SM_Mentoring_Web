@@ -14,16 +14,10 @@ class DetailEditModal extends Component{
     }
 
     handleSubmit(event){
-        const { creating, writer } = this.props;
+        const { creating } = this.props;
         const {context} = this.state;
-        if(context.trim() === '') {
-            alert("세부 내용은 공백이 존재할 수 없습니다. 다시 입력하세요.");
-            event.preventDefault();
-        }
-        else{
-            console.log(context);
-            event.preventDefault();
-        }
+        event.preventDefault();
+        creating(context);
     }
 
     render(){

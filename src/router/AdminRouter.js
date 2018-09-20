@@ -28,6 +28,7 @@ const AdminRouter = () => (
             <Route exact path="/intro/edit" component={IntroEditPage} />
             <Route exact path="/intro/edit/_refresh" render={() => <Redirect to="/intro/edit" />} />
             <Route exact path="/intro/:id/detail/edit" component={DetailEditPage} />
+            <Route exact path="/intro/:id/detail/edit/_refresh" render={({ match }) => <Redirect to={`/intro/${match.params.id}/detail/edit`} />} />
             <Route exact path="/account/sign/edit" component={SignUpdatePage} />
             <Route exact path="/account/timetable/edit" component={TimetableEditPage} />
             <Route exact path="/account/profile/edit" component={ProfileEditPage} />
