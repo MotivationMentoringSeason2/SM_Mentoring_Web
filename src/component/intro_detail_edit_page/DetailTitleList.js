@@ -57,7 +57,9 @@ class DetailTitleList extends Component{
         });
     }
 
-    componentWillUmmount(){
+    componentWillUnmount(){
+        this.props.resetExecuteSaveDetail();
+        this.props.resetExecuteRemoveDetails();
         this.props.resetFetchDetailList();
     }
 
@@ -94,7 +96,7 @@ class DetailTitleList extends Component{
         });
     }
 
-    handleSave(id, context){
+    handleUpdateDetail(id, context){
         const { principal } = this.props.accessAccount;
         if(context.trim() === '') {
             alert("세부 내용은 공백이 존재할 수 없습니다. 다시 입력하세요.");
@@ -102,9 +104,27 @@ class DetailTitleList extends Component{
         else{
             let beUpdate = window.confirm("세부 내용을 저장합니다. 계속 하시겠습니까?");
             if(beUpdate) {
-                console.log(id);
-                console.log(context);
-                console.log(principal.identity);
+                this.props.executeUpdateDetail({
+                    detailId : id,
+                    context : context
+                }, principal.identity);
+            }
+        }
+    }
+
+    handleCreateDetail(context) {
+        const {principal} = this.props.accessAccount;
+        const {match} = this.props;
+        if(context.trim() === '') {
+            alert("세부 내용은 공백이 존재할 수 없습니다. 다시 입력하세요.");
+        }
+        else{
+            let beCreate = window.confirm("세부 내용을 추가합니다. 계속 하시겠습니까?");
+            if(beCreate) {
+                this.props.executeCreateDetail({
+                    detailId : 0,
+                    context : context
+                }, match.params.id, principal.identity);
             }
         }
     }
@@ -125,16 +145,33 @@ class DetailTitleList extends Component{
         const { ids } = this.state;
         let beRemoving = window.confirm("현재 선택하신 세부 문장들을 삭제합니다. 계속 하시겠습니까?");
         if(beRemoving)
-            console.log(ids);
+            this.props.executeRemoveDetails(ids);
     }
 
     render(){
         const { classes } = this.props;
         const { ids, contexts, selectDetails, creatable } = this.state;
         const { principal } = this.props.accessAccount;
+
+        if(this.props.saveStatus.message){
+            alert(this.props.saveStatus.message);
+            this.props.history.push(`/intro/${this.props.match.params.id}/detail/edit/_refresh`);
+        } else if(this.props.saveStatus.error){
+            alert(this.props.saveStatus.error);
+            this.props.history.push(`/intro/${this.props.match.params.id}/detail/edit/_refresh`);
+        }
+
+        if(this.props.deleteStatus.message){
+            alert(this.props.deleteStatus.message);
+            this.props.history.push(`/intro/${this.props.match.params.id}/detail/edit/_refresh`);
+        } else if(this.props.deleteStatus.error){
+            alert(this.props.deleteStatus.error);
+            this.props.history.push(`/intro/${this.props.match.params.id}/detail/edit/_refresh`);
+        }
+
         let renderModal;
         if(creatable){
-            renderModal = <DetailEditModal creatable={creatable} writer={principal.identity} cancel={this.handleClickCancelCreate.bind(this)} />
+            renderModal = <DetailEditModal creatable={creatable} writer={principal.identity} cancel={this.handleClickCancelCreate.bind(this)} creating={this.handleCreateDetail.bind(this)} />
         }
         return(
             <div>
@@ -160,7 +197,7 @@ class DetailTitleList extends Component{
                             <div className="w3-margin w3-padding-16 w3-round-large w3-border w3-border-light-green">
                                 <input className="w3-input w3-animate-input" type="text" id={`${idx}`} onChange={this.handleChange.bind(this)} placeholder={'수정할 세부 내용을 입력하세요.'} value={c.context} />
                                 <p>작성자 : {c.writer}</p>
-                                <button className="w3-small w3-button w3-round-large w3-blue" onClick={() => this.handleSave(c.id, c.context)}>수정 내용 저장</button>
+                                <button className="w3-small w3-button w3-round-large w3-blue" onClick={() => this.handleUpdateDetail(c.id, c.context)}>수정 내용 저장</button>
                                 &nbsp;
                                 {
                                     ids.includes(c.id) ?

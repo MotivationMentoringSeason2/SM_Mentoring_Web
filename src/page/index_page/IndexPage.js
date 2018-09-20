@@ -1,7 +1,7 @@
 import React from 'react';
-import {NoticeFormContainer} from "../../container";
+import {NoticeFormContainer, ScheduleFormContainer} from "../../container";
 import styled from 'styled-components';
-import Grid from '@material-ui/core/Grid';
+import SKHUImage from '../../resource_image/skhu_photo.png';
 const Notice = styled.div`
   display: flex;
   width : 50%;
@@ -12,9 +12,16 @@ const Notice = styled.div`
 
 const IndexPage = () =>
     <div>
-        <Grid item md={6}>
-             <NoticeFormContainer indexed={true} />
-        </Grid>
+        <img src={SKHUImage} width="100%" className="w3-round-large" />
+        <br/><br/>
+        <div className="w3-row">
+            <div className="w3-half">
+                 <NoticeFormContainer indexed={true} />
+            </div>
+            <div className="w3-half">
+                <ScheduleFormContainer />
+            </div>
+        </div>
     </div>
 
 export default IndexPage;

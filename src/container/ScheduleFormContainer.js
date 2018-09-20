@@ -1,31 +1,24 @@
 import {ScheduleForm} from "../component/schedule_page";
 import {connect} from 'react-redux';
-import {anybodyLoadPostList, anybodyLoadPostListSuccess, anybodyLoadPostListFailure, resetAnybodyLoadPostList} from "../action/action_notice";
+import {
+    anybodyLoadCalendarList, anybodyLoadCalendarListSuccess, anybodyLoadCalendarListFailure, resetAnybodyLoadCalendarList
+} from "../action/action_calendar";
 
 function mapStateToProps(state) {
-    const { pagination } = state.account.accountList;
-    let formUpdater = {
-        sb : pagination && (pagination.sb || 0),
-        ob : pagination && (pagination.ob || 0),
-        st : pagination && (pagination.st || '')
-    };
     return {
-        initialValues : formUpdater,
-        postList : state.notice.postList,
-        searchForm : state.form.searchForm
-    };
+        calendarList : state.calendar.calendarList
+    }
 }
 
-function mapDispatchToProps(dispatch){
+const mapDispatchToProps = (dispatch) => {
     return {
-        fetchPostList : (queryString) => dispatch(anybodyLoadPostList(queryString)).then((response) => {
-            if(!response.error){
-                dispatch(anybodyLoadPostListSuccess(response.payload));
-            }else{
-                dispatch(anybodyLoadPostListFailure(response.payload));
-            }
+        fetchCalendarList : () => dispatch(anybodyLoadCalendarList()).then((response) => {
+            if(!response.error)
+                dispatch(anybodyLoadCalendarListSuccess(response.payload));
+            else
+                dispatch(anybodyLoadCalendarListFailure(response.payload));
         }),
-        resetFetchPostList : () => dispatch(resetAnybodyLoadPostList())
+        resetFetchCalendarList : () => dispatch(resetAnybodyLoadCalendarList()),
     }
 }
 

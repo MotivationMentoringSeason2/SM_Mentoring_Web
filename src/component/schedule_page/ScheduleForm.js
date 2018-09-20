@@ -1,8 +1,8 @@
-import React from 'react';
-import { Component } from 'react';
+import React, { Component } from 'react';
 import Typography from '@material-ui/core/Typography';
 import styled from 'styled-components';
 import Driver from './driver';
+
 const Container = styled.div`
   display: flex;
   justify-content: center;
@@ -10,29 +10,26 @@ const Container = styled.div`
   flex-direction: column;
 `;
 
-const Title = styled.h1`
-  font-size : 1em;
-  margin-bottom : 1em;
-  color : #000000;
-
-`;
-
-export default class ScheduleForm extends Component {
-
-  render() {
-    
-    return (
-      
-      <Container>
-      <div >
-    
-         <Typography variant="display1" gutterBottom>
-
-          </Typography>
-         <Driver/>
-      </div>
-      </Container>
-      );
-  }
+class ScheduleForm extends Component {
+    componentWillMount(){
+        this.props.fetchCalendarList();
+    }
+    componentWillUnmount(){
+        this.props.resetFetchCalendarList();
+    }
+    render() {
+        const { calendars } = this.props.calendarList;
+        return (
+            <Container>
+                <div>
+                    <Typography variant="display1" gutterBottom>
+                        SM 사업 일정 안내
+                    </Typography>
+                    <Driver schedules={calendars} />
+                </div>
+            </Container>
+        );
+    }
 }
+export default ScheduleForm;
 
