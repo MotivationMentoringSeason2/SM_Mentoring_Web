@@ -6,6 +6,7 @@ import departmentReducer from './reducer_department';
 import timetableReducer from './reducer_timetable';
 import noticeReducer from './reducer_notice';
 import introReducer from './reducer_intro';
+import calendarReducer from './reducer_calendar';
 
 export const rootReducer = combineReducers({
     form : formReducer,
@@ -14,5 +15,6 @@ export const rootReducer = combineReducers({
     department : departmentReducer,
     timetable : timetableReducer,
     notice : noticeReducer,
-    intro : introReducer
+    intro : introReducer,
+    calendar : calendarReducer
 });
