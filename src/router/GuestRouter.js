@@ -6,6 +6,7 @@ import {SignPage} from "../page/sign_page"
 import {NoticePage} from "../page/notice_page";
 import {CardPage} from "../page/card_page";
 import {FindIdentityPage} from "../page/find_identity_page";
+import {FindPasswordPage} from "../page/find_password_page";
 import ScrollToTop from "./ScrollToTop";
 import {IntroViewPage} from "../page/intro_view_page";
 import {SchedulePage} from "../page/schedule_page";
@@ -17,6 +18,7 @@ const GuestRouter = () => (
             <Route exact path="/" component={IndexPage} />
             <Route exact path="/login" component={LoginPage} />
             <Route exact path="/account/identity" component={FindIdentityPage} />
+            <Route exact path="/account/password" component={FindPasswordPage} />
             <Route exact path="/sign" component={SignPage} />
             <Route path="/notice/:id/list" component={NoticePage} />
             <Route path="/notice/:id/list/_move" render={({ match, location }) => {

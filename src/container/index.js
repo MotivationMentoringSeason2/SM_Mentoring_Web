@@ -3,6 +3,7 @@ export {default as ApplicationContainer} from './ApplicationContainer';
 // 비회원 Containers
 export {default as LoginFormContainer} from './LoginFormContainer';
 export {default as FindIdentityFormContainer} from './FindIdentityFormContainer';
+export {default as FindPasswordFormContainer} from './FindPasswordFormContainer';
 export {default as SignFormContainer} from './SignFormContainer';
 export {default as NoticeFormContainer} from './NoticeFormContainer';
 export {default as CardFormContainer} from './CardFormContainer';
