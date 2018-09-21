@@ -141,6 +141,6 @@ FindPasswordForm.propTypes = {
 };
 
 export default reduxForm({
-    form : 'identityFindForm',
+    form : 'findPasswordForm',
     validate
 })(withStyles(styles)(FindPasswordForm));
