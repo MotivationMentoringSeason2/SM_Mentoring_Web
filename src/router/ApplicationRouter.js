@@ -171,7 +171,7 @@ class ApplicationRouter extends Component{
                             router = <MentiRouter isChairman={true} />;
                             break;
                         case 'CHAIRMAN_NORMAL' :
-                            router = <AdminRouter />;
+                            router = <AdminRouter isStudent={true} />;
                             break;
                         default :
                             router = <UserRouter />

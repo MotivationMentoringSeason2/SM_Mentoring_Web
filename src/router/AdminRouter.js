@@ -15,8 +15,9 @@ import {IntroEditPage} from "../page/intro_edit_page";
 import {SchedulePage} from "../page/schedule_page";
 import {ScheduleEditPage} from "../page/schedule_edit_page";
 import {DetailEditPage} from "../page/intro_detail_edit_page";
+import {MentoApplicationPage} from "../page/mento_application_page";
 
-const AdminRouter = () => (
+const AdminRouter = (props) => (
     <div>
         <ScrollToTop>
             <Route exact path="/login" render={() => <Redirect to="/" />} />
@@ -34,6 +35,9 @@ const AdminRouter = () => (
             <Route exact path="/schedule/edit/_refresh" render={() => <Redirect to="/schedule/edit" />} />
             <Route exact path="/intro/:id/detail/edit" component={DetailEditPage} />
             <Route exact path="/intro/:id/detail/edit/_refresh" render={({ match }) => <Redirect to={`/intro/${match.params.id}/detail/edit`} />} />
+            {
+                (props.isStudent) ? <Route exact path="/application/mento" component={MentoApplicationPage} /> : null
+            }
             <Route exact path="/account/sign/edit" component={SignUpdatePage} />
             <Route exact path="/account/timetable/edit" component={TimetableEditPage} />
             <Route exact path="/account/profile/edit" component={ProfileEditPage} />

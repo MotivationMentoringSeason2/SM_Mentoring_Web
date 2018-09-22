@@ -1,11 +1,17 @@
 import axios from 'axios';
 
 const COMMON_ROOT_URL = 'http://127.0.0.1:8081/AccountAPI/common';
+const RESOURCE_ROOT_URL = 'http://127.0.0.1:8081/AccountAPI/resource';
 
 export const FETCH_ACCOUNT_TIMETABLE = 'FETCH_ACCOUNT_TIMETABLE';
 export const FETCH_ACCOUNT_TIMETABLE_SUCCESS = 'FETCH_ACCOUNT_TIMETABLE_SUCCESS';
 export const FETCH_ACCOUNT_TIMETABLE_FAILURE = 'FETCH_ACCOUNT_TIMETABLE_FAILURE';
 export const RESET_FETCH_ACCOUNT_TIMETABLE = 'RESET_FETCH_ACCOUNT_TIMETABLE';
+
+export const FETCH_ANOTHER_ACCOUNT_TIMETABLE = 'FETCH_ANOTHER_ACCOUNT_TIMETABLE';
+export const FETCH_ANOTHER_ACCOUNT_TIMETABLE_SUCCESS = 'FETCH_ANOTHER_ACCOUNT_TIMETABLE_SUCCESS';
+export const FETCH_ANOTHER_ACCOUNT_TIMETABLE_FAILURE = 'FETCH_ANOTHER_ACCOUNT_TIMETABLE_FAILURE';
+export const RESET_FETCH_ANOTHER_ACCOUNT_TIMETABLE = 'RESET_FETCH_ANOTHER_ACCOUNT_TIMETABLE';
 
 export const EXECUTE_ACCOUNT_SAVE_TIMETABLE = 'EXECUTE_ACCOUNT_SAVE_TIMETABLE';
 export const EXECUTE_ACCOUNT_SAVE_TIMETABLE_SUCCESS = 'EXECUTE_ACCOUNT_SAVE_TIMETABLE_SUCCESS';
@@ -44,6 +50,37 @@ export function fetchAccountTimetableFailure(error){
 export function resetFetchAccountTimetable(){
     return {
         type : RESET_FETCH_ACCOUNT_TIMETABLE
+    }
+}
+
+export function fetchAnotherAccountTimetable(identity){
+    const request = axios({
+        method : 'get',
+        url : `${RESOURCE_ROOT_URL}/available_times/${identity}`,
+    });
+    return {
+        type : FETCH_ANOTHER_ACCOUNT_TIMETABLE,
+        payload : request
+    }
+}
+
+export function fetchAnotherAccountTimetableSuccess(timetables){
+    return {
+        type : FETCH_ANOTHER_ACCOUNT_TIMETABLE_SUCCESS,
+        payload : timetables.data
+    }
+}
+
+export function fetchAnotherAccountTimetableFailure(error){
+    return {
+        type : FETCH_ANOTHER_ACCOUNT_TIMETABLE_FAILURE,
+        payload : error
+    }
+}
+
+export function resetFetchAnotherAccountTimetable(){
+    return {
+        type : RESET_FETCH_ANOTHER_ACCOUNT_TIMETABLE
     }
 }
 

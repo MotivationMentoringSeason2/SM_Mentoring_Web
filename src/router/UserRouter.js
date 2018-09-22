@@ -8,6 +8,7 @@ import {TimetableEditPage} from "../page/timetable_edit_page";
 import {ProfileEditPage} from "../page/profile_edit_page";
 import {NoticePage} from "../page/notice_page";
 import {IntroViewPage} from "../page/intro_view_page";
+import {MentoApplicationPage} from "../page/mento_application_page";
 
 const UserRouter = () => (
     <div>
@@ -23,6 +24,7 @@ const UserRouter = () => (
             <Route exact path="/account/sign/edit" component={SignUpdatePage} />
             <Route exact path="/account/timetable/edit" component={TimetableEditPage} />
             <Route exact path="/account/profile/edit" component={ProfileEditPage} />
+            <Route exact path="/application/mento" component={MentoApplicationPage} />
         </ScrollToTop>
     </div>
 );
