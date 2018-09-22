@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import { withRouter } from 'react-router-dom';
-import { reduxForm, Field } from 'redux-form';
+import {reduxForm, Field, SubmissionError} from 'redux-form';
 import Select from 'react-select';
 
 import PropTypes from 'prop-types';
@@ -17,6 +17,8 @@ import CheckIcon from '@material-ui/icons/Check';
 import {
     renderTextField, renderMultiTextField, renderDropzoneInput
 } from "../form_render";
+
+import {SingleTimetable} from "../timetable_component";
 
 const RESOURCE_URL = 'http://127.0.0.1:8082/MentoAPI';
 
@@ -38,6 +40,56 @@ const styles = theme => ({
         marginRight: theme.spacing.unit,
     }
 });
+
+function validate(values){
+    var errors = {};
+    var hasErrors = false;
+    if(!values.teamName || values.teamName.trim() === ''){
+        errors.teamName = '멘토링 팀 이름을 입력하세요.';
+        hasErrors = true;
+    }
+
+    if(!values.person || values.person.trim() === ''){
+        errors.person = '멘토링 팀 인원을 입력하세요.';
+        hasErrors = true;
+    } else if(isNaN(values.person)){
+        errors.person = '멘토링 인원은 숫자로만 입력하세요.';
+        hasErrors = true;
+    } else if(values.person * 1 < 3 || values.person * 1 > 10) {
+        errors.person = '멘토링 인원은 3명 부터 10명까지만 입력하세요.';
+        hasErrors = true;
+    }
+
+    if(!values.teamName || values.teamName.trim() === ''){
+        errors.teamName = '멘토링 팀 이름을 입력하세요.';
+        hasErrors = true;
+    }
+
+    if(!values.qualify || values.qualify.trim() === ''){
+        errors.qualify = '자격 증명을 입력하세요.';
+        hasErrors = true;
+    }
+
+    if(!values.advertise || values.advertise.trim() === ''){
+        errors.advertise = '멘토링 홍보 / 안내 글을 입력하세요.';
+        hasErrors = true;
+    }
+
+    if(values.advFile && values.advFile.length >= 1){
+        const file = values.advFile[0];
+        if(file.size > 2097152) {
+            errors.advFile = '파일은 2MB 이하로 첨부하시길 바랍니다.';
+            hasErrors = true;
+        }
+    }
+
+    return hasErrors && errors;
+}
+
+const validateAndApplicateMento = (values, dispatch) => {
+    console.log(values);
+}
+
 
 class MentoApplicationForm extends Component {
     constructor(props){
@@ -61,10 +113,12 @@ class MentoApplicationForm extends Component {
     }
 
     render() {
+        const { principal } = this.props.accessAccount;
         const { semester, subjects, selectSubs } = this.state;
         const { timetableElements } = this.props.accountTimetable;
-        const { classes } = this.props;
+        const { classes, handleSubmit } = this.props;
 
+        this.props.change('subjects', selectSubs);
 
         // 초기에 시간표를 불러올 때 배열의 길이가 0으로 되어 있으면 Status 에 상관 없이 이것이 뜹니다.
         // 그래서 timetableElements 변수에 월요일 9시, 9시 데이터를 임시로 넣었습니다.
@@ -74,7 +128,7 @@ class MentoApplicationForm extends Component {
         }
 
         return (
-            <form className={classes.form}>
+            <form className={classes.form} onSubmit={handleSubmit(validateAndApplicateMento)}>
                 <Grid align="center">
                     <hr/>
                     <div>
@@ -142,6 +196,9 @@ class MentoApplicationForm extends Component {
                             <CheckIcon className={classes.leftIcon}/> 신청하기
                         </Button>
                     </div>
+                    <br/>
+
+                    <SingleTimetable timetable={timetableElements} name={principal.identity} />
                 </Grid>
             </form>
         )
@@ -153,5 +210,6 @@ MentoApplicationForm.propTypes = {
 };
 
 export default reduxForm({
-    form : 'mentoCreateForm'
+    form : 'mentoCreateForm',
+    validate
 })((withStyles(styles))(withRouter(MentoApplicationForm)));
