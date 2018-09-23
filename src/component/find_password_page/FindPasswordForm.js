@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {renderTextField} from "../form_render";
 import {
-    guestFindIdentity, guestFindIdentitySuccess, guestFindIdentityFailure
+    guestFindPassword, guestFindPasswordSuccess, guestFindPasswordFailure
 } from "../../action/action_account";
 
 import {reduxForm, Field, SubmissionError} from 'redux-form';
@@ -66,19 +66,19 @@ const styles = theme => ({
     }
 });
 
-const validateAndFindIdentity = (values, dispatch) => {
-    return dispatch(guestFindIdentity(values)).then((response) => {
+const validateAndFindPassword = (values, dispatch) => {
+    return dispatch(guestFindPassword(values)).then((response) => {
         if(response.payload && response.payload.status !== 200){
-            dispatch(guestFindIdentityFailure(response.payload));
+            dispatch(guestFindPasswordFailure(response.payload));
             throw new SubmissionError(response.payload.data);
         }
-        dispatch(guestFindIdentitySuccess(response.payload));
+        dispatch(guestFindPasswordSuccess(response.payload));
     })
 }
 
 class FindPasswordForm extends Component {
     componentWillUnmount(){
-        this.props.resetFindIdentity();
+        this.props.resetFindPassword();
     }
     render(){
         let findResult;
@@ -100,7 +100,7 @@ class FindPasswordForm extends Component {
             )
         }
         return(
-            <form onSubmit={handleSubmit(validateAndFindIdentity)} className={classes.form}>
+            <form onSubmit={handleSubmit(validateAndFindPassword)} className={classes.form}>
                 <Grid align="center">
                     <hr/>
                     <div>
@@ -115,7 +115,7 @@ class FindPasswordForm extends Component {
                     </div>
                     <br/>
                     <div>
-                        <Field name="name" className={classes.textField} type="text" component={renderTextField} label="아이디" placeholder="아이디을 입력하세요." />
+                        <Field name="identity" className={classes.textField} type="text" component={renderTextField} label="아이디" placeholder="아이디을 입력하세요." />
                     </div>
                     <br/>
                     <div>

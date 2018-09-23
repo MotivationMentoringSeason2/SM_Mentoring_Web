@@ -1,6 +1,6 @@
 import {FindPasswordForm} from "../component/find_password_page";
 import {connect} from 'react-redux';
-import {resetGuestFindIdentity} from "../action/action_account";
+import {resetGuestFindPassword} from "../action/action_account";
 
 function mapStateToProps(state){
     return {
@@ -10,7 +10,7 @@ function mapStateToProps(state){
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        resetFindIdentity : () => dispatch(resetGuestFindIdentity())
+        resetFindPassword : () => dispatch(resetGuestFindPassword())
     }
 }
 
