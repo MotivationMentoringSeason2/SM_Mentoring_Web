@@ -18,6 +18,10 @@ import {
     renderTextField, renderMultiTextField, renderDropzoneInput
 } from "../form_render";
 
+import {
+    studentApplyMento, studentApplyMentoSuccess, studentApplyMentoFailure
+} from "../../action/action_mento";
+
 import {SingleTimetable} from "../timetable_component";
 
 const RESOURCE_URL = 'http://127.0.0.1:8082/MentoAPI';
@@ -87,9 +91,23 @@ function validate(values){
 }
 
 const validateAndApplicateMento = (values, dispatch) => {
-    console.log(values);
+    const fileArray = values.advFile;
+    let applyModel = {
+        mento : values && values.mento,
+        teamName : values && values.teamName,
+        person : values && values.person * 1,
+        advertise : values && values.advertise,
+        qualify : values && values.qualify,
+        subjects : values && values.subjects.map(subject => subject.value)
+    }
+    dispatch(studentApplyMento(values.mento, applyModel, fileArray !== undefined ? fileArray[0] : null)).then((response) => {
+        if (response.payload && response.payload.status !== 200) {
+            dispatch(studentApplyMentoFailure(response.payload));
+            throw new SubmissionError(response.payload.data);
+        }
+        dispatch(studentApplyMentoSuccess(response.payload));
+    });
 }
-
 
 class MentoApplicationForm extends Component {
     constructor(props){
@@ -99,6 +117,7 @@ class MentoApplicationForm extends Component {
     componentWillMount(){
         const { principal } = this.props.accessAccount;
         this.props.fetchTimetable(principal.identity);
+        this.props.fetchMentoApply(principal.identity);
     }
     componentDidMount(){
         axios.get(`${RESOURCE_URL}/semester/current`).then(response => this.setState({ semester : response.data }));
@@ -106,6 +125,8 @@ class MentoApplicationForm extends Component {
     }
     componentWillUnmount(){
         this.props.resetFetchTimetable();
+        this.props.resetFetchMentoApply();
+        this.props.resetApplyMento();
     }
 
     handleChange(event) {
@@ -117,7 +138,10 @@ class MentoApplicationForm extends Component {
         const { semester, subjects, selectSubs } = this.state;
         const { timetableElements } = this.props.accountTimetable;
         const { classes, handleSubmit } = this.props;
+        const { model } = this.props.applyModel;
+        const { message, error } = this.props.saveStatus;
 
+        this.props.change('mento', principal.identity);
         this.props.change('subjects', selectSubs);
 
         // 초기에 시간표를 불러올 때 배열의 길이가 0으로 되어 있으면 Status 에 상관 없이 이것이 뜹니다.
@@ -125,6 +149,19 @@ class MentoApplicationForm extends Component {
         if(timetableElements.length <= 0){
             alert("시간표를 설정하지 않았습니다. 시간표 설정 페이지로 넘어갑니다.");
             this.props.history.push("/account/timetable/edit");
+        }
+
+        if(model && model !== ''){
+            alert("멘토 신청을 이미 하셨습니다. 멘토 신청 결과 페이지로 넘어갑니다.");
+            this.props.history.push("/application/confirm");
+        }
+
+        if(message){
+            alert(message);
+            this.props.history.push("/application/confirm");
+        } else if(error) {
+            alert("멘토 신청 중 오류가 발생했습니다. 홈 으로 이동 합니다.");
+            this.props.history.push("/");
         }
 
         return (

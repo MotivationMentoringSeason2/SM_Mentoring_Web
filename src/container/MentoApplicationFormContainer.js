@@ -3,11 +3,17 @@ import {connect} from 'react-redux';
 import {
     fetchAnotherAccountTimetable, fetchAnotherAccountTimetableSuccess, fetchAnotherAccountTimetableFailure, resetFetchAnotherAccountTimetable
 } from "../action/action_available_time";
+import {
+    studentLoadApplyModel, studentLoadApplyModelSuccess, studentLoadApplyModelFailure, resetStudentLoadApplyModel,
+    resetStudentApplyMento
+} from "../action/action_mento";
 
 function mapStateToProps(state){
     return {
         accessAccount : state.account.accessAccount,
-        accountTimetable : state.timetable.accountTimetable
+        accountTimetable : state.timetable.accountTimetable,
+        applyModel : state.mento.applyModel,
+        saveStatus : state.mento.saveStatus
     }
 }
 
@@ -24,7 +30,18 @@ function mapDispatchToProps(dispatch){
                 }
             })
         },
-        resetFetchTimetable : () => dispatch(resetFetchAnotherAccountTimetable())
+        resetFetchTimetable : () => dispatch(resetFetchAnotherAccountTimetable()),
+        fetchMentoApply : (identity) => {
+            dispatch(studentLoadApplyModel(identity)).then(response => {
+                if(!response.error){
+                    dispatch(studentLoadApplyModelSuccess(response.payload));
+                } else {
+                    dispatch(studentLoadApplyModelFailure(response.payload));
+                }
+            })
+        },
+        resetFetchMentoApply : () => dispatch(resetStudentLoadApplyModel()),
+        resetApplyMento : () => dispatch(resetStudentApplyMento())
     }
 }
 

@@ -7,6 +7,7 @@ import timetableReducer from './reducer_timetable';
 import noticeReducer from './reducer_notice';
 import introReducer from './reducer_intro';
 import calendarReducer from './reducer_calendar';
+import mentoReducer from './reducer_mento';
 
 export const rootReducer = combineReducers({
     form : formReducer,
@@ -16,5 +17,6 @@ export const rootReducer = combineReducers({
     timetable : timetableReducer,
     notice : noticeReducer,
     intro : introReducer,
-    calendar : calendarReducer
+    calendar : calendarReducer,
+    mento : mentoReducer
 });
