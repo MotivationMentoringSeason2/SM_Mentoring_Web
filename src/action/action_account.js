@@ -11,6 +11,11 @@ export const GUEST_FIND_IDENTITY_SUCCESS = 'GUEST_FIND_IDENTITY_SUCCESS';
 export const GUEST_FIND_IDENTITY_FAILURE = 'GUEST_FIND_IDENTITY_FAILURE';
 export const RESET_GUEST_FIND_IDENTITY = 'RESET_GUEST_FIND_IDENTITY';
 
+export const GUEST_FIND_PASSWORD = 'GUEST_FIND_PASSWORD';
+export const GUEST_FIND_PASSWORD_SUCCESS = 'GUEST_FIND_PASSWORD_SUCCESS';
+export const GUEST_FIND_PASSWORD_FAILURE = 'GUEST_FIND_IDENTITY_FAILURE';
+export const RESET_GUEST_FIND_PASSWORD = 'RESET_GUEST_FIND_PASSWORD';
+
 export const GUEST_CREATE_ACCOUNT = 'GUEST_CREATE_ACCOUNT';
 export const GUEST_CREATE_ACCOUNT_SUCCESS = 'GUEST_CREATE_ACCOUNT_SUCCESS';
 export const GUEST_CREATE_ACCOUNT_FAILURE = 'GUEST_CREATE_ACCOUNT_FAILURE';
@@ -128,6 +133,37 @@ export function resetGuestFindIdentity(){
     }
 }
 
+export function guestFindPassword(findForm){
+    const request = axios({
+        url : `${ROOT_URL}/guest/account/password`,
+        data : findForm,
+        method : 'post'
+    });
+    return {
+        type : GUEST_FIND_PASSWORD,
+        payload : request
+    }
+}
+
+export function guestFindPasswordSuccess(message){
+    return {
+        type : GUEST_FIND_PASSWORD_SUCCESS,
+        payload : message.data
+    }
+}
+
+export function guestFindPasswordFailure(error){
+    return {
+        type : GUEST_FIND_PASSWORD_FAILURE,
+        payload : error
+    }
+}
+
+export function resetGuestFindPassword(){
+    return {
+        type : RESET_GUEST_FIND_PASSWORD
+    }
+}
 
 export function guestCreateAccount(type, formData){
     const request = axios({
