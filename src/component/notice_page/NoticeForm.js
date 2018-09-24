@@ -14,6 +14,7 @@ import styled from 'styled-components';
 import {withRouter} from 'react-router-dom';
 import queryString from 'query-string';
 import axios from "axios";
+const RESOURCE_URL = 'http://127.0.0.1:8081/AccountAPI/resource';
 
 const Container = styled.div`
   display: flex;
