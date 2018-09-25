@@ -8,6 +8,7 @@ import noticeReducer from './reducer_notice';
 import introReducer from './reducer_intro';
 import calendarReducer from './reducer_calendar';
 import mentoReducer from './reducer_mento';
+import integrateFileReducer from './reducer_integrate_file';
 
 export const rootReducer = combineReducers({
     form : formReducer,
@@ -18,5 +19,6 @@ export const rootReducer = combineReducers({
     notice : noticeReducer,
     intro : introReducer,
     calendar : calendarReducer,
-    mento : mentoReducer
+    mento : mentoReducer,
+    integrateFile : integrateFileReducer
 });
