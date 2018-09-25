@@ -10,7 +10,7 @@
     "moment": "^2.22.2",
     "prop-types": "^15.6.2",
     "query-string": "^6.1.0",
-    "react": "^16.4.2",
+    "react": "^16.5.2",
     "react-dom": "^16.4.2",
     "react-dropzone": "^5.1.0",
     "react-redux": "^5.0.7",
@@ -21,6 +21,7 @@
     "redux": "^4.0.0",
     "redux-form": "^7.4.2",
     "redux-promise": "^0.6.0",
+    "select": "^1.1.2",
     "styled-components": "^3.4.6"
   },
   "scripts": {

@@ -87,14 +87,14 @@ class FindPasswordForm extends Component {
         if(message){
             findResult = (
                 <div className="w3-panel w3-card-4 w3-pale-green w3-round-large" style={{ width : window.innerWidth >= 450 ? '60%' : '90%' }}>
-                    { (window.innerWidth >= 450) ? <h3><DoneOutlineIcon /> 회원 아이디 조회를 성공하였습니다.</h3> : <h4><DoneOutlineIcon /> 회원 아이디 조회를 성공하였습니다.</h4> }
+                    { (window.innerWidth >= 450) ? <h3><DoneOutlineIcon /> 회원 비밀번호 발급에 성공하였습니다.</h3> : <h4><DoneOutlineIcon /> 회원 비밀번호 발급에 성공하였습니다.</h4> }
                     <p>{message}</p>
                 </div>
             );
         } else if(error){
             findResult = (
                 <div className="w3-panel w3-card-4 w3-pale-red w3-round-large" style={{ width : window.innerWidth >= 450 ? '60%' : '90%' }}>
-                    { (window.innerWidth >= 450) ? <h3><ReportProblemIcon /> 회원 아이디 조회에 문제 발생!</h3> : <h4><ReportProblemIcon /> 회원 아이디 조회에 문제 발생!</h4> }
+                    { (window.innerWidth >= 450) ? <h3><ReportProblemIcon /> 회원 비밀번호 발급에 문제 발생!</h3> : <h4><ReportProblemIcon /> 회원 비밀번호 발급에 문제 발생!</h4> }
                     <p>{error}</p>
                 </div>
             )
