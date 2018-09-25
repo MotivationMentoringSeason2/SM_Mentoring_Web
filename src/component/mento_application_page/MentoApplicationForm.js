@@ -218,11 +218,12 @@ class MentoApplicationForm extends Component {
 
                     <div>
                         <label>멘토링 홍보 / 안내 파일</label>
-                        <p>이미지 파일(jpg, jpeg, png), PDF 파일, Word(doc, docx), 한글(hwp) 파일 등만 올릴 수 있습니다.</p>
+                        <p>이미지 파일(jpg, jpeg, png), PDF 파일, Word(doc, docx), 한글(hwp) 파일 등 하나의 파일만 올릴 수 있습니다.</p>
                         <Field
                             name="advFile"
                             component={renderDropzoneInput}
                             accept={"image/jpeg, image/png, image/jpg, application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document, .hwp"}
+                            multiple={false}
                         />
                         <br/>
                     </div>
