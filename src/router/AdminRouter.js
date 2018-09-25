@@ -16,6 +16,8 @@ import {SchedulePage} from "../page/schedule_page";
 import {ScheduleEditPage} from "../page/schedule_edit_page";
 import {DetailEditPage} from "../page/intro_detail_edit_page";
 import {MentoApplicationPage} from "../page/mento_application_page";
+import {MentoringPage} from "../page/mentoring_page";
+import {NoticeEditPage} from "../page/notice_edit_page";
 
 const AdminRouter = (props) => (
     <div>
@@ -27,6 +29,8 @@ const AdminRouter = (props) => (
                 window.location.href = `/notice/${match.params.id}/list${location.search}`
                 return <Redirect to={`/notice/${match.params.id}/list${location.search}`}/>
             }} />
+            <Route path="/notice/create" component={NoticeEditPage} />
+            <Route path="/notice/update" component={NoticeEditPage} />
             <Route exact path="/intro/view" component={IntroViewPage} />
             <Route exact path="/intro/edit" component={IntroEditPage} />
             <Route exact path="/intro/edit/_refresh" render={() => <Redirect to="/intro/edit" />} />
@@ -37,6 +41,9 @@ const AdminRouter = (props) => (
             <Route exact path="/intro/:id/detail/edit/_refresh" render={({ match }) => <Redirect to={`/intro/${match.params.id}/detail/edit`} />} />
             {
                 (props.isStudent) ? <Route exact path="/application/mento" component={MentoApplicationPage} /> : null
+            }
+            {
+                (props.isStudent) ? <Route exact path="/application/mento_list" component={MentoringPage} /> : null
             }
             <Route exact path="/account/sign/edit" component={SignUpdatePage} />
             <Route exact path="/account/timetable/edit" component={TimetableEditPage} />

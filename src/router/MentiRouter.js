@@ -8,6 +8,7 @@ import {TimetableEditPage} from "../page/timetable_edit_page";
 import {ProfileEditPage} from "../page/profile_edit_page";
 import {NoticePage} from "../page/notice_page";
 import {IntroViewPage} from "../page/intro_view_page";
+import {NoticeEditPage} from "../page/notice_edit_page";
 
 const MentiRouter = (props) => {
     return (
@@ -20,6 +21,8 @@ const MentiRouter = (props) => {
                     window.location.href = `/notice/${match.params.id}/list${location.search}`
                     return <Redirect to={`/notice/${match.params.id}/list${location.search}`}/>
                 }} />
+                <Route path="/notice/create" component={NoticeEditPage} />
+                <Route path="/notice/update" component={NoticeEditPage} />
                 <Route exact path="/intro/view" component={IntroViewPage} />
                 <Route exact path="/account/sign/edit" component={SignUpdatePage} />
                 <Route exact path="/account/timetable/edit" component={TimetableEditPage} />

@@ -12,7 +12,8 @@ function mapStateToProps(state) {
     return {
         initialValues : formUpdater,
         postList : state.notice.postList,
-        searchForm : state.form.searchForm
+        searchForm : state.form.searchForm,
+        accessAccount : state.account.accessAccount
     };
 }
 

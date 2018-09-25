@@ -10,6 +10,7 @@ import {NoticePage} from "../page/notice_page";
 import {IntroViewPage} from "../page/intro_view_page";
 import {MentoApplicationPage} from "../page/mento_application_page";
 import {MentoringPage} from "../page/mentoring_page";
+import {NoticeEditPage} from "../page/notice_edit_page";
 const UserRouter = () => (
     <div>
         <ScrollToTop>
@@ -20,6 +21,8 @@ const UserRouter = () => (
                 window.location.href = `/notice/${match.params.id}/list${location.search}`
                 return <Redirect to={`/notice/${match.params.id}/list${location.search}`}/>
             }} />
+            <Route path="/notice/create" component={NoticeEditPage} />
+            <Route path="/notice/update" component={NoticeEditPage} />
             <Route exact path="/intro/view" component={IntroViewPage} />
             <Route exact path="/account/sign/edit" component={SignUpdatePage} />
             <Route exact path="/account/timetable/edit" component={TimetableEditPage} />

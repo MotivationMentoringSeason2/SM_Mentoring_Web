@@ -39,18 +39,11 @@ class SimpleTable extends Component {
         axios.get(`${RESOURCE_URL}/account/name/${post.writer}`).then(response => {
           const { data } = this.state;
           let tmpArray = data.slice();
-          let id = -1;
-          for(var k=0;k<tmpArray.length;k++){
-            if(tmpArray[k].id === post.id){
-              id = k;
-              break;
-            }
-          }
           post = {
               ...post,
               writer : response.data
           }
-          tmpArray.splice(k, 1, post);
+          tmpArray.splice(idx, 1, post);
           this.setState({
               data : tmpArray
           });

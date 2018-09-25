@@ -6,15 +6,15 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import { reduxForm, Field } from 'redux-form';
 import { withStyles } from "@material-ui/core/styles/index";
-import {renderTextField, renderSelectField } from "../form_render";
+import { renderTextField, renderSelectField } from "../form_render";
 
 import SearchIcon from '@material-ui/icons/Search';
+import PlusIcon from '@material-ui/icons/PlusOne';
 
 import styled from 'styled-components';
-import {withRouter} from 'react-router-dom';
+import {withRouter, Link} from 'react-router-dom';
 import queryString from 'query-string';
 import axios from "axios";
-const RESOURCE_URL = 'http://127.0.0.1:8081/AccountAPI/resource';
 
 const Container = styled.div`
   display: flex;
@@ -45,14 +45,17 @@ const styles = theme => ({
 class NoticeForm extends Component {
     constructor(props){
         super(props);
-        this.state = { typeName : '', orderBy : [], searchBy : [] };
+        this.state = { typeName : '', limitWritten : true, orderBy : [], searchBy : [] };
     }
 
     componentWillMount(){
         axios({
             url : `${NOTICE_URL}/type/${this.props.match.params.id || 1}`,
             method : 'get'
-        }).then(response => this.setState({ typeName : response.data.name}))
+        }).then(response => this.setState({
+            typeName : response.data.name,
+            limitWritten : response.data.limitWritten
+        }));
 
         axios({
             url: `${NOTICE_URL}/options/sb_elements`,
@@ -148,9 +151,10 @@ class NoticeForm extends Component {
     }
 
     render() {
-        const { searchBy, orderBy, typeName } = this.state;
+        const { searchBy, orderBy, typeName, limitWritten } = this.state;
 	    const { indexed, classes } = this.props;
         const { pagination, posts } = this.props.postList;
+        const { principal } = this.props.accessAccount;
 
         const pageNumbers = [];
         const barCount = 10;
@@ -227,6 +231,26 @@ class NoticeForm extends Component {
                                                 <SearchIcon className={classes.leftIcon} /> 검색하기
                                             </Button>
                                         </div>
+                                        {
+                                            limitWritten ?
+                                                ((principal !== null) && (principal.type === 'PROFESSOR' || principal.type === 'EMPLOYEE' || principal.studentStatus.startsWith('CHAIRMAN')))
+                                                    ?
+                                                    <div className="w3-bar-item">
+                                                        <Link to={`/notice/create?tid=${this.props.match.params.id}`} style={{ textDecoration: 'none' }}>
+                                                            <Button variant="contained" type="button" color="secondary">
+                                                                <PlusIcon className={classes.leftIcon} /> 게시글 추가
+                                                            </Button>
+                                                        </Link>
+                                                    </div> : null
+                                                : (principal !== null) ?
+                                                <div className="w3-bar-item">
+                                                    <Link to={`/notice/create?tid=${this.props.match.params.id}`} style={{ textDecoration: 'none' }}>
+                                                        <Button variant="contained" type="button" color="secondary">
+                                                            <PlusIcon className={classes.leftIcon} /> 게시글 추가
+                                                        </Button>
+                                                    </Link>
+                                                </div> : null
+                                        }
                                     </div>
                                 </div>
                                 <br/>

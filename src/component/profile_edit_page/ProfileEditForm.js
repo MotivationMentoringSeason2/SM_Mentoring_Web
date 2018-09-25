@@ -123,6 +123,7 @@ class ProfileEditForm extends Component {
                             name="profile_photo"
                             component={renderDropzoneInput}
                             accept={"image/jpeg, image/png, image/jpg"}
+                            multiple={false}
                         />
                         <br/>
                         <button type="submit" className="w3-button w3-round-large w3-blue">프로필 설정</button>
