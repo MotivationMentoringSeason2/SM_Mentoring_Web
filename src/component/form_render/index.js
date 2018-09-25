@@ -5,3 +5,4 @@ export {default as renderCheckBox} from './renderCheckBox';
 export {default as renderTimetable} from './renderTimetable';
 export {default as renderDropzoneInput} from './renderDropzoneInput';
 export {default as renderMultiTextField} from './renderMultiTextField';
+export {default as renderQuill} from './renderQuill';
