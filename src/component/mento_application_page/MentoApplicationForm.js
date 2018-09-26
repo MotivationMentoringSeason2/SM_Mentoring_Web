@@ -79,7 +79,10 @@ function validate(values){
         hasErrors = true;
     }
 
-    if(values.advFile && values.advFile.length >= 1){
+    if(!values.advFile){
+        errors.advFile = '멘토링 홍보 / 안내 파일을 적어도 하나 올리셔야 합니다.';
+        hasErrors = true;
+    } else if(values.advFile && values.advFile.length >= 1){
         const file = values.advFile[0];
         if(file.size > 2097152) {
             errors.advFile = '파일은 2MB 이하로 첨부하시길 바랍니다.';
@@ -114,15 +117,18 @@ class MentoApplicationForm extends Component {
         super(props);
         this.state = { semester : null, subjects : [], selectSubs : [] }
     }
+
     componentWillMount(){
         const { principal } = this.props.accessAccount;
         this.props.fetchTimetable(principal.identity);
         this.props.fetchMentoApply(principal.identity);
     }
+
     componentDidMount(){
         axios.get(`${RESOURCE_URL}/semester/current`).then(response => this.setState({ semester : response.data }));
         axios.get(`${RESOURCE_URL}/subjects`).then(response => this.setState({ subjects : response.data }));
     }
+
     componentWillUnmount(){
         this.props.resetFetchTimetable();
         this.props.resetFetchMentoApply();
@@ -236,7 +242,7 @@ class MentoApplicationForm extends Component {
                     </div>
                     <br/>
 
-                    <SingleTimetable timetable={timetableElements} name={principal.identity} />
+                    <SingleTimetable timetable={timetableElements} name={principal.name} />
                 </Grid>
             </form>
         )

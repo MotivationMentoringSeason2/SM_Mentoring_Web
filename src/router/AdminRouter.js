@@ -18,6 +18,7 @@ import {DetailEditPage} from "../page/intro_detail_edit_page";
 import {MentoApplicationPage} from "../page/mento_application_page";
 import {MentoringPage} from "../page/mentoring_page";
 import {NoticeEditPage} from "../page/notice_edit_page";
+import {MentiApplicationPage} from "../page/menti_application_page";
 
 const AdminRouter = (props) => (
     <div>
@@ -43,7 +44,13 @@ const AdminRouter = (props) => (
                 (props.isStudent) ? <Route exact path="/application/mento" component={MentoApplicationPage} /> : null
             }
             {
+                (props.isStudent) ? <Route exact path="/application/menti" component={MentiApplicationPage} /> : null
+            }
+            {
                 (props.isStudent) ? <Route exact path="/application/mento_list" component={MentoringPage} /> : null
+            }
+            {
+                (props.isStudent) ? <Route exact path="/application/menti/_refresh" render={() => <Redirect to="/application/menti" />} /> : null
             }
             <Route exact path="/account/sign/edit" component={SignUpdatePage} />
             <Route exact path="/account/timetable/edit" component={TimetableEditPage} />

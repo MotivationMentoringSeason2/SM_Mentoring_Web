@@ -151,7 +151,7 @@ class NoticeEditForm extends Component {
         const { model } = this.props.postModel;
         const { post, loading } = this.props.saveStatus;
 
-        if(model && (model.writer !== principal.identity)){
+        if(type && model && (model.writer !== principal.identity)){
             alert("게시물 수정의 권한이 없습니다. 수정은 본인의 게시물만 가능합니다.");
             this.props.history.push(`/notice/${type.id}/list?pg=1&sz=10`);
         }
