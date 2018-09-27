@@ -1,7 +1,9 @@
 import {
     STUDENT_LOAD_TEAM_LIST, STUDENT_LOAD_TEAM_LIST_SUCCESS, STUDENT_LOAD_TEAM_LIST_FAILURE, RESET_STUDENT_LOAD_TEAM_LIST,
     STUDENT_APPLY_MENTI, STUDENT_APPLY_MENTI_SUCCESS, STUDENT_APPLY_MENTI_FAILURE, RESET_STUDENT_APPLY_MENTI,
-    STUDENT_RELEASE_CURRENT_MENTI, STUDENT_RELEASE_CURRENT_MENTI_SUCCESS, STUDENT_RELEASE_CURRENT_MENTI_FAILURE, RESET_STUDENT_RELEASE_CURRENT_MENTI
+    STUDENT_RELEASE_CURRENT_MENTI, STUDENT_RELEASE_CURRENT_MENTI_SUCCESS, STUDENT_RELEASE_CURRENT_MENTI_FAILURE, RESET_STUDENT_RELEASE_CURRENT_MENTI,
+    RESET_STUDENT_LOAD_MENTI_CAREERS, STUDENT_LOAD_MENTI_CAREERS, STUDENT_LOAD_MENTI_CAREERS_FAILURE,
+    STUDENT_LOAD_MENTI_CAREERS_SUCCESS
 } from "../action/action_menti";
 
 const INITIAL_STATE = {
@@ -13,6 +15,9 @@ const INITIAL_STATE = {
     },
     deleteStatus : {
         message : null, loading : false, error : null
+    },
+    careerList : {
+        careers : [], loading : false, error : null
     }
 }
 
@@ -48,6 +53,16 @@ export default function(state = INITIAL_STATE, action) {
             return { ...state, deleteStatus : { message : null, loading : false, error : error }};
         case RESET_STUDENT_RELEASE_CURRENT_MENTI :
             return { ...state, deleteStatus : { message : null, loading : false, error : null }};
+
+        case STUDENT_LOAD_MENTI_CAREERS :
+            return { ...state, careerList : { careers : [], loading : true, error : null }};
+        case STUDENT_LOAD_MENTI_CAREERS_SUCCESS :
+            return { ...state, careerList : { careers : action.payload, loading : false, error : null }};
+        case STUDENT_LOAD_MENTI_CAREERS_FAILURE :
+            error = action.payload.data || { message : action.payload.data };
+            return { ...state, careerList : { careers : [], loading : false, error : error }};
+        case RESET_STUDENT_LOAD_MENTI_CAREERS :
+            return { ...state, careerList : { careers : [], loading : false, error : null }};
 
         default :
             return state;
