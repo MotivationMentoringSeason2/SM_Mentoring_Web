@@ -12,6 +12,7 @@ import {MentoApplicationPage} from "../page/mento_application_page";
 import {MentoringPage} from "../page/mentoring_page";
 import {NoticeEditPage} from "../page/notice_edit_page";
 import MentiApplicationPage from "../page/menti_application_page/MentiApplicationPage";
+import MentoringCareerViewPage from "../page/mentoring_career_view_page/MentoringCareerViewPage";
 const UserRouter = () => (
     <div>
         <ScrollToTop>
@@ -32,6 +33,8 @@ const UserRouter = () => (
             <Route exact path="/application/menti" component={MentiApplicationPage} />
             <Route exact path="/application/menti/_refresh" render={() => <Redirect to="/application/menti" />} />
             <Route exact path="/application/mento_list" component={MentoringPage} />
+            <Route exact path="/application/confirm" component={MentoringCareerViewPage} />
+            <Route exact path="/application/confirm/_refresh" render={() => <Redirect to="/application/confirm" />} />
         </ScrollToTop>
     </div>
 );

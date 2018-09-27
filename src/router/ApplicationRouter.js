@@ -322,6 +322,12 @@ class ApplicationRouter extends Component{
                                             <Link to="/account/profile/edit" style={{ textDecoration: 'none' }}>
                                                 <MenuItem onClick={this.handleClose}>프로필 설정</MenuItem>
                                             </Link>
+                                            {
+                                                principal.type === 'STUDENT' ?
+                                                    <Link to="/application/confirm" style={{ textDecoration: 'none' }}>
+                                                        <MenuItem onClick={this.handleClose}>멘토링 신청 내역</MenuItem>
+                                                    </Link> : null
+                                            }
                                         </Menu>
                                     </div>
                                 )}

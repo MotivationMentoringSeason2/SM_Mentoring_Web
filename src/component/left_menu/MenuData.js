@@ -76,6 +76,14 @@ export const introDefaultItems = (
                 <ListItemText primary="일정 확인" />
             </ListItem>
         </Link>
+        <Link to="/application/mento_list" style={{ textDecoration: 'none' }}>
+            <ListItem button>
+                <ListItemIcon>
+                    <ArrowForwardIcon />
+                </ListItemIcon>
+                <ListItemText primary="멘토링 목록" />
+            </ListItem>
+        </Link>
     </div>
 );
 
@@ -101,6 +109,14 @@ export const introAdminItems = (
                     <ArrowForwardIcon />
                 </ListItemIcon>
                 <ListItemText primary="일정 확인" />
+            </ListItem>
+        </Link>
+        <Link to="/application/mento_list" style={{ textDecoration: 'none' }}>
+            <ListItem button>
+                <ListItemIcon>
+                    <ArrowForwardIcon />
+                </ListItemIcon>
+                <ListItemText primary="멘토링 목록" />
             </ListItem>
         </Link>
         <Link to="/intro/edit" style={{ textDecoration: 'none' }}>
@@ -144,22 +160,6 @@ export const applicationItems = (
                     <ArrowForwardIcon />
                 </ListItemIcon>
                 <ListItemText primary="멘티 신청" />
-            </ListItem>
-        </Link>
-        <Link to="/application/mento_list" style={{ textDecoration: 'none' }}>
-            <ListItem button>
-                <ListItemIcon>
-                    <ArrowForwardIcon />
-                </ListItemIcon>
-                <ListItemText primary="멘토링 목록" />
-            </ListItem>
-        </Link>
-        <Link to="/application/confirm" style={{ textDecoration: 'none' }}>
-            <ListItem button>
-                <ListItemIcon>
-                    <ArrowForwardIcon />
-                </ListItemIcon>
-                <ListItemText primary="신청 내역 확인" />
             </ListItem>
         </Link>
     </div>

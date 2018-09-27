@@ -9,6 +9,7 @@ import {ProfileEditPage} from "../page/profile_edit_page";
 import {NoticePage} from "../page/notice_page";
 import {IntroViewPage} from "../page/intro_view_page";
 import {NoticeEditPage} from "../page/notice_edit_page";
+import MentoringCareerViewPage from "../page/mentoring_career_view_page/MentoringCareerViewPage";
 
 const MentoRouter = (props) => {
     return(
@@ -27,6 +28,8 @@ const MentoRouter = (props) => {
                 <Route exact path="/account/sign/edit" component={SignUpdatePage} />
                 <Route exact path="/account/timetable/edit" component={TimetableEditPage} />
                 <Route exact path="/account/profile/edit" component={ProfileEditPage} />
+                <Route exact path="/application/confirm" component={MentoringCareerViewPage} />
+                <Route exact path="/application/confirm/_refresh" render={() => <Redirect to="/application/confirm" />} />
             </ScrollToTop>
         </div>
     );
