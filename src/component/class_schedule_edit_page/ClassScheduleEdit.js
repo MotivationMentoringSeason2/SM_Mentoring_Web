@@ -94,7 +94,7 @@ class ClassScheduleEdit extends Component {
             alert(message);
             this.props.history.push("/mento/class/edit/_refresh");
         } else if(error) {
-            alert("멘토링 수업 시간 설정 중 오류가 발생 하였습니다. 이전으로 이동합니다.");
+            alert("멘토링 수업 시간 삭제 작업 중 오류가 발생 하였습니다. 이전으로 이동합니다.");
             this.props.history.push("/mento/class/edit/_refresh");
         }
 
@@ -164,7 +164,7 @@ class ClassScheduleEdit extends Component {
                     {
                         counts.length > 0 ?
                             <div className="w3-center" style={{ width : window.innerWidth <= 425 ? '95%' : '60%'}}>
-                                <h3>선택하신 다음과 같은 제목들이 삭제 됩니다.</h3>
+                                <h3>선택하신 다음과 같은 수업 시간 회차가 삭제 됩니다.</h3>
                                 <ul className="w3-ul w3-border">
                                     {
                                         counts.map((id) => <li key={`context_${id}`}>{id} 회차</li>)
