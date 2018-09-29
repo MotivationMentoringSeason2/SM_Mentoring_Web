@@ -22,6 +22,11 @@ export const STUDENT_LOAD_MENTI_CAREERS_SUCCESS = 'STUDENT_LOAD_MENTI_CAREERS_SU
 export const STUDENT_LOAD_MENTI_CAREERS_FAILURE = 'STUDENT_LOAD_MENTI_CAREERS_FAILURE';
 export const RESET_STUDENT_LOAD_MENTI_CAREERS = 'RESET_STUDENT_LOAD_MENTI_CAREERS';
 
+export const MENTO_LOAD_MENTI_LIST = 'MENTO_LOAD_MENTI_LIST';
+export const MENTO_LOAD_MENTI_LIST_SUCCESS = 'MENTO_LOAD_MENTI_LIST_SUCCESS';
+export const MENTO_LOAD_MENTI_LIST_FAILURE = 'MENTO_LOAD_MENTI_LIST_FAILURE';
+export const RESET_MENTO_LOAD_MENTI_LIST = 'RESET_MENTO_LOAD_MENTI_LIST';
+
 export function studentLoadTeamList(identity){
     const request = axios({
         url : `${ROOT_URL}/menti/infos/${identity}`,
@@ -146,5 +151,36 @@ export function studentLoadMentiCareersFailure(error){
 export function resetStudentLoadMentiCareers(){
     return {
         type : RESET_STUDENT_LOAD_MENTI_CAREERS
+    }
+}
+
+export function mentoLoadMentiList(teamId){
+    const request = axios({
+        url : `${ROOT_URL}/team/persons/${teamId}`,
+        method : 'get'
+    });
+    return {
+        type : MENTO_LOAD_MENTI_LIST,
+        payload : request
+    }
+}
+
+export function mentoLoadMentiListSuccess(mentis){
+    return {
+        type : MENTO_LOAD_MENTI_LIST_SUCCESS,
+        payload : mentis.data
+    }
+}
+
+export function mentoLoadMentiListFailure(error){
+    return {
+        type : MENTO_LOAD_MENTI_LIST_FAILURE,
+        payload : error
+    }
+}
+
+export function resetMentoLoadMentiList(){
+    return {
+        type : RESET_MENTO_LOAD_MENTI_LIST
     }
 }

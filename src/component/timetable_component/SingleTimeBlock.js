@@ -39,13 +39,16 @@ class SingleTimeBlock extends Component {
         }
         return(
             <table className="w3-table w3-bordered w3-centered" style={{ width : '60%'}}>
+                <thead>
                 <tr>
-                    <td>시</td>
-                    <td>00~15분</td>
-                    <td>16~30분</td>
-                    <td>31~45분</td>
-                    <td>46~59분</td>
+                    <th>시</th>
+                    <th>00~15분</th>
+                    <th>16~30분</th>
+                    <th>31~45분</th>
+                    <th>46~59분</th>
                 </tr>
+                </thead>
+                <tbody>
                 {
                     hours.map(h => {
                         return (
@@ -64,6 +67,7 @@ class SingleTimeBlock extends Component {
                         )
                     })
                 }
+                </tbody>
             </table>
         )
     }
