@@ -10,6 +10,8 @@ import {NoticePage} from "../page/notice_page";
 import {IntroViewPage} from "../page/intro_view_page";
 import {NoticeEditPage} from "../page/notice_edit_page";
 import MentoringCareerViewPage from "../page/mentoring_career_view_page/MentoringCareerViewPage";
+import {ClassScheduleEditPage} from "../page/class_schedule_edit_page";
+import {ClassScheduleFormPage} from "../page/class_schedule_form_page";
 
 const MentoRouter = (props) => {
     return(
@@ -30,6 +32,10 @@ const MentoRouter = (props) => {
                 <Route exact path="/account/profile/edit" component={ProfileEditPage} />
                 <Route exact path="/application/confirm" component={MentoringCareerViewPage} />
                 <Route exact path="/application/confirm/_refresh" render={() => <Redirect to="/application/confirm" />} />
+                <Route exact path="/mento/class/edit" component={ClassScheduleEditPage}/>
+                <Route exact path="/mento/class/edit/_refresh" render={() => <Redirect to="/mento/class/edit" />} />
+                <Route exact path="/mento/class/update" component={ClassScheduleFormPage}/>
+                <Route exact path="/mento/class/create" component={ClassScheduleFormPage}/>
             </ScrollToTop>
         </div>
     );
