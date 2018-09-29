@@ -13,19 +13,23 @@ import {MentoringPage} from "../page/mentoring_page";
 import {NoticeEditPage} from "../page/notice_edit_page";
 import MentiApplicationPage from "../page/menti_application_page/MentiApplicationPage";
 import MentoringCareerViewPage from "../page/mentoring_career_view_page/MentoringCareerViewPage";
+import {SchedulePage} from "../page/schedule_page";
+import {CardPage} from "../page/card_page";
 const UserRouter = () => (
     <div>
         <ScrollToTop>
             <Route exact path="/login" render={() => <Redirect to="/" />} />
             <Route exact path="/" component={IndexPage} />
-            <Route path="/notice/:id/list" component={NoticePage} />
-            <Route path="/notice/:id/list/_move" render={({ match, location }) => {
+            <Route exact path="/notice/:id/list" component={NoticePage} />
+            <Route exact path="/notice/:id/list/_move" render={({ match, location }) => {
                 window.location.href = `/notice/${match.params.id}/list${location.search}`
                 return <Redirect to={`/notice/${match.params.id}/list${location.search}`}/>
             }} />
-            <Route path="/notice/create" component={NoticeEditPage} />
-            <Route path="/notice/update" component={NoticeEditPage} />
+            <Route exact path="/notice/create" component={NoticeEditPage} />
+            <Route exact path="/notice/update" component={NoticeEditPage} />
+            <Route exact path="/notice/view" component={CardPage} />
             <Route exact path="/intro/view" component={IntroViewPage} />
+            <Route exact path="/schedule/view" component={SchedulePage} />
             <Route exact path="/account/sign/edit" component={SignUpdatePage} />
             <Route exact path="/account/timetable/edit" component={TimetableEditPage} />
             <Route exact path="/account/profile/edit" component={ProfileEditPage} />

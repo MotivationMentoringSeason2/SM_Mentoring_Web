@@ -20,6 +20,7 @@ import {MentoringPage} from "../page/mentoring_page";
 import {NoticeEditPage} from "../page/notice_edit_page";
 import {MentiApplicationPage} from "../page/menti_application_page";
 import MentoringCareerViewPage from "../page/mentoring_career_view_page/MentoringCareerViewPage";
+import {CardPage} from "../page/card_page";
 
 const AdminRouter = (props) => (
     <div>
@@ -31,6 +32,7 @@ const AdminRouter = (props) => (
                 window.location.href = `/notice/${match.params.id}/list${location.search}`
                 return <Redirect to={`/notice/${match.params.id}/list${location.search}`}/>
             }} />
+            <Route path="/notice/view" component={CardPage} />
             <Route path="/notice/create" component={NoticeEditPage} />
             <Route path="/notice/update" component={NoticeEditPage} />
             <Route exact path="/intro/view" component={IntroViewPage} />

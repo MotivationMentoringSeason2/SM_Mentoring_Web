@@ -12,6 +12,16 @@ import {NoticeEditPage} from "../page/notice_edit_page";
 import MentoringCareerViewPage from "../page/mentoring_career_view_page/MentoringCareerViewPage";
 import {ClassScheduleEditPage} from "../page/class_schedule_edit_page";
 import {ClassScheduleFormPage} from "../page/class_schedule_form_page";
+import {MentoApplicationPage} from "../page/mento_application_page";
+import {IntroEditPage} from "../page/intro_edit_page";
+import {ScheduleEditPage} from "../page/schedule_edit_page";
+import {SchedulePage} from "../page/schedule_page";
+import {DetailEditPage} from "../page/intro_detail_edit_page";
+import {AccountExcelUploadPage} from "../page/account_excel_upload_page";
+import {AccountListPage} from "../page/account_list_page";
+import {AccountViewPage} from "../page/account_view_page";
+import {CardPage} from "../page/card_page";
+import {MentoringReportEditPage} from "../page/mentoring_report_edit_page";
 
 const MentoRouter = (props) => {
     return(
@@ -26,7 +36,39 @@ const MentoRouter = (props) => {
                 }} />
                 <Route path="/notice/create" component={NoticeEditPage} />
                 <Route path="/notice/update" component={NoticeEditPage} />
+                <Route path="/notice/view" component={CardPage} />
+                <Route path="/schedule/view" component={SchedulePage} />
                 <Route exact path="/intro/view" component={IntroViewPage} />
+                {
+                    (props.isChairman) ? <Route exact path="/intro/edit" component={IntroEditPage} /> : null
+                }
+                {
+                    (props.isChairman) ? <Route exact path="/intro/edit/_refresh" render={() => <Redirect to="/intro/edit" />} /> : null
+                }
+                {
+                    (props.isChairman) ? <Route exact path="/schedule/edit" component={ScheduleEditPage} /> : null
+                }
+                {
+                    (props.isChairman) ? <Route exact path="/schedule/edit/_refresh" render={() => <Redirect to="/schedule/edit" />} /> : null
+                }
+                {
+                    (props.isChairman) ? <Route exact path="/intro/:id/detail/edit" component={DetailEditPage} /> : null
+                }
+                {
+                    (props.isChairman) ? <Route exact path="/intro/:id/detail/edit/_refresh" render={({ match }) => <Redirect to={`/intro/${match.params.id}/detail/edit`} />} /> : null
+                }
+                {
+                    (props.isChairman) ? <Route exact path="/admin/accounts/list" component={AccountListPage} /> : null
+                }
+                {
+                    (props.isChairman) ? <Route exact path="/admin/accounts/view" component={AccountViewPage} /> : null
+                }
+                {
+                    (props.isChairman) ? <Route exact path="/admin/excel_upload" component={AccountExcelUploadPage} /> : null
+                }
+                {
+                    (props.isChairman) ? <Route exact path="/admin/excel_upload/_refresh" render={() => <Redirect to="/admin/excel_upload" />} /> : null
+                }
                 <Route exact path="/account/sign/edit" component={SignUpdatePage} />
                 <Route exact path="/account/timetable/edit" component={TimetableEditPage} />
                 <Route exact path="/account/profile/edit" component={ProfileEditPage} />
@@ -36,6 +78,8 @@ const MentoRouter = (props) => {
                 <Route exact path="/mento/class/edit/_refresh" render={() => <Redirect to="/mento/class/edit" />} />
                 <Route exact path="/mento/class/update" component={ClassScheduleFormPage}/>
                 <Route exact path="/mento/class/create" component={ClassScheduleFormPage}/>
+                <Route exact path="/mento/report/edit" component={MentoringReportEditPage} />
+                <Route exact path="/mento/report/edit/_refresh" render={() => <Redirect to="/mento/report/edit" />} />
             </ScrollToTop>
         </div>
     );
