@@ -10,6 +10,7 @@ import calendarReducer from './reducer_calendar';
 import mentoReducer from './reducer_mento';
 import mentiReducer from './reducer_menti';
 import integrateFileReducer from './reducer_integrate_file';
+import classTimeReducer from './reducer_class_times';
 
 export const rootReducer = combineReducers({
     form : formReducer,
@@ -22,5 +23,6 @@ export const rootReducer = combineReducers({
     calendar : calendarReducer,
     mento : mentoReducer,
     menti : mentiReducer,
-    integrateFile : integrateFileReducer
+    integrateFile : integrateFileReducer,
+    classTime : classTimeReducer
 });

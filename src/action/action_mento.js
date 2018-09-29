@@ -27,6 +27,11 @@ export const STUDENT_DELETE_MENTO_INFO_SUCCESS = 'STUDENT_DELETE_MENTO_INFO_SUCC
 export const STUDENT_DELETE_MENTO_INFO_FAILURE = 'STUDENT_DELETE_MENTO_INFO_FAILURE';
 export const RESET_STUDENT_DELETE_MENTO_INFO = 'RESET_STUDENT_DELETE_MENTO_INFO';
 
+export const STUDENT_LOAD_CURRENT_MENTO_TOKEN = 'STUDENT_LOAD_CURRENT_MENTO_TOKEN';
+export const STUDENT_LOAD_CURRENT_MENTO_TOKEN_SUCCESS = 'STUDENT_LOAD_CURRENT_MENTO_TOKEN_SUCCESS';
+export const STUDENT_LOAD_CURRENT_MENTO_TOKEN_FAILURE = 'STUDENT_LOAD_CURRENT_MENTO_TOKEN_FAILURE';
+export const RESET_STUDENT_LOAD_CURRENT_MENTO_TOKEN = 'RESET_STUDENT_LOAD_CURRENT_MENTO_TOKEN';
+
 export function studentLoadApplyModel(identity){
     const request = axios({
         url : `${ROOT_URL}/team/model/${identity}`,
@@ -204,5 +209,36 @@ export function studentDeleteMentoInfoFailure(error){
 export function resetStudentDeleteMentoInfo(){
     return {
         type : RESET_STUDENT_DELETE_MENTO_INFO
+    }
+}
+
+export function studentLoadCurrentMentoToken(identity){
+    const request = axios({
+        url : `${ROOT_URL}/team/token/${identity}`,
+        method : 'get'
+    });
+    return {
+        type : STUDENT_LOAD_CURRENT_MENTO_TOKEN,
+        payload : request
+    }
+}
+
+export function studentLoadCurrentMentoTokenSuccess(tokenData){
+    return {
+        type : STUDENT_LOAD_CURRENT_MENTO_TOKEN_SUCCESS,
+        payload : tokenData.data
+    }
+}
+
+export function studentLoadCurrentMentoTokenFailure(error){
+    return {
+        type : STUDENT_LOAD_CURRENT_MENTO_TOKEN_FAILURE,
+        payload : error
+    }
+}
+
+export function resetStudentLoadCurrentMentoToken(){
+    return {
+        type : RESET_STUDENT_LOAD_CURRENT_MENTO_TOKEN
     }
 }
