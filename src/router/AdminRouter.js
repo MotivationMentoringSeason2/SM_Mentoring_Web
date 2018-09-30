@@ -21,6 +21,7 @@ import {NoticeEditPage} from "../page/notice_edit_page";
 import {MentiApplicationPage} from "../page/menti_application_page";
 import MentoringCareerViewPage from "../page/mentoring_career_view_page/MentoringCareerViewPage";
 import {CardPage} from "../page/card_page";
+import {MentoringOpenViewPage} from "../page/mentoring_open_view_page";
 
 const AdminRouter = (props) => (
     <div>
@@ -64,6 +65,7 @@ const AdminRouter = (props) => (
             <Route exact path="/account/sign/edit" component={SignUpdatePage} />
             <Route exact path="/account/timetable/edit" component={TimetableEditPage} />
             <Route exact path="/account/profile/edit" component={ProfileEditPage} />
+            <Route exact path="/admin/mentoring/confirm" component={MentoringOpenViewPage} />
             <Route exact path="/admin/accounts/list" component={AccountListPage} />
             <Route exact path="/admin/accounts/view" component={AccountViewPage} />
             <Route exact path="/admin/excel_upload" component={AccountExcelUploadPage} />

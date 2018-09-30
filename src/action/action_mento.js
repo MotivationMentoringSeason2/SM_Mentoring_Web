@@ -32,6 +32,11 @@ export const STUDENT_LOAD_CURRENT_MENTO_TOKEN_SUCCESS = 'STUDENT_LOAD_CURRENT_ME
 export const STUDENT_LOAD_CURRENT_MENTO_TOKEN_FAILURE = 'STUDENT_LOAD_CURRENT_MENTO_TOKEN_FAILURE';
 export const RESET_STUDENT_LOAD_CURRENT_MENTO_TOKEN = 'RESET_STUDENT_LOAD_CURRENT_MENTO_TOKEN';
 
+export const ADMIN_LOAD_MENTO_INFOS = 'ADMIN_LOAD_MENTO_INFOS';
+export const ADMIN_LOAD_MENTO_INFOS_SUCCESS = 'ADMIN_LOAD_MENTO_INFOS_SUCCESS';
+export const ADMIN_LOAD_MENTO_INFOS_FAILURE = 'ADMIN_LOAD_MENTO_INFOS_FAILURE';
+export const RESET_ADMIN_LOAD_MENTO_INFOS = 'RESET_ADMIN_LOAD_MENTO_INFOS';
+
 export function studentLoadApplyModel(identity){
     const request = axios({
         url : `${ROOT_URL}/team/model/${identity}`,
@@ -240,5 +245,36 @@ export function studentLoadCurrentMentoTokenFailure(error){
 export function resetStudentLoadCurrentMentoToken(){
     return {
         type : RESET_STUDENT_LOAD_CURRENT_MENTO_TOKEN
+    }
+}
+
+export function adminLoadMentoInfos(){
+    const request = axios({
+        url : `${ROOT_URL}/teams/application/admin`,
+        method : 'get'
+    });
+    return {
+        type : ADMIN_LOAD_MENTO_INFOS,
+        payload : request
+    }
+}
+
+export function adminLoadMentoInfosSuccess(mentoApps){
+    return {
+        type : ADMIN_LOAD_MENTO_INFOS_SUCCESS,
+        payload : mentoApps.data
+    }
+}
+
+export function adminLoadMentoInfosFailure(error){
+    return {
+        type : ADMIN_LOAD_MENTO_INFOS_FAILURE,
+        payload : error
+    }
+}
+
+export function resetAdminLoadMentoInfos(){
+    return {
+        type : RESET_ADMIN_LOAD_MENTO_INFOS
     }
 }

@@ -4,7 +4,8 @@ import {
     STUDENT_LOAD_MENTO_CAREERS, STUDENT_LOAD_MENTO_CAREERS_SUCCESS, STUDENT_LOAD_MENTO_CAREERS_FAILURE, RESET_STUDENT_LOAD_MENTO_CAREERS,
     STUDENT_UPDATE_MENTO_INFO, STUDENT_UPDATE_MENTO_INFO_SUCCESS, STUDENT_UPDATE_MENTO_INFO_FAILURE, RESET_STUDENT_UPDATE_MENTO_INFO,
     STUDENT_DELETE_MENTO_INFO, STUDENT_DELETE_MENTO_INFO_SUCCESS, STUDENT_DELETE_MENTO_INFO_FAILURE, RESET_STUDENT_DELETE_MENTO_INFO,
-    STUDENT_LOAD_CURRENT_MENTO_TOKEN, STUDENT_LOAD_CURRENT_MENTO_TOKEN_SUCCESS, STUDENT_LOAD_CURRENT_MENTO_TOKEN_FAILURE, RESET_STUDENT_LOAD_CURRENT_MENTO_TOKEN
+    STUDENT_LOAD_CURRENT_MENTO_TOKEN, STUDENT_LOAD_CURRENT_MENTO_TOKEN_SUCCESS, STUDENT_LOAD_CURRENT_MENTO_TOKEN_FAILURE, RESET_STUDENT_LOAD_CURRENT_MENTO_TOKEN,
+    ADMIN_LOAD_MENTO_INFOS, ADMIN_LOAD_MENTO_INFOS_SUCCESS, ADMIN_LOAD_MENTO_INFOS_FAILURE, RESET_ADMIN_LOAD_MENTO_INFOS
 } from "../action/action_mento";
 
 const INITIAL_STATE = {
@@ -25,6 +26,9 @@ const INITIAL_STATE = {
     },
     mentoringToken : {
         data : null, loading : false, error : null
+    },
+    teamList : {
+        teams : [], loading : false, error : null
     }
 }
 
@@ -84,6 +88,15 @@ export default function(state = INITIAL_STATE, action) {
             return { ...state, mentoringToken : { data : null, loading : false, error : error }};
         case RESET_STUDENT_LOAD_CURRENT_MENTO_TOKEN :
             return { ...state, mentoringToken : { data : null, loading : false, error : null }};
+
+        case ADMIN_LOAD_MENTO_INFOS :
+            return { ...state, teamList : { teams : [], loading : true, error : null }};
+        case ADMIN_LOAD_MENTO_INFOS_SUCCESS :
+            return { ...state, teamList : { teams : action.payload, loading : false, error : null }};
+        case ADMIN_LOAD_MENTO_INFOS_FAILURE :
+            return { ...state, teamList : { teams : [], loading : false, error : null }};
+        case RESET_ADMIN_LOAD_MENTO_INFOS :
+            return { ...state, teamLIst : { teams : [], loading : false, error : null }};
 
         default :
             return state;
