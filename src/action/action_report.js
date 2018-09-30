@@ -195,7 +195,7 @@ export function mentoUpdateReportWithPhotoFailure(error){
 
 export function mentoUpdateReportContextOnly(scheduleId, reportForm){
     const request = axios({
-        url : `${ROOT_URL}/report/${scheduleId}`,
+        url : `${ROOT_URL}/report/context/${scheduleId}`,
         method : 'put',
         data : reportForm,
     });
