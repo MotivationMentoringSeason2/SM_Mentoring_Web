@@ -3,6 +3,7 @@ import { Component } from 'react';
 import Card from './card';
 import Typography from '@material-ui/core/Typography';
 import styled from 'styled-components';
+import {withRouter} from 'react-router-dom';
 
 const Container = styled.div`
   display: flex;
@@ -11,29 +12,19 @@ const Container = styled.div`
   flex-direction: column;
 `;
 
-const Title = styled.h1`
-  font-size : 1em;
-  margin-bottom : 1em;
-  color : #000000;
-
-`;
-
-export default class CardForm extends Component {
-
+class CardForm extends Component {
   render() {
-    
+    const { principal } = this.props.accessAccount;
     return (
-      
       <Container>
-      <div >
-         <Typography variant="display1" gutterBottom>
-
-          </Typography>
-        
-      <Card />
+      <div>
+        <Typography variant="display1" gutterBottom>
+        </Typography>
+        <Card viewer={principal && principal.identity}/>
       </div>
       </Container>
       );
   }
 }
 
+export default withRouter(CardForm);

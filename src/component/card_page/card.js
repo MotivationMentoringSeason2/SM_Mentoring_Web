@@ -7,25 +7,29 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Collapse from '@material-ui/core/Collapse';
-import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import red from '@material-ui/core/colors/red';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import ShareIcon from '@material-ui/icons/Share';
+import GridList from '@material-ui/core/GridList';
+import GridListTile from '@material-ui/core/GridListTile';
+
+import RemoveIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import BackIcon from '@material-ui/icons/ArrowBack';
+import SaveIcon from '@material-ui/icons/Save';
+import ImageIcon from '@material-ui/icons/Image';
 
 import queryString from 'query-string';
-import {withRouter} from 'react-router-dom';
+import {withRouter, Link} from 'react-router-dom';
 
 import axios from 'axios';
-import './card.css'
+import './card.css';
+import ProfileImage from "../profile_component/ProfileImage";
 
 const styles = theme => ({
   card: {
-    maxWidth: 1000,
-    width:1000,
-    
+    width: window.innerWidth * 0.9,
   },
   media: {
     height: 0,
@@ -51,20 +55,28 @@ const styles = theme => ({
     backgroundColor: red[500],
   },
   cardContent:{
-    width : 1000,
+    width : window.innerWidth * 0.9,
   },
-
+  gridList: {
+    width: window.innerWidth * 0.85,
+    height: 450,
+  }
 });
 
 const NOTICE_URL = 'http://localhost:8083/NoticeAPI';
+
+const RESOURCE_URL = 'http://localhost:8081/AccountAPI/resource';
 
 class RecipeReviewCard extends React.Component {
   state = { expanded: false };
 
   constructor(props) {
     super(props);
-    this.state = {title: "제목",context: "내용", writer: "작성자", views: "조회수",writtenDate: "작성일",};
-  }  
+    this.state = {
+      title: "제목",context: "내용", identity : "아이디", writer: "작성자", views: "조회수", writtenDate: "작성일", files : [], images : []
+    };
+  }
+
   handleExpandClick = () => {
     this.setState(state => ({ expanded: !state.expanded }));
   };
@@ -72,49 +84,168 @@ class RecipeReviewCard extends React.Component {
   componentDidMount() {
     const {id} = queryString.parse(this.props.location.search);
     axios.get(`${NOTICE_URL}/notice/post/${id}`)
-    .then(r => {
-      this.setState({title:r.data.title});
-      this.setState({context :r.data.context});
-      this.setState({writer:r.data.writer});
-      this.setState({views:r.data.views});
-      this.setState({writtenDate:r.data.writtenDate+" 작성자 "+ r.data.writer});
+    .then(response => {
+      const { data } = response;
+      this.setState({
+        title : data && data.title,
+        context : data && data.context,
+        identity : data && data.writer,
+        views : data && data.views,
+        writtenDate : data && data.writtenDate
+      });
+      if(data) {
+        axios.get(`${RESOURCE_URL}/account/name/${data.writer}`).then(response => {
+          this.setState({writer: response.data})
+        });
+      }
     });
-    
+    axios.get(`${NOTICE_URL}/notice/files/${id}`).then(response => {
+      this.setState({
+        files : response.data
+      })
+    });
+    axios.get(`${NOTICE_URL}/notice/images/${id}`).then(response => {
+      this.setState({
+        images : response.data
+      })
+    })
+  }
+
+  handleClickDelete(id){
+    const isDelete = window.confirm("선택하신 파일을 삭제합니다. 계속 진행 하시겠습니까?");
+    if(isDelete){
+      axios({
+        url: `${NOTICE_URL}/notice/file/${id}`,
+        method: 'delete'
+      }).then(response => {
+        alert(response.data);
+        window.location.reload(true);
+      });
+    }
+  }
+
+  handleClickFileDownload(fileId, fileName){
+    axios({
+      url: `${NOTICE_URL}/notice/file/${fileId}`,
+      method: 'get',
+      responseType: 'blob'
+    }).then(response => {
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', fileName);
+      document.body.appendChild(link);
+      link.click();
+    });
+  }
+
+  handleClickFileDelete(){
+    const {id} = queryString.parse(this.props.location.search);
+    const isDelete = window.confirm("현재 게시물에 존재하는 파일들을 모두 삭제합니다. 계속 진행 하시겠습니까?");
+    if(isDelete){
+      axios({
+        url: `${NOTICE_URL}/notice/files/post/${id}`,
+        method: 'delete'
+      }).then(response => {
+        alert(response.data);
+        window.location.reload(true);
+      });
+    }
+  }
+
+  handleClickImageDelete(){
+    const {id} = queryString.parse(this.props.location.search);
+    const isDelete = window.confirm("현재 게시물에 존재하는 이미지를 모두 삭제합니다. 계속 진행 하시겠습니까?");
+    if(isDelete){
+      axios({
+        url: `${NOTICE_URL}/notice/images/post/${id}`,
+        method: 'delete'
+      }).then(response => {
+        alert(response.data);
+        window.location.reload(true);
+      });
+    }
+  }
+
+  handleClickPostDelete(){
+    const query = queryString.parse(this.props.location.search);
+    const isDelete = window.confirm("현재 게시물을 삭제합니다. 계속 진행 하시겠습니까?");
+    if(isDelete){
+      axios({
+          url: `${NOTICE_URL}/notice/post/${query && query.id}`,
+          method: 'delete'
+      }).then(response => {
+          alert(response.data);
+          window.location.href = `/notice/${query && query.tid}/list${this.props.location.search}`;
+      });
+    }
   }
 
   render() {
-    const { classes } = this.props;
- 
+    const { classes, viewer } = this.props;
+    const { writtenDate, views, identity, writer, files, images } = this.state;
+    const queryModel = queryString.parse(this.props.location.search);
+    const filesTr = files.length > 0 ?
+      files.map(file => (
+        <tr key={`file_${file.id}`}>
+          <td>{file.fileName}</td>
+          <td>{Math.ceil(file.fileSize / 1024)} KB</td>
+          <td>{file.uploadDate}</td>
+          <td>
+              <button className="w3-small w3-button w3-round-large w3-blue" onClick={() => this.handleClickFileDownload(file.id, file.fileName)}>파일 다운로드</button>
+              {identity === viewer ? <button className="w3-small w3-button w3-round-large w3-red" onClick={() => this.handleClickDelete(file.id)}>파일 삭제</button> : null}
+          </td>
+        </tr>
+      )) :
+        <tr>
+          <td colSpan="4">이 글에 첨부한 파일이 없습니다.</td>
+        </tr>;
+
     return (
       <Card className={classes.card}>
         <CardHeader
           avatar={
-            <Avatar aria-label="Recipe" className={classes.avatar}>
-              공지
-            </Avatar>
+            <div style={{ width : "60px"}}>
+              <ProfileImage identity={identity}/>
+            </div>
           }
           action={
             <IconButton>
-             {this.state.views}
+             {views}
             </IconButton>
           }
           title={this.state.title}
-          subheader={this.state.writtenDate}
-  
+          subheader={new Date(writtenDate).toLocaleDateString() + new Date(writtenDate).toLocaleTimeString() + " / 작성자 : " + writer}
         />
 
         <CardContent className="cardContent">
-          <Typography component="p">
-            {this.state.context}
-          </Typography>
+          <div
+              dangerouslySetInnerHTML={ {__html: (this.state.context === null || this.state.context) } }
+              style={{ minHeight : '400px' }}
+          />
         </CardContent>
         <CardActions className={classes.actions} disableActionSpacing>
-          <IconButton aria-label="Add to favorites">
-            <FavoriteIcon />
+          <IconButton aria-label="이전으로 이동 ">
+            <Link to={`/notice/${queryModel && queryModel.tid}/list${this.props.location.search}`}>
+              <BackIcon />
+            </Link>
           </IconButton>
-          <IconButton aria-label="Share">
-            <ShareIcon />
-          </IconButton>
+          {
+            viewer === identity ?
+              <Link to={`/notice/update?tid=${queryModel && queryModel.tid}&pid=${queryModel && queryModel.id}`}>
+                <IconButton aria-label="게시물을 수정합니다.">
+                  <EditIcon />
+                </IconButton>
+              </Link> : null
+          }
+          {
+            viewer === identity ?
+              <div onClick={() => this.handleClickPostDelete()}>
+                <IconButton aria-label="게시물을 삭제합니다.">
+                  <RemoveIcon />
+                </IconButton>
+              </div> : null
+          }
           <IconButton
             className={classnames(classes.expand, {
               [classes.expandOpen]: this.state.expanded,
@@ -129,40 +260,45 @@ class RecipeReviewCard extends React.Component {
         <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
           <CardContent>
             <Typography paragraph variant="body2">
-             댓글:
+              <SaveIcon /> 첨부 파일
             </Typography>
-            <Typography paragraph>
-              Heat 1/2 cup of the broth in a pot until simmering, add saffron and set aside for 10
-              minutes.
-            </Typography>
-            <Typography paragraph>
-              Heat oil in a (14- to 16-inch) paella pan or a large, deep skillet over medium-high
-              heat. Add chicken, shrimp and chorizo, and cook, stirring occasionally until lightly
-              browned, 6 to 8 minutes. Transfer shrimp to a large plate and set aside, leaving
-              chicken and chorizo in the pan. Add pimentón, bay leaves, garlic, tomatoes, onion,
-              salt and pepper, and cook, stirring often until thickened and fragrant, about 10
-              minutes. Add saffron broth and remaining 4 1/2 cups chicken broth; bring to a boil.
-            </Typography>
-            <Typography paragraph>
-              Add rice and stir very gently to distribute. Top with artichokes and peppers, and cook
-              without stirring, until most of the liquid is absorbed, 15 to 18 minutes. Reduce heat
-              to medium-low, add reserved shrimp and mussels, tucking them down into the rice, and
-              cook again without stirring, until mussels have opened and rice is just tender, 5 to 7
-              minutes more. (Discard any mussels that don’t open.)
-            </Typography>
-            <Typography>
-              Set aside off of the heat to let rest for 10 minutes, and then serve.
-            </Typography>
-          </CardContent>
-
-           <CardContent>
+            <table className="w3-table w3-bordered w3-centered">
+              <thead>
+              <tr>
+                <th>파일 이름</th>
+                <th>용량</th>
+                <th>업로드 날짜</th>
+                <th>다운로드 / 삭제</th>
+              </tr>
+              </thead>
+              <tbody>
+              {filesTr}
+              </tbody>
+            </table>
+            <br/>
+              {identity === viewer && files.length > 0 ?
+                <div className="w3-center">
+                    <button className="w3-small w3-button w3-round-large w3-red" onClick={() => this.handleClickFileDelete()}>모든 파일 삭제</button>
+                </div>
+                : null
+              }
             <Typography paragraph variant="body2">
-             댓글:
+              <ImageIcon/> 첨부 이미지
             </Typography>
-            <Typography paragraph>
-              Heat 1/2 cup of the broth in a pot until simmering, add saffron and set aside for 10
-              minutes.
-              </Typography>
+            {identity === viewer && images.length > 0 ?
+              <div className="w3-center">
+                  <button className="w3-small w3-button w3-round-large w3-red" onClick={() => this.handleClickImageDelete()}>모든 이미지 삭제</button>
+              </div>
+              : null
+            }
+            <br/>
+            <GridList cellHeight={160} className={classes.gridList} cols={3}>
+                {images.map((image, idx) => (
+                  <GridListTile key={`image_${image}`} cols={(idx + 1) % 3}>
+                    <img src={`${NOTICE_URL}/notice/image/${image}`} alt={`첨부이미지_${image}`} />
+                  </GridListTile>
+                ))}
+            </GridList>
           </CardContent>
         </Collapse>
       </Card>
