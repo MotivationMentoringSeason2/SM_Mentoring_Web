@@ -3,12 +3,8 @@ import {connect} from 'react-redux';
 
 function mapStateToProps(state) {
     return {
+        accessAccount : state.account.accessAccount
     };
 }
 
-function mapDispatchToProps(dispatch){
-    return {
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(CardForm);
+export default connect(mapStateToProps, null)(CardForm);

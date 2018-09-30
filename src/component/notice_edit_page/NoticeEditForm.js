@@ -251,7 +251,7 @@ class NoticeEditForm extends Component {
                     <br/><br/><br/><br/>
                     <div>
                         <Button variant="contained" type="submit" color="primary">
-                            <CheckIcon className={classes.leftIcon}/> 게시물 추가하기
+                            <CheckIcon className={classes.leftIcon}/> 게시물 {(postId === 0) ? "추가" : "수정"}하기
                         </Button>
                     </div>
                     {loadModal}
