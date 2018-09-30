@@ -173,7 +173,7 @@ class ReportEditList extends Component {
                         &nbsp;
                         {
                             report.status !== 'PERMIT' ?
-                                <Link to={`/mento/report/update?rId=${report.id}`}>
+                                <Link to={`/mento/report/update?rId=${report.id}&sId=${report.scheduleId}`}>
                                     <button className="w3-small w3-button w3-round-large w3-purple">보고서 수정
                                     </button>
                                 </Link> : null
@@ -186,7 +186,7 @@ class ReportEditList extends Component {
                 <ReactHint autoPosition events delay={100} />
                 <hr/>
                 <div className="w3-light-grey w3-round-large">
-                    <div className="w3-blue w3-right-align w3-round-large" style={{width : `${activity && ((activity.diffSeconds) / 720 || 0)}%`}}>{activity && ((activity.diffSeconds) / 720 || 0)} %</div>
+                    <div className="w3-blue w3-right-align w3-round-large" style={{width : `${activity && ((activity.diffSeconds) / 720 || 0)}%`}}>{activity && ((activity.diffSeconds) / 720 + "%" || 0)}</div>
                 </div>
                 <div className="w3-right-align">
                     <p>{activity && activity.count} 회차, {activity && (activity.diffSeconds) / 3600} 시간 / 20 시간</p>
@@ -209,7 +209,11 @@ class ReportEditList extends Component {
                         <button className="w3-small w3-button w3-round-large w3-orange">수업 시간 관리하러 가기</button>
                     </Link>
                     <br/><br/>
-                    <button className="w3-small w3-button w3-round-large w3-green" onClick={() => this.handleClickReportsDownload()}>엑셀 보고서 다운로드</button>
+                    {
+                        reports.filter(report => report.status === 'PERMIT').length > 0 ?
+                            <button className="w3-small w3-button w3-round-large w3-green" onClick={() => this.handleClickReportsDownload()}>엑셀 보고서 다운로드</button>
+                             : null
+                    }
                     <br/><br/>
                     <h3>작성할 멘토링 시간 선택</h3>
                     <br/>
