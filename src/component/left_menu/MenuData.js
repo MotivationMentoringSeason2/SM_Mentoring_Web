@@ -224,14 +224,6 @@ export const mentoItems = (
                 <ListItemText primary="보고서 작성 / 수정" />
             </ListItem>
         </Link>
-        <Link to="/mento/report/confirm" style={{ textDecoration: 'none' }}>
-            <ListItem button>
-                <ListItemIcon>
-                    <ArrowForwardIcon />
-                </ListItemIcon>
-                <ListItemText primary="보고서 결과" />
-            </ListItem>
-        </Link>
         <Link to="/mento/sticky_memo" style={{ textDecoration: 'none' }}>
             <ListItem button>
                 <ListItemIcon>

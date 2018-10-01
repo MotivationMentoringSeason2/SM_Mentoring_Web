@@ -56,6 +56,11 @@ export const ADMIN_EXECUTE_EXCEL_UPLOADING_SUCCESS = 'ADMIN_EXECUTE_EXCEL_UPLOAD
 export const ADMIN_EXECUTE_EXCEL_UPLOADING_FAILURE = 'ADMIN_EXECUTE_EXCEL_UPLOADING_FAILURE';
 export const RESET_ADMIN_EXECUTE_EXCEL_UPLOADING = 'RESET_ADMIN_EXECUTE_EXCEL_UPLOADING';
 
+export const ADMIN_EXECUTE_CHANGE_STUDENT_STATUS = 'ADMIN_EXECUTE_CHANGE_STUDENT_STATUS';
+export const ADMIN_EXECUTE_CHANGE_STUDENT_STATUS_SUCCESS = 'ADMIN_EXECUTE_CHANGE_STUDENT_STATUS_SUCCESS';
+export const ADMIN_EXECUTE_CHANGE_STUDENT_STATUS_FAILURE = 'ADMIN_EXECUTE_CHANGE_STUDENT_STATUS_FAILURE';
+export const RESET_ADMIN_EXECUTE_CHANGE_STUDENT_STATUS = 'RESET_ADMIN_EXECUTE_CHANGE_STUDENT_STATUS';
+
 export const USER_LOGOUT_PROCESS = 'USER_LOGOUT_PROCESS';
 
 const ROOT_URL = 'http://127.0.0.1:8081/AccountAPI';
@@ -445,6 +450,41 @@ export function adminExecuteExcelUploadingFailure(error){
 export function resetAdminExecuteExcelUploading(){
     return {
         type : RESET_ADMIN_EXECUTE_EXCEL_UPLOADING
+    }
+}
+
+export function adminExecuteChangeStudentStatus(userToken, identity, role){
+    const request = axios({
+        url : `${ROOT_URL}/admin/account/mentoring/${identity}/${role}`,
+        method : 'put',
+        headers :
+            {
+                'Authorization' : `Bearer ${userToken}`
+            }
+    });
+    return {
+        type : ADMIN_EXECUTE_CHANGE_STUDENT_STATUS,
+        payload : request
+    }
+}
+
+export function adminExecuteChangeStudentStatusSuccess(message){
+    return {
+        type : ADMIN_EXECUTE_CHANGE_STUDENT_STATUS_SUCCESS,
+        payload : message.data
+    }
+}
+
+export function adminExecuteChangeStudentStatusFailure(error){
+    return {
+        type : ADMIN_EXECUTE_CHANGE_STUDENT_STATUS_FAILURE,
+        payload : error
+    }
+}
+
+export function resetAdminExecuteChangeStudentStatus(){
+    return {
+        type : RESET_ADMIN_EXECUTE_CHANGE_STUDENT_STATUS
     }
 }
 
