@@ -18,6 +18,7 @@ import {AccountListPage} from "../page/account_list_page";
 import {AccountViewPage} from "../page/account_view_page";
 import {SchedulePage} from "../page/schedule_page";
 import {CardPage} from "../page/card_page";
+import {MentoringOpenViewPage} from "../page/mentoring_open_view_page";
 
 const MentiRouter = (props) => {
     return (
@@ -57,6 +58,12 @@ const MentiRouter = (props) => {
                 }
                 {
                     (props.isChairman) ? <Route exact path="/intro/:id/detail/edit/_refresh" render={({ match }) => <Redirect to={`/intro/${match.params.id}/detail/edit`} />} /> : null
+                }
+                {
+                    (props.isChairman) ? <Route exact path="/admin/mentoring/confirm" component={MentoringOpenViewPage} /> : null
+                }
+                {
+                    (props.isChairman) ? <Route exact path="/admin/mentoring/confirm/_refresh" render={() => <Redirect to="/admin/mentoring/confirm" />} /> : null
                 }
                 {
                     (props.isChairman) ? <Route exact path="/admin/accounts/list" component={AccountListPage} /> : null

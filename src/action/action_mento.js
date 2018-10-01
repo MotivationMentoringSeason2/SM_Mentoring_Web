@@ -37,6 +37,11 @@ export const ADMIN_LOAD_MENTO_INFOS_SUCCESS = 'ADMIN_LOAD_MENTO_INFOS_SUCCESS';
 export const ADMIN_LOAD_MENTO_INFOS_FAILURE = 'ADMIN_LOAD_MENTO_INFOS_FAILURE';
 export const RESET_ADMIN_LOAD_MENTO_INFOS = 'RESET_ADMIN_LOAD_MENTO_INFOS';
 
+export const ADMIN_GRANT_MENTORING_TEAM = 'ADMIN_GRANT_MENTORING_TEAM';
+export const ADMIN_GRANT_MENTORING_TEAM_SUCCESS = 'ADMIN_GRANT_MENTORING_TEAM_SUCCESS';
+export const ADMIN_GRANT_MENTORING_TEAM_FAILURE = 'ADMIN_GRANT_MENTORING_TEAM_FAILURE';
+export const RESET_ADMIN_GRANT_MENTORING_TEAM = 'RESET_ADMIN_GRANT_MENTORING_TEAM';
+
 export function studentLoadApplyModel(identity){
     const request = axios({
         url : `${ROOT_URL}/team/model/${identity}`,
@@ -276,5 +281,36 @@ export function adminLoadMentoInfosFailure(error){
 export function resetAdminLoadMentoInfos(){
     return {
         type : RESET_ADMIN_LOAD_MENTO_INFOS
+    }
+}
+
+export function adminGrantMentoringTeam(teamId, status){
+    const request = axios({
+        url : `${ROOT_URL}/team/${teamId}/status/${status}`,
+        method : 'put'
+    });
+    return {
+        type : ADMIN_GRANT_MENTORING_TEAM,
+        payload : request
+    }
+}
+
+export function adminGrantMentoringTeamSuccess(message){
+    return {
+        type : ADMIN_GRANT_MENTORING_TEAM_SUCCESS,
+        payload : message.data
+    }
+}
+
+export function adminGrantMentoringTeamFailure(error){
+    return {
+        type : ADMIN_GRANT_MENTORING_TEAM_FAILURE,
+        payload : error
+    }
+}
+
+export function resetAdminGrantMentoringTeam(){
+    return {
+        type : RESET_ADMIN_GRANT_MENTORING_TEAM
     }
 }

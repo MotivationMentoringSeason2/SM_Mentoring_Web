@@ -162,7 +162,9 @@ class MentiApplicationView extends Component{
                     {
                         team.hasApplicated ?
                             <button className="w3-button w3-round-large w3-red" onClick={() => this.handleClickRelease(team.id, team.name)}>취소하기</button> :
-                            <button className="w3-button w3-round-large w3-blue" onClick={() => this.handleClickApply(team.id, team.name)}>신청하기</button>
+                            team.appPerson < team.limPerson ?
+                                <button className="w3-button w3-round-large w3-blue" onClick={() => this.handleClickApply(team.id, team.name)}>신청하기</button>
+                                : null
                     }
                     <br/>
                     <Link to={`/application/mento_view/${team.id}`}><button className="w3-button w3-round-large w3-purple">정보 조회</button></Link>

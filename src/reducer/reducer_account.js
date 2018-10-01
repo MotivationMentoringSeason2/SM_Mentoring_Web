@@ -9,6 +9,7 @@ import {
     ADMIN_FETCH_ACCOUNT_VIEW, ADMIN_FETCH_ACCOUNT_VIEW_SUCCESS, ADMIN_FETCH_ACCOUNT_VIEW_FAILURE, RESET_ADMIN_FETCH_ACCOUNT_VIEW,
     ADMIN_EXECUTE_SETTING_CHAIRMAN, ADMIN_EXECUTE_SETTING_CHAIRMAN_SUCCESS, ADMIN_EXECUTE_SETTING_CHAIRMAN_FAILURE, RESET_ADMIN_EXECUTE_SETTING_CHAIRMAN,
     ADMIN_EXECUTE_EXCEL_UPLOADING, ADMIN_EXECUTE_EXCEL_UPLOADING_SUCCESS, ADMIN_EXECUTE_EXCEL_UPLOADING_FAILURE, RESET_ADMIN_EXECUTE_EXCEL_UPLOADING,
+    ADMIN_EXECUTE_CHANGE_STUDENT_STATUS, ADMIN_EXECUTE_CHANGE_STUDENT_STATUS_SUCCESS, ADMIN_EXECUTE_CHANGE_STUDENT_STATUS_FAILURE, RESET_ADMIN_EXECUTE_CHANGE_STUDENT_STATUS,
     USER_LOGOUT_PROCESS
 } from "../action/action_account";
 
@@ -33,6 +34,9 @@ const INITIAL_STATE = {
     },
     accountView : {
         account : null, loading : false, error : null
+    },
+    grantStatus : {
+        message : null, loading : false, error : null
     }
 }
 
@@ -124,6 +128,16 @@ export default function(state = INITIAL_STATE, action){
             return { ...state, accountView : { account : null, loading : false, error : error }};
         case RESET_ADMIN_FETCH_ACCOUNT_VIEW :
             return { ...state, accountView : { account : null, loading : false, error : null }};
+
+        case ADMIN_EXECUTE_CHANGE_STUDENT_STATUS :
+            return { ...state, grantStatus : { message : null, loading : true, error : null }};
+        case ADMIN_EXECUTE_CHANGE_STUDENT_STATUS_SUCCESS :
+            return { ...state, grantStatus : { message : action.payload, loading : false, error : null }};
+        case ADMIN_EXECUTE_CHANGE_STUDENT_STATUS_FAILURE :
+            error = action.payload.data || { message : action.payload.data };
+            return { ...state, grantStatus : { message : null, loading : false, error : error }};
+        case RESET_ADMIN_EXECUTE_CHANGE_STUDENT_STATUS :
+            return { ...state, grantStatus : { message : null, loading : false, error : null }};
 
         default :
             return state;

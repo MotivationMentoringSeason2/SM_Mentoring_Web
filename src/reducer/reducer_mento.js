@@ -5,7 +5,8 @@ import {
     STUDENT_UPDATE_MENTO_INFO, STUDENT_UPDATE_MENTO_INFO_SUCCESS, STUDENT_UPDATE_MENTO_INFO_FAILURE, RESET_STUDENT_UPDATE_MENTO_INFO,
     STUDENT_DELETE_MENTO_INFO, STUDENT_DELETE_MENTO_INFO_SUCCESS, STUDENT_DELETE_MENTO_INFO_FAILURE, RESET_STUDENT_DELETE_MENTO_INFO,
     STUDENT_LOAD_CURRENT_MENTO_TOKEN, STUDENT_LOAD_CURRENT_MENTO_TOKEN_SUCCESS, STUDENT_LOAD_CURRENT_MENTO_TOKEN_FAILURE, RESET_STUDENT_LOAD_CURRENT_MENTO_TOKEN,
-    ADMIN_LOAD_MENTO_INFOS, ADMIN_LOAD_MENTO_INFOS_SUCCESS, ADMIN_LOAD_MENTO_INFOS_FAILURE, RESET_ADMIN_LOAD_MENTO_INFOS
+    ADMIN_LOAD_MENTO_INFOS, ADMIN_LOAD_MENTO_INFOS_SUCCESS, ADMIN_LOAD_MENTO_INFOS_FAILURE, RESET_ADMIN_LOAD_MENTO_INFOS,
+    ADMIN_GRANT_MENTORING_TEAM, ADMIN_GRANT_MENTORING_TEAM_SUCCESS, ADMIN_GRANT_MENTORING_TEAM_FAILURE, RESET_ADMIN_GRANT_MENTORING_TEAM
 } from "../action/action_mento";
 
 const INITIAL_STATE = {
@@ -47,16 +48,20 @@ export default function(state = INITIAL_STATE, action) {
 
         case STUDENT_APPLY_MENTO :
         case STUDENT_UPDATE_MENTO_INFO :
+        case ADMIN_GRANT_MENTORING_TEAM :
             return { ...state, saveStatus : { message : null, loading : true, error : null }};
         case STUDENT_APPLY_MENTO_SUCCESS :
         case STUDENT_UPDATE_MENTO_INFO_SUCCESS :
+        case ADMIN_GRANT_MENTORING_TEAM_SUCCESS :
             return { ...state, saveStatus : { message : action.payload, loading : false, error : null }};
         case STUDENT_APPLY_MENTO_FAILURE :
         case STUDENT_UPDATE_MENTO_INFO_FAILURE :
+        case ADMIN_GRANT_MENTORING_TEAM_FAILURE :
             error = action.payload.data || { message : action.payload.data };
             return { ...state, saveStatus : { message : null, loading : false, error : error }};
         case RESET_STUDENT_APPLY_MENTO :
         case RESET_STUDENT_UPDATE_MENTO_INFO :
+        case RESET_ADMIN_GRANT_MENTORING_TEAM :
             return { ...state, saveStatus : { message : null, loading : false, error : null }};
 
         case STUDENT_LOAD_MENTO_CAREERS :

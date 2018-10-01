@@ -66,6 +66,7 @@ const AdminRouter = (props) => (
             <Route exact path="/account/timetable/edit" component={TimetableEditPage} />
             <Route exact path="/account/profile/edit" component={ProfileEditPage} />
             <Route exact path="/admin/mentoring/confirm" component={MentoringOpenViewPage} />
+            <Route exact path="/admin/mentoring/confirm/_refresh" render={() => <Redirect to="/admin/mentoring/confirm" />} />
             <Route exact path="/admin/accounts/list" component={AccountListPage} />
             <Route exact path="/admin/accounts/view" component={AccountViewPage} />
             <Route exact path="/admin/excel_upload" component={AccountExcelUploadPage} />

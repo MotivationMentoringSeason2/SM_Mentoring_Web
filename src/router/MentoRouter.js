@@ -62,6 +62,9 @@ const MentoRouter = (props) => {
                     (props.isChairman) ? <Route exact path="/admin/mentoring/confirm" component={MentoringOpenViewPage} /> : null
                 }
                 {
+                    (props.isChairman) ? <Route exact path="/admin/mentoring/confirm/_refresh" render={() => <Redirect to="/admin/mentoring/confirm" />} /> : null
+                }
+                {
                     (props.isChairman) ? <Route exact path="/admin/accounts/list" component={AccountListPage} /> : null
                 }
                 {
