@@ -189,14 +189,7 @@ export const mentiItems = (
                 <ListItemText primary="멘토링 메모장" />
             </ListItem>
         </Link>
-        <Link to="/menti/survey" style={{ textDecoration: 'none' }}>
-            <ListItem button>
-                <ListItemIcon>
-                    <ArrowForwardIcon />
-                </ListItemIcon>
-                <ListItemText primary="멘티 설문조사" />
-            </ListItem>
-        </Link>
+  
     </div>
 );
 
@@ -232,14 +225,7 @@ export const mentoItems = (
                 <ListItemText primary="멘토링 메모장" />
             </ListItem>
         </Link>
-        <Link to="/mento/survey" style={{ textDecoration: 'none' }}>
-            <ListItem button>
-                <ListItemIcon>
-                    <ArrowForwardIcon />
-                </ListItemIcon>
-                <ListItemText primary="멘토 설문조사" />
-            </ListItem>
-        </Link>
+      
     </div>
 );
 
