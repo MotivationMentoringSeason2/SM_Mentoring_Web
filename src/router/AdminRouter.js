@@ -71,6 +71,7 @@ const AdminRouter = (props) => (
             <Route exact path="/admin/accounts/view" component={AccountViewPage} />
             <Route exact path="/admin/excel_upload" component={AccountExcelUploadPage} />
             <Route exact path="/admin/excel_upload/_refresh" render={() => <Redirect to="/admin/excel_upload" />} />
+            <Route exact path="/application/mento_list" component={MentoringPage} />
         </ScrollToTop>
     </div>
 );

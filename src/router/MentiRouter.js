@@ -19,7 +19,8 @@ import {AccountViewPage} from "../page/account_view_page";
 import {SchedulePage} from "../page/schedule_page";
 import {CardPage} from "../page/card_page";
 import {MentoringOpenViewPage} from "../page/mentoring_open_view_page";
-
+import {MentoringPage} from "../page/mentoring_page";
+import {MentoringMemo} from "../page/mentoring_memo";
 const MentiRouter = (props) => {
     return (
         <div>
@@ -40,6 +41,8 @@ const MentiRouter = (props) => {
                 <Route exact path="/account/timetable/edit" component={TimetableEditPage} />
                 <Route exact path="/account/profile/edit" component={ProfileEditPage} />
                 <Route exact path="/application/confirm" component={MentoringCareerViewPage} />
+                <Route exact path="/application/mento_list" component={MentoringPage} />
+                
                 <Route exact path="/application/confirm/_refresh" render={() => <Redirect to="/application/confirm" />} />
                 {
                     (props.isChairman) ? <Route exact path="/intro/edit" component={IntroEditPage} /> : null

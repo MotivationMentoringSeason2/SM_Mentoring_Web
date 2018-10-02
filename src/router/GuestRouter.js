@@ -10,6 +10,7 @@ import {FindPasswordPage} from "../page/find_password_page";
 import ScrollToTop from "./ScrollToTop";
 import {IntroViewPage} from "../page/intro_view_page";
 import {SchedulePage} from "../page/schedule_page";
+import {MentoringPage} from "../page/mentoring_page";
 
 const GuestRouter = () => (
     <div>
@@ -28,6 +29,7 @@ const GuestRouter = () => (
             <Route path="/notice/view" component={CardPage} />
             <Route path="/schedule/view" component={SchedulePage} />
             <Route exact path="/intro/view" component={IntroViewPage} />
+            <Route exact path="/application/mento_list" component={MentoringPage} />
         </ScrollToTop>
     </div>
 );

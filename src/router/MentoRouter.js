@@ -23,6 +23,8 @@ import {CardPage} from "../page/card_page";
 import {MentoringReportEditPage} from "../page/mentoring_report_edit_page";
 import MentoringReportFormPage from "../page/mentoring_report_form_page/MentoringReportFormPage";
 import {MentoringOpenViewPage} from "../page/mentoring_open_view_page";
+import {MentoringPage} from "../page/mentoring_page";
+import {MentoringMemoPage} from "../page/mentoring_memo";
 
 const MentoRouter = (props) => {
     return(
@@ -89,6 +91,9 @@ const MentoRouter = (props) => {
                 <Route exact path="/mento/report/edit/_refresh" render={() => <Redirect to="/mento/report/edit" />} />
                 <Route exact path="/mento/report/create" component={MentoringReportFormPage} />
                 <Route exact path="/mento/report/update" component={MentoringReportFormPage} />
+                <Route exact path="/application/mento_list" component={MentoringPage} />
+                <Route exact path="/mento/sticky_memo" component={MentoringMemoPage} />
+                
             </ScrollToTop>
         </div>
     );
