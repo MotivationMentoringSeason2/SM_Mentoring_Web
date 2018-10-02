@@ -6,7 +6,9 @@ import {
     STUDENT_DELETE_MENTO_INFO, STUDENT_DELETE_MENTO_INFO_SUCCESS, STUDENT_DELETE_MENTO_INFO_FAILURE, RESET_STUDENT_DELETE_MENTO_INFO,
     STUDENT_LOAD_CURRENT_MENTO_TOKEN, STUDENT_LOAD_CURRENT_MENTO_TOKEN_SUCCESS, STUDENT_LOAD_CURRENT_MENTO_TOKEN_FAILURE, RESET_STUDENT_LOAD_CURRENT_MENTO_TOKEN,
     ADMIN_LOAD_MENTO_INFOS, ADMIN_LOAD_MENTO_INFOS_SUCCESS, ADMIN_LOAD_MENTO_INFOS_FAILURE, RESET_ADMIN_LOAD_MENTO_INFOS,
-    ADMIN_GRANT_MENTORING_TEAM, ADMIN_GRANT_MENTORING_TEAM_SUCCESS, ADMIN_GRANT_MENTORING_TEAM_FAILURE, RESET_ADMIN_GRANT_MENTORING_TEAM
+    ADMIN_GRANT_MENTORING_TEAM, ADMIN_GRANT_MENTORING_TEAM_SUCCESS, ADMIN_GRANT_MENTORING_TEAM_FAILURE, RESET_ADMIN_GRANT_MENTORING_TEAM,
+    ADMIN_LOAD_MENTO_TEAMS_BY_SEMESTER, ADMIN_LOAD_MENTO_TEAMS_BY_SEMESTER_SUCCESS, ADMIN_LOAD_MENTO_TEAMS_BY_SEMESTER_FAILURE, RESET_ADMIN_LOAD_MENTO_TEAMS_BY_SEMESTER,
+    ADMIN_LOAD_MENTO_TOKEN, ADMIN_LOAD_MENTO_TOKEN_SUCCESS, ADMIN_LOAD_MENTO_TOKEN_FAILURE, RESET_ADMIN_LOAD_MENTO_TOKEN
 } from "../action/action_mento";
 
 const INITIAL_STATE = {
@@ -85,22 +87,30 @@ export default function(state = INITIAL_STATE, action) {
             return { ...state, deleteStatus : { message : null, loading : false, error : null }};
 
         case STUDENT_LOAD_CURRENT_MENTO_TOKEN :
+        case ADMIN_LOAD_MENTO_TOKEN :
             return { ...state, mentoringToken : { data : null, loading : true, error : null }};
         case STUDENT_LOAD_CURRENT_MENTO_TOKEN_SUCCESS :
+        case ADMIN_LOAD_MENTO_TOKEN_SUCCESS :
             return { ...state, mentoringToken : { data : action.payload, loading : false, error : null }};
         case STUDENT_LOAD_CURRENT_MENTO_TOKEN_FAILURE :
+        case ADMIN_LOAD_MENTO_TOKEN_FAILURE :
             error = action.payload.data || { message: action.payload.data };
             return { ...state, mentoringToken : { data : null, loading : false, error : error }};
         case RESET_STUDENT_LOAD_CURRENT_MENTO_TOKEN :
+        case RESET_ADMIN_LOAD_MENTO_TOKEN :
             return { ...state, mentoringToken : { data : null, loading : false, error : null }};
 
         case ADMIN_LOAD_MENTO_INFOS :
+        case ADMIN_LOAD_MENTO_TEAMS_BY_SEMESTER :
             return { ...state, teamList : { teams : [], loading : true, error : null }};
         case ADMIN_LOAD_MENTO_INFOS_SUCCESS :
+        case ADMIN_LOAD_MENTO_TEAMS_BY_SEMESTER_SUCCESS :
             return { ...state, teamList : { teams : action.payload, loading : false, error : null }};
         case ADMIN_LOAD_MENTO_INFOS_FAILURE :
+        case ADMIN_LOAD_MENTO_TEAMS_BY_SEMESTER_FAILURE :
             return { ...state, teamList : { teams : [], loading : false, error : null }};
         case RESET_ADMIN_LOAD_MENTO_INFOS :
+        case RESET_ADMIN_LOAD_MENTO_TEAMS_BY_SEMESTER :
             return { ...state, teamLIst : { teams : [], loading : false, error : null }};
 
         default :

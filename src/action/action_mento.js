@@ -42,6 +42,16 @@ export const ADMIN_GRANT_MENTORING_TEAM_SUCCESS = 'ADMIN_GRANT_MENTORING_TEAM_SU
 export const ADMIN_GRANT_MENTORING_TEAM_FAILURE = 'ADMIN_GRANT_MENTORING_TEAM_FAILURE';
 export const RESET_ADMIN_GRANT_MENTORING_TEAM = 'RESET_ADMIN_GRANT_MENTORING_TEAM';
 
+export const ADMIN_LOAD_MENTO_TEAMS_BY_SEMESTER = 'ADMIN_LOAD_MENTO_TEAMS_BY_SEMESTER';
+export const ADMIN_LOAD_MENTO_TEAMS_BY_SEMESTER_SUCCESS = 'ADMIN_LOAD_MENTO_TEAMS_BY_SEMESTER_SUCCESS';
+export const ADMIN_LOAD_MENTO_TEAMS_BY_SEMESTER_FAILURE = 'ADMIN_LOAD_MENTO_TEAMS_BY_SEMESTER_FAILURE';
+export const RESET_ADMIN_LOAD_MENTO_TEAMS_BY_SEMESTER = 'RESET_ADMIN_LOAD_MENTO_TEAMS_BY_SEMESTER';
+
+export const ADMIN_LOAD_MENTO_TOKEN = 'ADMIN_LOAD_MENTO_TOKEN';
+export const ADMIN_LOAD_MENTO_TOKEN_SUCCESS = 'ADMIN_LOAD_MENTO_TOKEN_SUCCESS';
+export const ADMIN_LOAD_MENTO_TOKEN_FAILURE = 'ADMIN_LOAD_MENTO_TOKEN_FAILURE';
+export const RESET_ADMIN_LOAD_MENTO_TOKEN = 'RESET_ADMIN_LOAD_MENTO_TOKEN';
+
 export function studentLoadApplyModel(identity){
     const request = axios({
         url : `${ROOT_URL}/team/model/${identity}`,
@@ -312,5 +322,67 @@ export function adminGrantMentoringTeamFailure(error){
 export function resetAdminGrantMentoringTeam(){
     return {
         type : RESET_ADMIN_GRANT_MENTORING_TEAM
+    }
+}
+
+export function adminLoadMentoTeamsBySemester(semesterId){
+    const request = axios({
+        url : `${ROOT_URL}/teams/${semesterId}`,
+        method : 'get'
+    });
+    return {
+        type : ADMIN_LOAD_MENTO_TEAMS_BY_SEMESTER,
+        payload : request
+    }
+}
+
+export function adminLoadMentoTeamsBySemesterSuccess(teams){
+    return {
+        type : ADMIN_LOAD_MENTO_TEAMS_BY_SEMESTER_SUCCESS,
+        payload : teams.data
+    }
+}
+
+export function adminLoadMentoTeamsBySemesterFailure(error){
+    return {
+        type : ADMIN_LOAD_MENTO_TEAMS_BY_SEMESTER_FAILURE,
+        payload : error
+    }
+}
+
+export function resetAdminLoadMentoTeamsBySemester(){
+    return {
+        type : RESET_ADMIN_LOAD_MENTO_TEAMS_BY_SEMESTER
+    }
+}
+
+export function adminLoadMentoToken(teamId){
+    const request = axios({
+        url : `${ROOT_URL}/team/admin/token/${teamId}`,
+        method : 'get'
+    });
+    return {
+        type : ADMIN_LOAD_MENTO_TOKEN,
+        payload : request
+    }
+}
+
+export function adminLoadMentoTokenSuccess(token){
+    return {
+        type : ADMIN_LOAD_MENTO_TOKEN_SUCCESS,
+        payload : token.data
+    }
+}
+
+export function adminLoadMentoTokenFailure(error){
+    return {
+        type : ADMIN_LOAD_MENTO_TOKEN_FAILURE,
+        payload : error
+    }
+}
+
+export function resetAdminLoadMentoToken(){
+    return {
+        type : RESET_ADMIN_LOAD_MENTO_TOKEN
     }
 }

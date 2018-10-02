@@ -3,7 +3,8 @@ import {
     MENTO_LOAD_CLASS_TIME_MODEL, MENTO_LOAD_CLASS_TIME_MODEL_SUCCESS, MENTO_LOAD_CLASS_TIME_MODEL_FAILURE, RESET_MENTO_LOAD_CLASS_TIME_MODEL,
     MENTO_CREATE_CLASS_TIME, MENTO_CREATE_CLASS_TIME_SUCCESS, MENTO_CREATE_CLASS_TIME_FAILURE,
     MENTO_UPDATE_CLASS_TIME, MENTO_UPDATE_CLASS_TIME_SUCCESS, MENTO_UPDATE_CLASS_TIME_FAILURE, RESET_MENTO_SAVE_CLASS_TIME,
-    MENTO_DELETE_CLASS_TIMES, MENTO_DELETE_CLASS_TIMES_SUCCESS, MENTO_DELETE_CLASS_TIMES_FAILURE, RESET_MENTO_DELETE_CLASS_TIMES
+    MENTO_DELETE_CLASS_TIMES, MENTO_DELETE_CLASS_TIMES_SUCCESS, MENTO_DELETE_CLASS_TIMES_FAILURE, RESET_MENTO_DELETE_CLASS_TIMES,
+    ADMIN_UPDATE_SCHEDULE_MESSAGE, ADMIN_UPDATE_SCHEDULE_MESSAGE_SUCCESS, ADMIN_UPDATE_SCHEDULE_MESSAGE_FAILURE, RESET_ADMIN_UPDATE_SCHEDULE_MESSAGE
 } from "../action/action_class_time";
 
 const INITIAL_STATE = {
@@ -46,15 +47,19 @@ export default function(state = INITIAL_STATE, action) {
 
         case MENTO_CREATE_CLASS_TIME :
         case MENTO_UPDATE_CLASS_TIME :
+        case ADMIN_UPDATE_SCHEDULE_MESSAGE :
             return { ...state, saveStatus : { message : null, loading : true, error : null }};
         case MENTO_CREATE_CLASS_TIME_SUCCESS :
         case MENTO_UPDATE_CLASS_TIME_SUCCESS :
+        case ADMIN_UPDATE_SCHEDULE_MESSAGE_SUCCESS :
             return { ...state, saveStatus : { message : action.payload, loading : false, error : null }};
         case MENTO_CREATE_CLASS_TIME_FAILURE :
         case MENTO_UPDATE_CLASS_TIME_FAILURE :
+        case ADMIN_UPDATE_SCHEDULE_MESSAGE_FAILURE :
             error = action.payload.data || { message : action.payload.data };
             return { ...state, saveStatus : { message : null, loading : false, error : error }};
         case RESET_MENTO_SAVE_CLASS_TIME :
+        case RESET_ADMIN_UPDATE_SCHEDULE_MESSAGE :
             return { ...state, saveStatus : { message : null, loading : false, error : null }};
 
         case MENTO_DELETE_CLASS_TIMES :

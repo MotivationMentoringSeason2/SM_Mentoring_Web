@@ -25,6 +25,11 @@ export const MENTO_DELETE_CLASS_TIMES_SUCCESS = 'MENTO_DELETE_CLASS_TIMES_SUCCES
 export const MENTO_DELETE_CLASS_TIMES_FAILURE = 'MENTO_DELETE_CLASS_TIMES_FAILURE';
 export const RESET_MENTO_DELETE_CLASS_TIMES = 'RESET_MENTO_DELETE_CLASS_TIMES';
 
+export const ADMIN_UPDATE_SCHEDULE_MESSAGE = 'ADMIN_UPDATE_SCHEDULE_MESSAGE';
+export const ADMIN_UPDATE_SCHEDULE_MESSAGE_SUCCESS = 'ADMIN_UPDATE_SCHEDULE_MESSAGE_SUCCESS';
+export const ADMIN_UPDATE_SCHEDULE_MESSAGE_FAILURE = 'ADMIN_UPDATE_SCHEDULE_MESSAGE_FAILURE';
+export const RESET_ADMIN_UPDATE_SCHEDULE_MESSAGE = 'RESET_ADMIN_UPDATE_SCHEDULE_MESSAGE';
+
 const ROOT_URL = 'http://127.0.0.1:8082/MentoAPI';
 
 export function anybodyLoadClassTimes(teamId){
@@ -176,5 +181,37 @@ export function mentoDeleteClassTimesFailure(error){
 export function resetMentoDeleteClassTimes(){
     return {
         type : RESET_MENTO_DELETE_CLASS_TIMES
+    }
+}
+
+export function adminUpdateScheduleMessage(scheduleId, messageForm){
+    const request = axios({
+        url : `${ROOT_URL}/schedule/confirm/${scheduleId}`,
+        method : 'put',
+        data : messageForm
+    });
+    return {
+        type : ADMIN_UPDATE_SCHEDULE_MESSAGE,
+        payload : request
+    }
+}
+
+export function adminUpdateScheduleMessageSuccess(message) {
+    return {
+        type : ADMIN_UPDATE_SCHEDULE_MESSAGE_SUCCESS,
+        payload : message.data
+    }
+}
+
+export function adminUpdateScheduleMessageFailure(error){
+    return {
+        type : ADMIN_UPDATE_SCHEDULE_MESSAGE_FAILURE,
+        payload : error
+    }
+}
+
+export function resetAdminUpdateScheduleMessage(){
+    return {
+        type : RESET_ADMIN_UPDATE_SCHEDULE_MESSAGE
     }
 }
