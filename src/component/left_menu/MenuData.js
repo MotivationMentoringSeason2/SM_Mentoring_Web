@@ -269,14 +269,6 @@ export const adminItems = (
                 <ListItemText primary="보고서 확인" />
             </ListItem>
         </Link>
-        <Link to="/admin/survey/edit" style={{ textDecoration: 'none' }}>
-            <ListItem button>
-                <ListItemIcon>
-                    <ArrowForwardIcon />
-                </ListItemIcon>
-                <ListItemText primary="설문조사 주소 설정" />
-            </ListItem>
-        </Link>
         <Link to="/admin/semester/edit" style={{ textDecoration: 'none' }}>
             <ListItem button>
                 <ListItemIcon>
