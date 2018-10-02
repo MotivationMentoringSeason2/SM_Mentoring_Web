@@ -22,6 +22,9 @@ import {MentiApplicationPage} from "../page/menti_application_page";
 import MentoringCareerViewPage from "../page/mentoring_career_view_page/MentoringCareerViewPage";
 import {CardPage} from "../page/card_page";
 import {MentoringOpenViewPage} from "../page/mentoring_open_view_page";
+import {ReportSelectViewPage} from "../page/mentoring_report_confirm_page";
+import {AdminReportListViewPage} from "../page/admin_report_list_view_page";
+import {AdminReportConfirmViewPage} from "../page/admin_report_confirm_view_page";
 
 const AdminRouter = (props) => (
     <div>
@@ -71,6 +74,9 @@ const AdminRouter = (props) => (
             <Route exact path="/admin/accounts/view" component={AccountViewPage} />
             <Route exact path="/admin/excel_upload" component={AccountExcelUploadPage} />
             <Route exact path="/admin/excel_upload/_refresh" render={() => <Redirect to="/admin/excel_upload" />} />
+            <Route exact path="/admin/report/checking" component={ReportSelectViewPage} />
+            <Route exact path="/admin/report/list/:id" component={AdminReportListViewPage} />
+            <Route exact path="/admin/report/:teamId/confirm/:reportId" component={AdminReportConfirmViewPage} />
             <Route exact path="/application/mento_list" component={MentoringPage} />
         </ScrollToTop>
     </div>
