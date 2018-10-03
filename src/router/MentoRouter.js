@@ -25,6 +25,9 @@ import MentoringReportFormPage from "../page/mentoring_report_form_page/Mentorin
 import {MentoringOpenViewPage} from "../page/mentoring_open_view_page";
 import {MentoringPage} from "../page/mentoring_page";
 import {MentoringMemoPage} from "../page/mentoring_memo";
+import {ReportSelectViewPage} from "../page/mentoring_report_confirm_page";
+import {AdminReportListViewPage} from "../page/admin_report_list_view_page";
+import {AdminReportConfirmViewPage} from "../page/admin_report_confirm_view_page";
 
 const MentoRouter = (props) => {
     return(
@@ -78,6 +81,15 @@ const MentoRouter = (props) => {
                 {
                     (props.isChairman) ? <Route exact path="/admin/excel_upload/_refresh" render={() => <Redirect to="/admin/excel_upload" />} /> : null
                 }
+                {
+                    (props.isChairman) ? <Route exact path="/admin/report/checking" component={ReportSelectViewPage} /> : null
+                }
+                {
+                    (props.isChairman) ? <Route exact path="/admin/report/list/:id" component={AdminReportListViewPage} /> : null
+                }
+                {
+                    (props.isChairman) ? <Route exact path="/admin/report/:teamId/confirm/:reportId" component={AdminReportConfirmViewPage} /> : null
+                }
                 <Route exact path="/account/sign/edit" component={SignUpdatePage} />
                 <Route exact path="/account/timetable/edit" component={TimetableEditPage} />
                 <Route exact path="/account/profile/edit" component={ProfileEditPage} />
@@ -93,7 +105,6 @@ const MentoRouter = (props) => {
                 <Route exact path="/mento/report/update" component={MentoringReportFormPage} />
                 <Route exact path="/application/mento_list" component={MentoringPage} />
                 <Route exact path="/mento/sticky_memo" component={MentoringMemoPage} />
-                
             </ScrollToTop>
         </div>
     );

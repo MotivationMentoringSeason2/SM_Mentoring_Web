@@ -21,6 +21,9 @@ import {CardPage} from "../page/card_page";
 import {MentoringOpenViewPage} from "../page/mentoring_open_view_page";
 import {MentoringPage} from "../page/mentoring_page";
 import {MentoringMemo} from "../page/mentoring_memo";
+import {ReportSelectViewPage} from "../page/mentoring_report_confirm_page";
+import {AdminReportListViewPage} from "../page/admin_report_list_view_page";
+import {AdminReportConfirmViewPage} from "../page/admin_report_confirm_view_page";
 const MentiRouter = (props) => {
     return (
         <div>
@@ -79,6 +82,15 @@ const MentiRouter = (props) => {
                 }
                 {
                     (props.isChairman) ? <Route exact path="/admin/excel_upload/_refresh" render={() => <Redirect to="/admin/excel_upload" />} /> : null
+                }
+                {
+                    (props.isChairman) ? <Route exact path="/admin/report/checking" component={ReportSelectViewPage} /> : null
+                }
+                {
+                    (props.isChairman) ? <Route exact path="/admin/report/list/:id" component={AdminReportListViewPage} /> : null
+                }
+                {
+                    (props.isChairman) ? <Route exact path="/admin/report/:teamId/confirm/:reportId" component={AdminReportConfirmViewPage} /> : null
                 }
             </ScrollToTop>
         </div>

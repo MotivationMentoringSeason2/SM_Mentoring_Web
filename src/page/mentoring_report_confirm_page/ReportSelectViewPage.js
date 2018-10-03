@@ -1,12 +1,13 @@
 import React from 'react';
 import SKHUImage from '../../resource_image/skhu_photo.png';
-import {MentoringFormContainer} from "../../container";
+import ReportSelectViewContainer from '../../container/ReportSelectViewContainer';
 
-const MentoringPage = () => (
+const ReportSelectViewPage = () => (
     <div>
         <img src={SKHUImage} width="100%" className="w3-round-large" />
         <br/><br/>
-        <MentoringFormContainer />
+        <ReportSelectViewContainer />
     </div>
 );
-export default MentoringPage;
+
+export default ReportSelectViewPage;

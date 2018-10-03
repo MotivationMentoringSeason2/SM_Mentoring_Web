@@ -182,12 +182,11 @@ class MentoringOpenView extends Component {
         }
 
         let buttonList = teams.map(team => {
-            const { mentoVO } = team;
             return (
                 <button
-                    onClick={() => this.handleClickChange(mentoVO.id)}
-                    className={`w3-button w3-small w3-round-large ${ selectId === mentoVO.id ? 'w3-green' : 'w3-yellow'}`}
-                >{mentoVO.name}
+                    onClick={() => this.handleClickChange(team.mentoVO.id)}
+                    className={`w3-button w3-small w3-round-large ${ selectId === team.mentoVO.id ? 'w3-green' : 'w3-yellow'}`}
+                >{team.mentoVO.name}
                 </button>
             )
         });
@@ -234,7 +233,7 @@ class MentoringOpenView extends Component {
                         {
                             mentoVO ?
                             <div className="w3-left-align">
-                                <h3 className="w3-border-bottom w3-border-indigo">자격 증명 파일</h3>
+                                <h3 className="w3-border-bottom w3-border-indigo">멘토링 홍보 파일</h3>
                                 {mentoVO && mentoVO.advFileName} [ {mentoVO && Math.ceil(mentoVO.advFileSize / 1024)} KB
                                 ]&nbsp;
                                 {
