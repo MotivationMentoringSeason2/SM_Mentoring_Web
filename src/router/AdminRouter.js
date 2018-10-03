@@ -25,6 +25,7 @@ import {MentoringOpenViewPage} from "../page/mentoring_open_view_page";
 import {ReportSelectViewPage} from "../page/mentoring_report_confirm_page";
 import {AdminReportListViewPage} from "../page/admin_report_list_view_page";
 import {AdminReportConfirmViewPage} from "../page/admin_report_confirm_view_page";
+import {SemesterEditPage} from "../page/semester_edit_page";
 
 const AdminRouter = (props) => (
     <div>
@@ -77,6 +78,8 @@ const AdminRouter = (props) => (
             <Route exact path="/admin/report/checking" component={ReportSelectViewPage} />
             <Route exact path="/admin/report/list/:id" component={AdminReportListViewPage} />
             <Route exact path="/admin/report/:teamId/confirm/:reportId" component={AdminReportConfirmViewPage} />
+            <Route exact path="/admin/semester/edit" component={SemesterEditPage} />
+            <Route exact path="/admin/semester/edit/_refresh" render={() => <Redirect to="/admin/semester/edit" />} />
             <Route exact path="/application/mento_list" component={MentoringPage} />
         </ScrollToTop>
     </div>
