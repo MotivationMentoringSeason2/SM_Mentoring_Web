@@ -3,9 +3,9 @@ import {
     STUDENT_APPLY_MENTI, STUDENT_APPLY_MENTI_SUCCESS, STUDENT_APPLY_MENTI_FAILURE, RESET_STUDENT_APPLY_MENTI,
     STUDENT_RELEASE_CURRENT_MENTI, STUDENT_RELEASE_CURRENT_MENTI_SUCCESS, STUDENT_RELEASE_CURRENT_MENTI_FAILURE, RESET_STUDENT_RELEASE_CURRENT_MENTI,
     RESET_STUDENT_LOAD_MENTI_CAREERS, STUDENT_LOAD_MENTI_CAREERS, STUDENT_LOAD_MENTI_CAREERS_FAILURE,
-    STUDENT_LOAD_MENTI_CAREERS_SUCCESS, MENTO_LOAD_MENTI_LIST, MENTO_LOAD_MENTI_LIST_SUCCESS, MENTO_LOAD_MENTI_LIST_FAILURE, RESET_MENTO_LOAD_MENTI_LIST
+    STUDENT_LOAD_MENTI_CAREERS_SUCCESS, MENTO_LOAD_MENTI_LIST, MENTO_LOAD_MENTI_LIST_SUCCESS, MENTO_LOAD_MENTI_LIST_FAILURE, RESET_MENTO_LOAD_MENTI_LIST,
+    MENTI_LOAD_MENTORING_TOKEN, MENTI_LOAD_MENTORING_TOKEN_SUCCESS, MENTI_LOAD_MENTORING_TOKEN_FAILURE, RESET_MENTI_LOAD_MENTORING_TOKEN
 } from "../action/action_menti";
-
 const INITIAL_STATE = {
     teamList : {
         teams : [], loading : false, error : null
@@ -21,6 +21,9 @@ const INITIAL_STATE = {
     },
     mentoringPeople : {
         people : null, loading : false, error : null
+    },
+    mentoringToken : {
+        data : null, loading : false, error : null
     }
 }
 
@@ -76,6 +79,16 @@ export default function(state = INITIAL_STATE, action) {
             return { ...state, mentoringPeople : { people : null, loading : false, error : error }};
         case RESET_MENTO_LOAD_MENTI_LIST :
             return { ...state, mentoringPeople : { people : null, loading : false, error : null }};
+
+        case MENTI_LOAD_MENTORING_TOKEN :
+            return { ...state, mentoringToken : { data : null, loading : true, error : null }};
+        case MENTI_LOAD_MENTORING_TOKEN_SUCCESS :
+            return { ...state, mentoringToken : { data : action.payload, loading : false, error : null }};
+        case MENTI_LOAD_MENTORING_TOKEN_FAILURE :
+            error = action.payload.data || { message: action.payload.data };
+            return { ...state, mentoringToken : { data : null, loading : false, error : error }};
+        case RESET_MENTI_LOAD_MENTORING_TOKEN :
+            return { ...state, mentoringToken : { data : null, loading : false, error : null }};
 
         default :
             return state;
