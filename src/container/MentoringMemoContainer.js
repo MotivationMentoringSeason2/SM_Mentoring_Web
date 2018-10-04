@@ -3,7 +3,8 @@ import {connect} from 'react-redux';
 
 function mapStateToProps(state){
     return {
-        findStatus : state.account.findStatus
+        accessAccount : state.account.accessAccount,
+
     }
 }
 
