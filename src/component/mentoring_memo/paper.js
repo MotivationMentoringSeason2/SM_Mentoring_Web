@@ -5,6 +5,10 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import axios from 'axios';
 import styled from 'styled-components';
+import Icon from '@material-ui/core/Icon';
+import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+import TextField from '@material-ui/core/TextField';
 const RESOURCE_URL = 'http://127.0.0.1:8082/MentoAPI/stickyNote';
 
 const styles = theme => ({
@@ -17,9 +21,14 @@ const styles = theme => ({
 });
 
 
+
 const Div = styled.div`
     padding: 0.25em 1em;
 `;
+const Post = styled.div`
+    padding: 3em 1em;
+`;
+
 
 class PaperSheet extends Component{
     constructor(props){
@@ -42,10 +51,11 @@ render(){
      {this.state.data.map(n => {
     return (
         <Div>
-        <Paper className={classes.root} elevation={1}>
-            <Typography variant="headline" component="h3">
-                {n.title}
+        <Paper className={classes.root} elevation={4}>
+            <Typography variant="headline" component="h4">
+                {n.writer}
             </Typography>
+            <br/>
             <Typography component="p">
             {n.context}
              </Typography>
@@ -53,6 +63,26 @@ render(){
         </Div>
     );
 })}
+
+<Post>
+<Grid container spacing={24}>
+<Grid item xs={20} sm={10}>
+          <TextField
+            required
+            id="context"
+            name="context"
+            label="내용을 적으세요"
+            fullWidth
+            autoComplete="fname"
+          />
+      
+        </Grid>
+     <Button variant="contained" color="primary" className={classes.button}>
+        Send
+        <Icon className={classes.rightIcon}>send</Icon>
+      </Button>
+      </Grid>
+</Post>
     </div>
   );
 }
