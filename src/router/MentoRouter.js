@@ -28,6 +28,7 @@ import {MentoringMemoPage} from "../page/mentoring_memo";
 import {ReportSelectViewPage} from "../page/mentoring_report_confirm_page";
 import {AdminReportListViewPage} from "../page/admin_report_list_view_page";
 import {AdminReportConfirmViewPage} from "../page/admin_report_confirm_view_page";
+import {SemesterEditPage} from "../page/semester_edit_page";
 
 const MentoRouter = (props) => {
     return(
@@ -89,6 +90,12 @@ const MentoRouter = (props) => {
                 }
                 {
                     (props.isChairman) ? <Route exact path="/admin/report/:teamId/confirm/:reportId" component={AdminReportConfirmViewPage} /> : null
+                }
+                {
+                    (props.isChairman) ? <Route exact path="/admin/semester/edit" component={SemesterEditPage} /> : null
+                }
+                {
+                    (props.isChairman) ? <Route exact path="/admin/semester/edit/_refresh" render={() => <Redirect to="/admin/semester/edit" />} /> : null
                 }
                 <Route exact path="/account/sign/edit" component={SignUpdatePage} />
                 <Route exact path="/account/timetable/edit" component={TimetableEditPage} />

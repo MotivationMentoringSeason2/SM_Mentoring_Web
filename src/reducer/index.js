@@ -12,6 +12,7 @@ import mentiReducer from './reducer_menti';
 import integrateFileReducer from './reducer_integrate_file';
 import classTimeReducer from './reducer_class_times';
 import reportReducer from './reducer_report';
+import semesterReducer from './reducer_semester';
 
 export const rootReducer = combineReducers({
     form : formReducer,
@@ -26,5 +27,6 @@ export const rootReducer = combineReducers({
     menti : mentiReducer,
     integrateFile : integrateFileReducer,
     classTime : classTimeReducer,
-    report : reportReducer
+    report : reportReducer,
+    semester : semesterReducer
 });
