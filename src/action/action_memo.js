@@ -10,6 +10,8 @@ export function memoPostProcess(stickyNoteModel){
         method : 'post',
         url : `${ROOT_URL}/create`,
         data : stickyNoteModel
+
+        
     });
     return {
         type : MEMO_POST_PROCESS,

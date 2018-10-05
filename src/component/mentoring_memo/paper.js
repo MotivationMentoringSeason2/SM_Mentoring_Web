@@ -32,20 +32,15 @@ const Post = styled.div`
 `;
 
 
-
 class PaperSheet extends Component{
     constructor(props){
         super(props);
-        this.state = { data:[], teamId:0,};
+        this.state = { data:[], teamId:0,
+            name: this.props.accessAccount.principal.name,
+        };
       }
-     
-      createMemo(values){
-        values.writer = this.props.accessAccount.principal.name;
-        values.teamId= this.state.teamId;
-        axios.post(`${RESOURCE_URL}/create`,values)
-        .then();
-    
-      }
+
+
 componentDidMount(){
     const identity =this.props.accessAccount.principal.identity;
     axios.get(`${RESOURCE_URL}/identity/${identity}`).then(
@@ -60,14 +55,40 @@ componentDidMount(){
         )}
             }   
     )
+
+
+    
 }
 
 
 
+createMemo(){
+var context= document.getElementsByTagName("input").context.value;    
+    axios.post(`${RESOURCE_URL}/create`,{
+      "teamId" : this.state.teamId,
+   "writer" : this.state.name,
+       "context": context
+    }).then();
+  }
+
 
 render(){
   const { classes } = this.props;
+  console.log(this.state.data)
+  if(this.state.teamId===0){
+      return (
+      <Div>
+            <Paper className={classes.root} elevation={4}>
+            <Typography variant="headline" component="h4">
+                개설된 멘토방이 없습니다.
+            </Typography>
+            
+        </Paper>
+          </Div>)
 
+  }
+
+  else{
   return(
     <div>
 
@@ -78,6 +99,9 @@ render(){
             <Typography variant="headline" component="h4">
                 {n.writer}
             </Typography>
+            <Typography component="p">
+                {n.writtenDate}
+             </Typography>
             <br/>
             <Typography component="p">
             {n.context}
@@ -88,7 +112,7 @@ render(){
 })}
 
 <Post>
-    <form onSubmit={this.createMemo.bind(this)} >
+    <form onSubmit={this.createMemo.bind(this)} className={classes.form}>
 <Grid container spacing={24}>
 <Grid item xs={12} sm={10}>
           <TextField
@@ -101,15 +125,15 @@ render(){
           />
       
         </Grid>
-     <Button variant="contained" color="primary" className={classes.button} type="submit">
+     <Button variant="contained" color="primary" type="submit">
         Send
-        <Icon className={classes.rightIcon}>send</Icon>
+        <Icon>send</Icon>
       </Button>
       </Grid>
       </form>
 </Post>
     </div>
-  );
+  );}
 }
 }
 
