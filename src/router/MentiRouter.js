@@ -20,12 +20,16 @@ import {SchedulePage} from "../page/schedule_page";
 import {CardPage} from "../page/card_page";
 import {MentoringOpenViewPage} from "../page/mentoring_open_view_page";
 import {MentoringPage} from "../page/mentoring_page";
-import {MentoringMemo} from "../page/mentoring_memo";
+
 import {ReportSelectViewPage} from "../page/mentoring_report_confirm_page";
 import {AdminReportListViewPage} from "../page/admin_report_list_view_page";
 import {AdminReportConfirmViewPage} from "../page/admin_report_confirm_view_page";
+
+import {MentoringMemoPage} from "../page/mentoring_memo";
+
 import {ClassTimeConfirmViewPage} from "../page/class_time_confirm_view_page";
 import {SemesterEditPage} from "../page/semester_edit_page";
+
 const MentiRouter = (props) => {
     return (
         <div>
@@ -47,7 +51,11 @@ const MentiRouter = (props) => {
                 <Route exact path="/account/profile/edit" component={ProfileEditPage} />
                 <Route exact path="/application/confirm" component={MentoringCareerViewPage} />
                 <Route exact path="/application/mento_list" component={MentoringPage} />
+
+                <Route exact path="/menti/sticky_memo" component={MentoringMemoPage} />
+
                 <Route exact path="/menti/class/confirm" component={ClassTimeConfirmViewPage} />
+
                 <Route exact path="/application/confirm/_refresh" render={() => <Redirect to="/application/confirm" />} />
                 {
                     (props.isChairman) ? <Route exact path="/intro/edit" component={IntroEditPage} /> : null
