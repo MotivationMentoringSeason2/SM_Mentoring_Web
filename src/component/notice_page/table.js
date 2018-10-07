@@ -63,9 +63,10 @@ class SimpleTable extends Component {
         <Table className={indexed ? classes.tableIndexed : classes.table}>
           <TableHead>
             <TableRow>
-              <TableCell>작성자</TableCell>
+            <TableCell >제목</TableCell>
+            <TableCell numeric>작성자</TableCell>
               <TableCell numeric>날짜</TableCell>
-              <TableCell numeric>제목</TableCell>
+
               <TableCell numeric>조회수</TableCell>
             </TableRow>
           </TableHead>
@@ -73,11 +74,13 @@ class SimpleTable extends Component {
             {data.map(n => {
               return (
                 <TableRow key={n.id} onClick={() => (!indexed ? this.props.history.push(`/notice/view?id=${n.id}&${pagination.queryString}`) : this.props.history.push(`/notice/view?id=${n.id}&tid=1&sz=10&pg=1`))} id={n.id}>
-                  <TableCell component="th" scope="row">
+                  
+                  <TableCell  component="th" scope="row">{n.title}</TableCell>
+                  <TableCell numeric>
                       {n.writer}
                   </TableCell>
                   <TableCell numeric>{n.writtenDate}</TableCell>
-                  <TableCell numeric>{n.title}</TableCell>
+               
                   <TableCell numeric>{n.views}</TableCell>
                 </TableRow>
               );
