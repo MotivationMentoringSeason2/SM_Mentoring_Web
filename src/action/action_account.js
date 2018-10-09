@@ -1,5 +1,6 @@
 import axios from 'axios';
 import queryString from 'query-string';
+import { ACCOUNT_URL } from './distribute_urls';
 
 export const GUEST_LOGIN_PROCESS = 'GUEST_LOGIN_PROCESS';
 export const GUEST_LOGIN_SUCCESS = 'GUEST_LOGIN_SUCCESS';
@@ -63,7 +64,7 @@ export const RESET_ADMIN_EXECUTE_CHANGE_STUDENT_STATUS = 'RESET_ADMIN_EXECUTE_CH
 
 export const USER_LOGOUT_PROCESS = 'USER_LOGOUT_PROCESS';
 
-const ROOT_URL = 'http://127.0.0.1:8081/AccountAPI';
+const ROOT_URL = ACCOUNT_URL
 
 export function guestLoginProcess(loginForm){
     const request = axios({
