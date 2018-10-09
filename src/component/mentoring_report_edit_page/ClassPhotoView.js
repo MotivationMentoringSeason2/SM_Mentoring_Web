@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
 import defaultProfile from '../../resource_image/default_profile.png';
 import axios from "axios";
-import {MENTO_URL} from "../../action/distribute_urls";
 
-const REPORT_ROOT_URL = `${MENTO_URL}/report/photo`;
+const REPORT_ROOT_URL = 'http://127.0.0.1:8082/MentoAPI/report/photo';
 
 class ClassPhotoView extends Component{
     constructor(props){

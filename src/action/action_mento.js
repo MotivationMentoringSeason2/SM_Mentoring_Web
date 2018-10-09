@@ -1,8 +1,6 @@
 import axios from 'axios';
 
-import { MENTO_URL } from "./distribute_urls";
-
-const ROOT_URL = `${MENTO_URL}/mentoring`;
+const ROOT_URL = 'http://127.0.0.1:8082/MentoAPI/mentoring';
 
 export const STUDENT_LOAD_APPLY_MODEL = 'STUDENT_LOAD_APPLY_MODEL';
 export const STUDENT_LOAD_APPLY_MODEL_SUCCESS = 'STUDENT_LOAD_APPLY_MODEL_SUCCESS';

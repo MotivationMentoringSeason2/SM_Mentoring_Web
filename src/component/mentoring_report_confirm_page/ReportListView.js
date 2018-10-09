@@ -9,7 +9,6 @@ import 'react-hint/css/index.css'
 import AssignmentIcon from '@material-ui/icons/AssignmentTurnedIn';
 import axios from "axios";
 import {MultiTimetable} from "../timetable_component";
-import {MENTO_URL} from "../../action/distribute_urls";
 
 const ReactHint = ReactHintFactory(React);
 
@@ -20,7 +19,7 @@ const styles = theme => ({
     }
 });
 
-const ROOT_URL = `${MENTO_URL}/report/excel`;
+const ROOT_URL = 'http://127.0.0.1:8082/MentoAPI/report/excel';
 
 class ReportListView extends Component {
     constructor(props){

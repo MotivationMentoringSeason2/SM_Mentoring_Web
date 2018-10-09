@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { MENTO_URL } from "./distribute_urls";
 
 export const ANYBODY_LOAD_CLASS_TIMES = 'ANYBODY_LOAD_CLASS_TIMES';
 export const ANYBODY_LOAD_CLASS_TIMES_SUCCESS = 'ANYBODY_LOAD_CLASS_TIMES_SUCCESS';
@@ -31,7 +30,7 @@ export const ADMIN_UPDATE_SCHEDULE_MESSAGE_SUCCESS = 'ADMIN_UPDATE_SCHEDULE_MESS
 export const ADMIN_UPDATE_SCHEDULE_MESSAGE_FAILURE = 'ADMIN_UPDATE_SCHEDULE_MESSAGE_FAILURE';
 export const RESET_ADMIN_UPDATE_SCHEDULE_MESSAGE = 'RESET_ADMIN_UPDATE_SCHEDULE_MESSAGE';
 
-const ROOT_URL = MENTO_URL;
+const ROOT_URL = 'http://127.0.0.1:8082/MentoAPI';
 
 export function anybodyLoadClassTimes(teamId){
     const request = axios({

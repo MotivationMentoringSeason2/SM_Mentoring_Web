@@ -15,9 +15,8 @@ import Grid from '@material-ui/core/Grid';
 
 import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
 import SearchIcon from '@material-ui/icons/Search';
-import {ACCOUNT_URL} from "../../action/distribute_urls";
 
-const ADMIN_ROOT_URL = `${ACCOUNT_URL}/admin`;
+const ADMIN_ROOT_URL = 'http://127.0.0.1:8081/AccountAPI/admin';
 const ROLE_OPTIONS = [{value : 1, label : '학생'}, {value : 2, label : '교수'}, {value : 3, label : '직원'}];
 
 const styles = theme => ({

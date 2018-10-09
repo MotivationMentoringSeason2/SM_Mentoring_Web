@@ -10,10 +10,9 @@ import Grid from '@material-ui/core/Grid';
 import ChildIcon from '@material-ui/icons/ChildCare';
 
 import {CompareTimetable} from "../timetable_component";
-import {ACCOUNT_URL, MENTO_URL} from "../../action/distribute_urls";
 
-const ACCOUNT_RESOURCE_URL = `${ACCOUNT_URL}/resource`;
-const RESOURCE_URL = `${MENTO_URL}/MentoAPI`;
+const ACCOUNT_RESOURCE_URL = 'http://127.0.0.1:8081/AccountAPI/resource';
+const RESOURCE_URL = 'http://127.0.0.1:8082/MentoAPI';
 
 const styles = theme => ({
     form: {

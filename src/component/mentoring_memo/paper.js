@@ -11,9 +11,7 @@ import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import{ memoPostProcess} from "../../action/action_memo";
 import {reduxForm, Field, SubmissionError} from 'redux-form';
-import {MENTO_URL} from "../../action/distribute_urls";
-
-const RESOURCE_URL = `${MENTO_URL}/stickyNote`;
+const RESOURCE_URL = 'http://127.0.0.1:8082/MentoAPI/stickyNote';
 
 const styles = theme => ({
   root: {
