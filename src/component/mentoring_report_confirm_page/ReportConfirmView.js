@@ -17,6 +17,7 @@ import {renderMultiTextField} from "../form_render";
 import {
     adminUpdateScheduleMessage, adminUpdateScheduleMessageSuccess, adminUpdateScheduleMessageFailure
 } from "../../action/action_class_time";
+import {ACCOUNT_URL} from "../../action/distribute_urls";
 
 const styles = theme => ({
     form: {
@@ -87,7 +88,7 @@ class ReportConfirmView extends Component {
             this.setState({
                 token : data
             });
-            axios.get(`http://127.0.0.1:8081/AccountAPI/resource/account/name/${data.mento}`).then(response => this.setState({ realName : response.data }));
+            axios.get(`${ACCOUNT_URL}/resource/account/name/${data.mento}`).then(response => this.setState({ realName : response.data }));
             this.props.fetchMentoringPerson(data.id);
         }
         if(nextProps.reportView.report !== report){
