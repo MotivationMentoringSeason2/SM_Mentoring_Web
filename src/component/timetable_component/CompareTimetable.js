@@ -2,9 +2,8 @@ import React, {Component} from 'react';
 import Grid from '@material-ui/core/Grid';
 import MultiTimeBlock from "./MultiTimeBlock";
 import axios from 'axios';
-import {ACCOUNT_URL} from "../../action/distribute_urls";
 
-const ROOT_URL = `${ACCOUNT_URL}/resource`;
+const ROOT_URL = 'http://127.0.0.1:8081/AccountAPI/resource'
 
 class CompareTimetable extends Component{
     constructor(props){

@@ -14,9 +14,8 @@ import {renderDropzoneInput} from "../form_render";
 import {
     userSaveProfile, userSaveProfileSuccess, userSaveProfileFailure
 } from "../../action/action_profile";
-import {ACCOUNT_URL} from "../../action/distribute_urls";
 
-const RESOURCE_ROOT_URL = `${ACCOUNT_URL}/resource`;
+const RESOURCE_ROOT_URL = 'http://127.0.0.1:8081/AccountAPI/resource';
 
 const styles = theme => ({
     form: {

@@ -1,7 +1,6 @@
 import axios from 'axios';
-import {NOTICE_URL} from "./distribute_urls";
 
-const ROOT_URL = `${NOTICE_URL}/introduce`;
+const ROOT_URL = 'http://127.0.0.1:8083/NoticeAPI/introduce';
 
 export const ANYBODY_LOAD_INTRO_ACCORDION = 'ANYBODY_LOAD_INTRO_ACCORDION';
 export const ANYBODY_LOAD_INTRO_ACCORDION_SUCCESS = 'ANYBODY_LOAD_INTRO_ACCORDION_SUCCESS';
