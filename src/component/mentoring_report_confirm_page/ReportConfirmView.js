@@ -17,7 +17,6 @@ import {renderMultiTextField} from "../form_render";
 import {
     adminUpdateScheduleMessage, adminUpdateScheduleMessageSuccess, adminUpdateScheduleMessageFailure
 } from "../../action/action_class_time";
-import {userUpdateSignForm, userUpdateSignFormFailure, userUpdateSignFormSuccess} from "../../action/action_account";
 
 const styles = theme => ({
     form: {

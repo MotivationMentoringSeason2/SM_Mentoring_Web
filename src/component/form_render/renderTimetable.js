@@ -7,16 +7,6 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import TimerIcon from '@material-ui/icons/Timer';
 import TimerOffIcon from '@material-ui/icons/TimerOff';
 
-const dayArray = [
-    { label : '월요일', value : 'MON' },
-    { label : '화요일', value : 'TUE' },
-    { label : '수요일', value : 'WED' },
-    { label : '목요일', value : 'THU' },
-    { label : '금요일', value : 'FRI' },
-    { label : '토요일', value : 'SAT' },
-    { label : '일요일', value : 'SUN' },
-]
-
 const renderTimetable = ({ fields }) => {
     return (
         <div style={{width : window.innerWidth >= 420 ? '50%' : '90%', backgroundColor : '#D0EEFB'}} className="w3-round-large">

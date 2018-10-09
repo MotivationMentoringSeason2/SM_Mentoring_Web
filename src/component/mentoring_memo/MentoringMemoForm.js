@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
 import styled from 'styled-components';
 import Paper from './paper';
+import {MENTO_URL} from "../../action/distribute_urls";
 
 const Container = styled.div`
 
@@ -18,7 +19,7 @@ const Container = styled.div`
 const Post = styled.div`
     padding: 3em 1em;
 `;
-const RESOURCE_URL = 'http://127.0.0.1:8082/MentoAPI/stickyNote';
+const RESOURCE_URL = `${MENTO_URL}/stickyNote`;
 
 export default class MentoringMemoForm extends Component {
 

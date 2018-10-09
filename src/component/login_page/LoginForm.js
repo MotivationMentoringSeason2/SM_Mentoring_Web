@@ -60,7 +60,7 @@ const styles = theme => ({
 });
 
 class LoginForm extends Component{
-    componentWillUmmount(){
+    componentWillUnmount(){
         this.props.resetLoginStatus();
     }
     render(){

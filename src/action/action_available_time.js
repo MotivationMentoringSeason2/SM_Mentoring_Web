@@ -1,7 +1,8 @@
 import axios from 'axios';
+import { ACCOUNT_URL } from "./distribute_urls";
 
-const COMMON_ROOT_URL = 'http://127.0.0.1:8081/AccountAPI/common';
-const RESOURCE_ROOT_URL = 'http://127.0.0.1:8081/AccountAPI/resource';
+const COMMON_ROOT_URL = `${ACCOUNT_URL}/common`;
+const RESOURCE_ROOT_URL = `${ACCOUNT_URL}/resource`;
 
 export const FETCH_ACCOUNT_TIMETABLE = 'FETCH_ACCOUNT_TIMETABLE';
 export const FETCH_ACCOUNT_TIMETABLE_SUCCESS = 'FETCH_ACCOUNT_TIMETABLE_SUCCESS';

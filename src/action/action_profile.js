@@ -1,6 +1,6 @@
 import axios from 'axios';
-
-const ROOT_URL = 'http://127.0.0.1:8081/AccountAPI/common';
+import { ACCOUNT_URL } from './distribute_urls';
+const ROOT_URL = `${ACCOUNT_URL}/common`;
 
 export const USER_SAVE_PROFILE = 'USER_SAVE_PROFILE';
 export const USER_SAVE_PROFILE_SUCCESS = 'USER_SAVE_PROFILE_SUCCESS';

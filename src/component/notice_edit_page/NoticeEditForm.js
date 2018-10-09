@@ -22,8 +22,9 @@ import CheckIcon from '@material-ui/icons/Check';
 import RefreshIcon from '@material-ui/icons/Refresh';
 
 import '../intro_edit_page/modal.css';
+import {NOTICE_URL} from "../../action/distribute_urls";
 
-const RESOURCE_URL = 'http://127.0.0.1:8083/NoticeAPI';
+const RESOURCE_URL = NOTICE_URL;
 
 const styles = theme => ({
     form: {
