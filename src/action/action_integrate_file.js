@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+import { NOTICE_URL } from "./distribute_urls";
+
 export const ANYBODY_UPLOAD_POST_FILES = 'ANYBODY_UPLOAD_POST_FILES';
 export const ANYBODY_UPLOAD_POST_FILES_SUCCESS = 'ANYBODY_UPLOAD_POST_FILES_SUCCESS';
 export const ANYBODY_UPLOAD_POST_FILES_FAILURE = 'ANYBODY_UPLOAD_POST_FILES_FAILURE';
@@ -10,7 +12,7 @@ export const ANYBODY_UPLOAD_POST_IMAGES_SUCCESS = 'ANYBODY_UPLOAD_POST_IMAGES_SU
 export const ANYBODY_UPLOAD_POST_IMAGES_FAILURE = 'ANYBODY_UPLOAD_POST_IMAGES_FAILURE';
 export const RESET_ANYBODY_UPLOAD_POST_IMAGES = 'RESET_ANYBODY_UPLOAD_POST_IMAGES';
 
-const ROOT_URL = 'http://127.0.0.1:8083/NoticeAPI';
+const ROOT_URL = NOTICE_URL;
 
 export function anybodyUploadPostFiles(postId, files){
     let formData = new FormData();

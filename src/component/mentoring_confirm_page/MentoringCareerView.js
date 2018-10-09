@@ -25,8 +25,9 @@ import {
 import {
     studentUpdateMentoInfo, studentUpdateMentoInfoSuccess, studentUpdateMentoInfoFailure
 } from "../../action/action_mento";
+import {MENTO_URL} from "../../action/distribute_urls";
 
-const RESOURCE_URL = 'http://127.0.0.1:8082/MentoAPI';
+const RESOURCE_URL = MENTO_URL;
 
 const styles = theme => ({
     form: {

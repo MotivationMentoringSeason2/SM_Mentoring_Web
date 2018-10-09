@@ -7,9 +7,10 @@ import Grid from '@material-ui/core/Grid';
 
 import AssignmentIcon from '@material-ui/icons/AssignmentTurnedIn';
 import {ProfileImage} from "../profile_component";
+import {ACCOUNT_URL, MENTO_URL} from "../../action/distribute_urls";
 
-const ACCOUNT_RESOURCE_URL = 'http://127.0.0.1:8081/AccountAPI/resource';
-const ROOT_URL = 'http://127.0.0.1:8082/MentoAPI';
+const ACCOUNT_RESOURCE_URL = `${ACCOUNT_URL}/resource`;
+const ROOT_URL = MENTO_URL;
 
 const styles = theme => ({
     form: {

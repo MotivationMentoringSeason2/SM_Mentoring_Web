@@ -1,9 +1,10 @@
 import axios from 'axios';
 
+import { MENTO_URL } from "./distribute_urls";
 
 export const MEMO_POST_PROCESS = 'MEMO_POST_PROCESS';
 
-const ROOT_URL = 'http://127.0.0.1:8082/MentoAPI/stickyNote';;
+const ROOT_URL = `${MENTO_URL}/stickyNote`;
 
 export function memoPostProcess(stickyNoteModel){
     const request = axios({
