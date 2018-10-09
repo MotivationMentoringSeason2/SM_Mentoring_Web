@@ -1,6 +1,7 @@
 import axios from 'axios';
+import { NOTICE_URL } from "./distribute_urls";
 
-const ROOT_URL = 'http://127.0.0.1:8083/NoticeAPI';
+const ROOT_URL = NOTICE_URL;
 
 export const ANYBODY_LOAD_CALENDAR_LIST = 'ANYBODY_LOAD_CALENDAR_LIST';
 export const ANYBODY_LOAD_CALENDAR_LIST_SUCCESS = 'ANYBODY_LOAD_CALENDAR_LIST_SUCCESS';

@@ -8,9 +8,10 @@ import Avatar from '@material-ui/core/Avatar';
 
 import FolderIcon from '@material-ui/icons/FolderShared';
 import axios from "axios";
+import {ACCOUNT_URL, MENTO_URL} from "../../action/distribute_urls";
 
-const ACCOUNT_RESOURCE_URL = 'http://127.0.0.1:8081/AccountAPI/resource';
-const RESOURCE_URL = 'http://127.0.0.1:8082/MentoAPI';
+const ACCOUNT_RESOURCE_URL = `${ACCOUNT_URL}/resource`;
+const RESOURCE_URL = MENTO_URL;
 
 const styles = theme => ({
     form: {

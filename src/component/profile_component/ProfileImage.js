@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import defaultProfile from '../../resource_image/default_profile.png';
 import axios from "axios";
+import {ACCOUNT_URL} from "../../action/distribute_urls";
 
-const RESOURCE_ROOT_URL = 'http://127.0.0.1:8081/AccountAPI/resource';
+const RESOURCE_ROOT_URL = `${ACCOUNT_URL}/resource`;
 
 class ProfileImage extends Component{
     constructor(props){

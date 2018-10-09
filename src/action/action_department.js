@@ -1,11 +1,12 @@
 import axios from 'axios';
+import { ACCOUNT_URL } from './distribute_urls';
 
 export const ANYBODY_LOAD_DEPARTMENTS = 'ANYBODY_LOAD_DEPARTMENTS';
 export const ANYBODY_LOAD_DEPARTMENTS_SUCCESS = 'ANYBODY_LOAD_DEPARTMENTS_SUCCESS';
 export const ANYBODY_LOAD_DEPARTMENTS_FAILURE = 'ANYBODY_LOAD_DEPARTMENTS_FAILURE';
 export const RESET_ANYBODY_LOAD_DEPARTMENTS = 'RESET_ANYBODY_LOAD_DEPARTMENTS';
 
-const ROOT_URL = 'http://127.0.0.1:8081/AccountAPI/resource';
+const ROOT_URL = `${ACCOUNT_URL}/resource`;
 
 export function anybodyLoadDepartments(){
     const request = axios({
