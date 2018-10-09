@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-import { ACCOUNT_URL } from "../../action/distribute_urls";
 import { renderDropzoneInput } from "../form_render";
 import { reduxForm, Field } from 'redux-form';
 import { withRouter } from 'react-router-dom';
@@ -12,7 +11,7 @@ import { withStyles } from "@material-ui/core/styles/index";
 import CloudIcon from '@material-ui/icons/Cloud';
 import {adminExecuteExcelUploading, adminExecuteExcelUploadingSuccess, adminExecuteExcelUploadingFailure} from "../../action/action_account";
 
-const ADMIN_ROOT_URL = `${ACCOUNT_URL}/admin`;
+const ADMIN_ROOT_URL = 'http://127.0.0.1:8081/AccountAPI/admin';
 
 const styles = theme => ({
     form: {

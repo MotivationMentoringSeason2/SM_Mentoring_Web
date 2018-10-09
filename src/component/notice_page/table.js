@@ -10,9 +10,8 @@ import Paper from '@material-ui/core/Paper';
 import './table.css';
 import {withRouter} from 'react-router-dom';
 import axios from 'axios';
-import {ACCOUNT_URL} from "../../action/distribute_urls";
 
-const RESOURCE_URL = `${ACCOUNT_URL}/resource`;
+const RESOURCE_URL = 'http://127.0.0.1:8081/AccountAPI/resource';
 
 const styles = theme => ({
   root: {

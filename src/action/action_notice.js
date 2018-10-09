@@ -1,6 +1,5 @@
 import axios from 'axios';
 import queryString from "query-string";
-import { NOTICE_URL } from "./distribute_urls";
 
 export const ANYBODY_LOAD_TYPE = 'ANYBODY_LOAD_TYPE';
 export const ANYBODY_LOAD_TYPE_SUCCESS = 'ANYBODY_LOAD_TYPE_SUCCESS';
@@ -22,7 +21,7 @@ export const ANYBODY_SAVE_EDITED_POST_SUCCESS = 'ANYBODY_SAVE_EDITED_POST_SUCCES
 export const ANYBODY_SAVE_EDITED_POST_FAILURE = 'ANYBODY_SAVE_EDITED_POST_FAILURE';
 export const RESET_ANYBODY_SAVE_EDITED_POST = 'RESET_ANYBODY_SAVE_EDITED_POST';
 
-const ROOT_URL = `${NOTICE_URL}/notice`;
+const ROOT_URL = 'http://127.0.0.1:8083/NoticeAPI/notice';
 
 export function anybodyLoadPostList(qs){
     const request = axios({

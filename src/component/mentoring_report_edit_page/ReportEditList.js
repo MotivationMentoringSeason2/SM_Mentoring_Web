@@ -8,7 +8,6 @@ import ReactHintFactory from 'react-hint'
 import 'react-hint/css/index.css'
 import FileIcon from '@material-ui/icons/FileCopy';
 import axios from "axios/index";
-import {MENTO_URL} from "../../action/distribute_urls";
 
 const ReactHint = ReactHintFactory(React);
 
@@ -19,7 +18,7 @@ const styles = theme => ({
     }
 });
 
-const ROOT_URL = `${MENTO_URL}/report/excel`;
+const ROOT_URL = 'http://127.0.0.1:8082/MentoAPI/report/excel';
 
 class ReportEditList extends Component {
     constructor(props){

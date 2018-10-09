@@ -18,9 +18,8 @@ import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import CheckIcon from '@material-ui/icons/Check';
 
 import {guestCreateAccount, guestCreateAccountSuccess, guestCreateAccountFailure} from "../../action/action_account";
-import {ACCOUNT_URL} from "../../action/distribute_urls";
 
-const RESOURCE_ROOT_URL = `${ACCOUNT_URL}/resource`;
+const RESOURCE_ROOT_URL = 'http://127.0.0.1:8081/AccountAPI/resource';
 
 function validate(values){
     var errors = {};

@@ -1,7 +1,6 @@
 import axios from 'axios';
-import {MENTO_URL} from "./distribute_urls";
 
-const ROOT_URL = MENTO_URL;
+const ROOT_URL = 'http://127.0.0.1:8082/MentoAPI';
 
 export const ADMIN_LOAD_SEMESTER_LIST = 'ADMIN_LOAD_SEMESTER_LIST';
 export const ADMIN_LOAD_SEMESTER_LIST_SUCCESS = 'ADMIN_LOAD_SEMESTER_LIST_SUCCESS';

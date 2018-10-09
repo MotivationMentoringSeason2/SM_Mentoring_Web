@@ -25,7 +25,6 @@ import {withRouter, Link} from 'react-router-dom';
 
 import axios from 'axios';
 import './card.css';
-import {ACCOUNT_URL, NOTICE_URL} from "../../action/distribute_urls";
 import ProfileImage from "../profile_component/ProfileImage";
 
 const styles = theme => ({
@@ -64,7 +63,9 @@ const styles = theme => ({
   }
 });
 
-const RESOURCE_URL = `${ACCOUNT_URL}/resource`;
+const NOTICE_URL = 'http://localhost:8083/NoticeAPI';
+
+const RESOURCE_URL = 'http://localhost:8081/AccountAPI/resource';
 
 class RecipeReviewCard extends React.Component {
   state = { expanded: false };
