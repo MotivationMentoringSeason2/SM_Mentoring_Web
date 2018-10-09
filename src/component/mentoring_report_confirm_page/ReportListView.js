@@ -9,7 +9,7 @@ import 'react-hint/css/index.css'
 import AssignmentIcon from '@material-ui/icons/AssignmentTurnedIn';
 import axios from "axios";
 import {MultiTimetable} from "../timetable_component";
-import {MENTO_URL} from "../../action/distribute_urls";
+import {ACCOUNT_URL, MENTO_URL} from "../../action/distribute_urls";
 
 const ReactHint = ReactHintFactory(React);
 
@@ -41,7 +41,7 @@ class ReportListView extends Component {
             this.setState({
                 token : data
             });
-            axios.get(`http://127.0.0.1:8081/AccountAPI/resource/account/name/${data.mento}`).then(response => this.setState({ realName : response.data }));
+            axios.get(`${ACCOUNT_URL}/resource/account/name/${data.mento}`).then(response => this.setState({ realName : response.data }));
             this.props.fetchReportList(data.id);
             this.props.fetchMentoringPerson(data.id);
         }

@@ -8,7 +8,7 @@ import ReactHintFactory from 'react-hint'
 import 'react-hint/css/index.css'
 import FileIcon from '@material-ui/icons/FileCopy';
 import axios from "axios/index";
-import {MENTO_URL} from "../../action/distribute_urls";
+import {ACCOUNT_URL, MENTO_URL} from "../../action/distribute_urls";
 
 const ReactHint = ReactHintFactory(React);
 
@@ -81,7 +81,7 @@ class ReportEditList extends Component {
             this.setState({
                 token : data
             });
-            axios.get(`http://127.0.0.1:8081/AccountAPI/resource/account/name/${data.mento}`).then(response => this.setState({ realName : response.data }));
+            axios.get(`${ACCOUNT_URL}/resource/account/name/${data.mento}`).then(response => this.setState({ realName : response.data }));
             this.props.fetchClassTimes(data.id);
             this.props.fetchReportList(data.id);
         }
