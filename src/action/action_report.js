@@ -1,7 +1,5 @@
 import axios from 'axios';
 
-import { MENTO_URL } from "./distribute_urls";
-
 export const ANYBODY_LOAD_REPORTS = 'ANYBODY_LOAD_REPORTS';
 export const ANYBODY_LOAD_REPORTS_SUCCESS = 'ANYBODY_LOAD_REPORTS_SUCCESS';
 export const ANYBODY_LOAD_REPORTS_FAILURE = 'ANYBODY_LOAD_REPORTS_FAILURE';
@@ -36,7 +34,7 @@ export const MENTO_DELETE_REPORTS_SUCCESS = 'MENTO_DELETE_REPORTS_SUCCESS';
 export const MENTO_DELETE_REPORTS_FAILURE = 'MENTO_DELETE_REPORTS_FAILURE';
 export const RESET_MENTO_DELETE_REPORTS = 'RESET_MENTO_DELETE_REPORTS';
 
-const ROOT_URL = MENTO_URL;
+const ROOT_URL = 'http://127.0.0.1:8082/MentoAPI';
 
 export function anybodyLoadReports(teamId){
     const request = axios({

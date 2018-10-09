@@ -19,9 +19,8 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 import EditIcon from '@material-ui/icons/Edit';
 import CheckIcon from '@material-ui/icons/Check';
-import {ACCOUNT_URL} from "../../action/distribute_urls";
 
-const COMMON_ROOT_URL = `${ACCOUNT_URL}/common`;
+const COMMON_ROOT_URL = 'http://127.0.0.1:8081/AccountAPI/common';
 
 function validate(values){
     var errors = {};

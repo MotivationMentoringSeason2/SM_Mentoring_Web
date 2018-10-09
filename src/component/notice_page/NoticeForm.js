@@ -15,7 +15,6 @@ import styled from 'styled-components';
 import {withRouter, Link} from 'react-router-dom';
 import queryString from 'query-string';
 import axios from "axios";
-import {NOTICE_URL} from "../../action/distribute_urls";
 
 const Container = styled.div`
   display: flex;
@@ -29,7 +28,7 @@ const Title = styled.h1`
   color : #000000;
 `;
 
-const NOTICE_ROOT_URL = `${NOTICE_URL}/notice`;
+const NOTICE_URL = 'http://localhost:8083/NoticeAPI/notice';
 
 const styles = theme => ({
     form: {
@@ -51,7 +50,7 @@ class NoticeForm extends Component {
 
     componentWillMount(){
         axios({
-            url : `${NOTICE_ROOT_URL}/type/${this.props.match.params.id || 1}`,
+            url : `${NOTICE_URL}/type/${this.props.match.params.id || 1}`,
             method : 'get'
         }).then(response => this.setState({
             typeName : response.data.name,
@@ -59,12 +58,12 @@ class NoticeForm extends Component {
         }));
 
         axios({
-            url: `${NOTICE_ROOT_URL}/options/sb_elements`,
+            url: `${NOTICE_URL}/options/sb_elements`,
             method: 'get'
         }).then(response => this.setState({ searchBy : response.data }));
 
         axios({
-            url: `${NOTICE_ROOT_URL}/options/ob_elements`,
+            url: `${NOTICE_URL}/options/ob_elements`,
             method: 'get'
         }).then(response => this.setState({ orderBy : response.data }));
     }
